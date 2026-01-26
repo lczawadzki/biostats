@@ -11,4 +11,4 @@ Exercise 3 (Ch 2):
 Exercise 4 (Ch 3):
 
 # Data
-All data for in-class exercises, quizzes, and exams is in the data folder.
+All data for in-class exercises, quizzes, and exams is in the <a href = "https://github.com/lczawadzki/biostats/tree/main/datadata folder">data</a>.

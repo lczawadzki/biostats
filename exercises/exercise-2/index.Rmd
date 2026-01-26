@@ -1,0 +1,189 @@
+---
+title: "Intro to R (BIO 272)"
+author: "Dr. Z"
+date: "Exercise 1"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Introduction to R (Parts I and II)
+
+## Activities drawn from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+## 2) Statistics for Linguists by Winter
+## 3) Getting Started with R (2nd Edition) by Beckerman, Childs, and Petchey
+```
+
+Welcome to the wonderful world of R!  
+<br>  
+__Objectives__  
+
+- Become familiar with _RStudio_ interface (windows, toolbar). Explain difference between _R_ and _RStudio_.
+- Be able to perform basic calculations.
+- Understand functions and ask for help.
+- Be able to create, annotate, and run an _R_ script.
+- Assign variables and vectors (numeric and categorical).  
+
+
+__Notes before we begin__: _R_ and _RStudio_ rely on syntax, and are case-sensitive. They will not work if you type anything in incorrectly, include extra or are missing parentheses, use lowercase when you need uppercase, or uppercase when you need lowercase, etc. Think of everything you type in as a password. If you do not type your password in precisely, you cannot get into your account!  
+<br>  
+
+__LEARNING R__  
+1\. Open _RStudio_. We will explore the interface together.  
+
+a) Familiarise yourself with the different windows -- the Console on the left pane, Environment and History tabs in the top right pane, and Files, Plots, Packages, Help, and Viewer tabs on the bottom right pane.
+
+b) Familiarise yourself with the dropdown tabs in the toolbar. (_Here's a fun hint!_ If you want to change the appearance of console window, go to Tools -> Global Options -> Appearance and select an Editor Theme. My personal favourite is "Chrome", but you can select one that works best for you. Click "Apply".)  
+<br>  
+
+2\. _R_ can be used as a calculator, AND a statistical analysis powerhouse.  
+
+a) Let's learn how to use it as a calculator. Type the following into the console.
+```{r echo = TRUE, results ='hide'}
+     2+2 
+```
+
+b) Let's try some more calculations in _R_. Do you get the expected result?
+```{r echo = TRUE, results ='hide'}
+     3-2
+     3/2
+     3*2 
+     2^2 
+     (2+3)*3
+```
+Great, you can do math in _R_!  
+<br>  
+
+3\. We can also perform a wide variety of mathematical functions in _R_. Some functions include the following:  
+
+- log of a number: __log()__ (calculates as ln())
+- square root of a number: __sqrt()__
+- absolute value of a number: __abs()__  
+  
+a) Calculate the following.
+```{r echo = T, results = 'hide'}
+    log(4)
+    sqrt(4)
+    abs(-2)
+```
+<br>  
+
+4\. With basic calculations you can just type in the syntax of the problem (_e.g._ 2 + 2), but to find the square root of a number we used "sqrt()". __sqrt()__ is a type of __function__, which is code that tells _R_ to perform a specific task. The function is your _action_. Any words or numbers entered into the function are _arguments_, which define what the action acts upon, and how it runs. We will use functions a lot in _R_, especially for statistical analysis.  
+<br>
+
+a) Let's look at the __log()__ function again, except this time we want _R_ to calculate it as __base 10__ rather than __base e (natural log)__. Try the following.
+```{r echo = T, results = 'hide'}
+     log(4, base = 10)
+
+     ## Notice how we added a new argument, "base = 10" to tell the function log() to calculate base 10, rather than the natural log. Functions will have anywhere from one to multiple arguments, depending on the complexity of the function and what it can do.
+```
+
+b) To know what else you can do with a function, we can ask _R_ directly.  
+Ask _R_ for help on the __log()__ function.
+```{r echo = T}
+     ?log
+
+     ## Documentation on the function should open in the bottom right pane. This documentation gives you information on the function (description), how to use it (usage), the arguments, examples, and much more. 
+```
+<br>  
+
+5\. We can also assign values to variables (handy when analysing data!).  
+
+a) Assign x a value of 4 (**Shortcut for <- : alt + -**)
+```{r echo = T, results = 'hide'}
+     x <- 4
+
+     # Notice that we used <- instead of =. You should never use an = sign when assigning variables! It will work, but causes errors and conflicts within functions. Best to avoid! 
+```
+  
+b) There will be no output because you are just assigning a variable. To see the value of your variable, you must type in your variable again.
+```{r echo = T, results = 'hide'}
+     x
+```
+  
+c) Use your variable in some basic calculations. Do you get the correct value?
+```{r echo = T, results = 'hide'}
+     x + 3
+     x - 2
+     x*2
+```
+
+d) You can reassign x to another value at any point.  
+Reassign it to 32.
+```{r echo = T, results = 'hide'}
+     x <- 32
+     x
+```
+
+e) Type in a capital X. Why does this produce the following error?
+```{r echo = T, error = T, results = 'hide', warniing = F, messsage = F}
+     X
+```
+
+f) We can use full names instead of one letter when assigning variables, so we can keep track of what we are analysing. Be as descriptive as possible so you know what it means, but don't make them too long! Otherwise, they become a pain to type over and over and over...Also, names __cannot__ have spaces. (If you want a name with multiple words, you can use underscores "_", but this is not recommended. They're a pain to to type, and often run into errors for big analyses).  
+
+    Assign the value of 64 to the height of an adult human.
+```{r echo = T, results = 'hide'}
+     height <- 64
+     height
+```
+<br>  
+
+6\. So far, we have only worked in the console. When you work in the console, your input and output are __NOT__ saved. Think of it as a scientific calculator -- once you shut off the calculator, all of your inputs are lost. We usually want to be able to save our input so we can re-run analyses, remind ourselves of what we've done, and have something to work from the next time we open _RStudio_. To do this, we use and save R scripts.
+
+a) Create a new script: Click on the upper left icon (white paper with + button) -> Select "R Script" from the dropdown menu (_alternatively, use the shortcut ctrl + shift + N_).  
+
+b) Write the following in your script (**Shortcut for #: shift + 3**)
+```{r}
+     # Filename: bio272-lecture1
+     # Title: R Exercise 1 - Intro to R
+     # Author: Write your full name here
+     # Date: Month Day Year (write the actual date here)
+
+     # Description: This script is...write a description of what this script is for. 
+     # You will thank yourself later!
+
+```
+
+```{r}
+     ## DO NOT WRITE:: Notice we use # to denote a comment or annotation. I like to use ## but that's just 
+     ## personal preference! Anything with a # in front will not run in the console when you run your 
+     ## script later.
+```
+
+c) Let's see how to use and run a script.  
+Type the following in your script, then click on the button that says "Run". Do you get the same answers as before when just using the console? (**Shortcut to Run: ctrl + enter**)  
+```{r echo = T, results = 'hide'}
+     # Basic calculations in R:
+     2+2 # addition
+     3-2 # subtraction
+     3*2 # multiplication
+     3/2 # division
+     2^2 # exponents
+     (2+3)*3 # stacking operations
+```
+
+d) Save your script: File -> Save As -> Save to Desktop. Email the file to yourself, or save to USB if you wish to keep this for future study/practice (**recommended**).  
+
+<br>  
+
+7\. Now it's time to practice on your own. Print out your _R_ script when you are done (I will explain how).  
+
+1. Using your R script, type in everything we did in the console. Run and check your results. Are they the same as before?
+
+2. A researcher wants to come up with a name for each of the following variables. Come up with appropriate names that can be used in _R_ and type them into your script.  
+    a\. Body temperature in Celsius  
+    b\. How much aspirin is given per dose for a patient  
+    c\. Number of televisions per household  
+    d\. Height (inlcuding neck and extended legs) of giraffes  
+
+3. Using script and run, calculate the following:  
+    a\. 15 x 17  
+    b\. $13^3$  
+    c\. log(14) (natural log)  
+    d\. log(100) (use base 10)  
+    e\. $\sqrt{81}$  

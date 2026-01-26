@@ -9,3 +9,6 @@ Exercise 2 (Intro Pt II): https://lczawadzki.github.io/biostats/exercise-2/index
 Exercise 3 (Ch 2):
 <br>
 Exercise 4 (Ch 3):
+
+# Data
+All data for in-class exercises, quizzes, and exams is in the data folder.

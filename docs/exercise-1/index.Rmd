@@ -1,16 +1,17 @@
 ---
-title: "Intro to R (BIO 272)"
+title: "R Exercise 1: Intro to R"
 author: "Dr. Z"
-date: "Exercise 1"
+date: "2026"
 output:
   html_document:
+    highlight: textmate
     df_print: paged
   pdf_document: default
   word_document: default
 ---
 
 ```{r include = F}
-## Introduction to R (Parts I and II)
+## Introduction to R (Part I)
 
 ## Activities drawn from the following sources:
 ## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
@@ -20,13 +21,13 @@ output:
 
 Welcome to the wonderful world of R!  
 <br>  
-__Objectives__  
+__Objectives__
 
 - Become familiar with _RStudio_ interface (windows, toolbar). Explain difference between _R_ and _RStudio_.
 - Be able to perform basic calculations.
 - Understand functions and ask for help.
 - Be able to create, annotate, and run an _R_ script.
-- Assign variables and vectors (numeric and categorical).  
+- Assign variables (numeric and categorical).  
 
 
 __Notes before we begin__: _R_ and _RStudio_ rely on syntax, and are case-sensitive. They will not work if you type anything in incorrectly, include extra or are missing parentheses, use lowercase when you need uppercase, or uppercase when you need lowercase, etc. Think of everything you type in as a password. If you do not type your password in precisely, you cannot get into your account!  
@@ -64,7 +65,7 @@ Great, you can do math in _R_!
 - square root of a number: __sqrt()__
 - absolute value of a number: __abs()__  
   
-a) Calculate the following.
+Calculate the following.
 ```{r echo = T, results = 'hide'}
     log(4)
     sqrt(4)
@@ -93,7 +94,7 @@ Ask _R_ for help on the __log()__ function.
 
 5\. We can also assign values to variables (handy when analysing data!).  
 
-a) Assign x a value of 4 (**Shortcut for <- : alt + -**)
+a) Assign x a value of 4 (**Shortcut for <- : Alt + -**)
 ```{r echo = T, results = 'hide'}
      x <- 4
 
@@ -135,28 +136,28 @@ f) We can use full names instead of one letter when assigning variables, so we c
 
 6\. So far, we have only worked in the console. When you work in the console, your input and output are __NOT__ saved. Think of it as a scientific calculator -- once you shut off the calculator, all of your inputs are lost. We usually want to be able to save our input so we can re-run analyses, remind ourselves of what we've done, and have something to work from the next time we open _RStudio_. To do this, we use and save R scripts.
 
-a) Create a new script: Click on the upper left icon (white paper with + button) -> Select "R Script" from the dropdown menu (_alternatively, use the shortcut ctrl + shift + N_).  
+a) Create a new script: Click on the upper left icon (white paper with + button) -> Select "R Script" from the dropdown menu (_alternatively, use the shortcut Ctrl + Shift + N_).  
 
-b) Write the following in your script (**Shortcut for #: shift + 3**)
+b) Write the following in your script (**Shortcut for #: Shift + 3**)
 ```{r}
-     # Filename: bio272-lecture1
-     # Title: R Exercise 1 - Intro to R
-     # Author: Write your full name here
-     # Date: Month Day Year (write the actual date here)
+# Filename: bio272-lecture1
+# Title: R Exercise 1 - Intro to R 
+# Author: Write your full name here
+# Date: Month Day Year (write the actual date here)
 
-     # Description: This script is...write a description of what this script is for. 
-     # You will thank yourself later!
+# Description: This script is...write a description of what this script is for. You will thank yourself later!
 
 ```
 
 ```{r}
-     ## DO NOT WRITE:: Notice we use # to denote a comment or annotation. I like to use ## but that's just 
-     ## personal preference! Anything with a # in front will not run in the console when you run your 
-     ## script later.
+## Tip 1 (DO NOT WRITE): Notice we use # to denote a comment or annotation. I like to use ## but that's just personal preference! Anything with a # in front will not run in the console when you run your script later.
+
+## Tip 2 (DO NOT WRITE): If you do not want to type a new # symbol everytime you go to a new line, you can change the settings in R. In the toolbar, go to Tools -> Global Options -> Code. Under "General" you will see a check box for "Continue comment when inserting new line". Check this box. To apply settings click on Apply, and OK.
 ```
 
 c) Let's see how to use and run a script.  
-Type the following in your script, then click on the button that says "Run". Do you get the same answers as before when just using the console? (**Shortcut to Run: ctrl + enter**)  
+Type the following in your script. When done, either go to each line and click on the button that says "Run" OR highlight the entire script and then click "Run". Do you get the same answers as before when just using the console? (**Shortcut to Run: Ctrl + Enter**)  
+(**Shortcut to Run entire script: Ctrl + Shift + Enter**)
 ```{r echo = T, results = 'hide'}
      # Basic calculations in R:
      2+2 # addition
@@ -167,21 +168,21 @@ Type the following in your script, then click on the button that says "Run". Do 
      (2+3)*3 # stacking operations
 ```
 
-d) Save your script: File -> Save As -> Save to Desktop. Email the file to yourself, or save to USB if you wish to keep this for future study/practice (**recommended**).  
+d) Save your script: File -> Save As -> Save to Desktop. Email the file to yourself, or save to USB if you wish to keep this for future study/practice. I recommend you do this every class so you can write notes during exercises and have something to practice from at home.  
 
 <br>  
 
-7\. Now it's time to practice on your own. Print out your _R_ script when you are done (I will explain how).  
-
-1. Using your R script, type in everything we did in the console. Run and check your results. Are they the same as before?
+**Now it's time to practice on your own.** 
+  
+1. In your R script, go back to the previous exercises (3, 4a-b, 5a-f) and type them is as we did in the console. Add comments to tell yourself what each line of code does. Then, run and check your results. Are they the same as before?
 
 2. A researcher wants to come up with a name for each of the following variables. Come up with appropriate names that can be used in _R_ and type them into your script.  
     a\. Body temperature in Celsius  
     b\. How much aspirin is given per dose for a patient  
     c\. Number of televisions per household  
-    d\. Height (inlcuding neck and extended legs) of giraffes  
+    d\. Height (including neck and extended legs) of giraffes  
 
-3. Using script and run, calculate the following:  
+3. In your script, write code for the following calculations. Run the code and write values for your calculations as comments in your script.  
     a\. 15 x 17  
     b\. $13^3$  
     c\. log(14) (natural log)  

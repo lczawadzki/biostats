@@ -113,9 +113,7 @@ c) Calculate the sum of __temperatureF__.
 ```
 <br>
 
-5\. But, what if we _already_ have a beautiful dataset with multiple columns and rows, and we want to import it into _R_? To do this, we have to read in the file.  
-
-All files we use in this class will be ".csv" files. CSV files, or comma-separated value files, are plain text files that save tabular data. You can easily save your data in Excel into a CSV format.  
+5\. But, what if we _already_ have a beautiful dataset with multiple columns and rows, and we want to import it into _R_? To do this, we have to read in the file. All files we use in this class will be ".csv" files. CSV files, or comma-separated value files, are plain text files that save tabular data. You can easily save your data in Excel into a CSV format.  
 
 To read in a .csv file, we use the function: __read.csv( )__. 
 
@@ -123,10 +121,8 @@ a. __Reading in a file from a URL__: We can read files into _R_ directly from th
 ```{r echo = T, results = 'hide'}
      birds <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv", header = TRUE)
 ```
-__read.csv( )__ looks for the csv file on the GitHub via the URL. The first argument in this function is the location of the file you're looking for, and the second argument we have added, __"header = TRUE"__ tells _R_ that the first row in the file has column names.  
-
-Notice we assign the data to an object to read it in. In this case, we have named it __birds__. _R_ will recognise from now on that __birds__ contains all this bird richness data _(to view more arguments in read.csv, type ?read.csv into your console)_.
-
+__read.csv( )__ looks for the csv file on the GitHub via the URL. The first argument in this function is the location of the file you're looking for, and the second argument we have added, __"header = TRUE"__ tells _R_ that the first row in the file has column names. Notice we assign the data to an object to read it in. In this case, we have named it __birds__. _R_ will recognise from now on that __birds__ contains all this bird richness data _(to view more arguments in read.csv, type ?read.csv into your console)_.  
+<br>
 You will now see the object __birds__ in your Environment. You can view the dataset by clicking on it directly in the Environment, or typing in:
 ```{r echo = T, eval = F}
      View(birds)
@@ -151,14 +147,14 @@ __(1) Copy pathname and read it in by pathname__: Go to the GitHub and download 
 ```
 
 <br>
-__(2) Set a working directory, and read it in directly from that location__: Go to the toolbar at the top of _RStudio_, go to Session -> Set Working Directory -> Choose Directory. Select a folder on your computer where you will save your datasets for _R_ to read from. Once set, make sure you put __"bird-richness.csv" in this folder.
+__(2) Set a working directory, and read it in directly from that location__: Go to the toolbar at the top of _RStudio_, go to Session -> Set Working Directory -> Choose Directory. Select a folder on your computer where you will save your datasets for _R_ to read from. Once set, make sure you put __"bird-richness.csv" in this folder.  
 <br>
 First, let's check that _R_ is reading in from the correct directory.
 ```{r echo = T, results = 'hide'}
      getwd() #checks directory
      list.files() #lists files in folder
 ```
-<br>
+<br>  
 Once confirmed, we can read in our data by _just_ using the __file name__ as our argument.
 ```{r echo = T, eval = F}
      birds <- read.csv("bird-richness.csv", header = TRUE)
@@ -205,7 +201,8 @@ mean(ACE_Canada)/mean(urineperL)
 mean(urineperL)*500000
 ```
 <br>
-2. Read in the file "student-height.csv" directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv. Now download the file, save it to your working directory, and read it into _R_ directly.
+2. Read in the file "student-height.csv" directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv. Now download the file, save it to your working directory, and read it into _R_ directly.  
+<br>
 <br>
 **Finally, save your script: File -> Save As -> Save to Desktop. Email the file to yourself, or save to USB to use for future study/practice.**
 

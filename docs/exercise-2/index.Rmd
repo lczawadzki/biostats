@@ -1,12 +1,213 @@
 ---
-title: "Intro to R (BIO 272)"
+title: "R Exercise 2: Intro to R (cont.)"
 author: "Dr. Z"
-date: "Exercise 2"
+date: "2026"
 output:
   html_document:
+    highlight: textmate
     df_print: paged
   pdf_document: default
   word_document: default
 ---
 
-hello
+```{r include = F}
+## Introduction to R (Part II)
+
+## Activities drawn from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+## 2) Statistics for Linguists by Winter
+## 3) Getting Started with R (2nd Edition) by Beckerman, Childs, and Petchey
+```
+
+Let's continue to explore how to use _R_.
+<br>  
+__Objectives__  
+
+- Assign vectors in _R_.
+- Run basic operations and calculations with vectors.
+- Be able to read in datasets from: a URL, a working directory, base R. 
+<br>
+  
+__Reminder__: _R_ and _RStudio_ rely on syntax, and are case-sensitive. Always check your cases are correct, and you are using the correct number of parentheses.  
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 2__  
+1\. Open _RStudio_ and prepare a new script.
+
+a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. 
+b) Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. In our last exercise, we saw that we assign variables a specific number in _R_. For e.g., we can assign the variable height a value of 64 inches by typing in:
+```{r echo = T, results = 'hide'}
+     height <- 64
+```
+
+Real data will likely have multiple observations, or a collection of numbers known as a _vector_. We can also use assignment to assign vectors, rather than a single number, to a variable.   
+  
+Let's first see how _R_ creates vectors. Let's say we have data on daily temperatures in Farenheit for New York City in January. Our temperatures are: 32ºF, 31ºF, 31ºF, 29ºF, 29ºF, 24ºF, and 22ºF. We will tell _R_ to put these numbers in vector format.  
+<br>
+a. Type the following your script and run it.
+```{r echo = T, results = 'hide'}
+     c(32, 31, 31, 29, 29, 24, 22)
+```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In your console, your output should look like this:
+```{r echo = F, results = T}
+     c(32, 31, 31, 29, 29, 24, 22)
+```
+  
+Notice that we are using __c( )__. This has a letter, followed by parantheses, in which we enter values. This means that __c( )__ is a function! Remember that functions are code that tell _R_ to perform a specific task. We can specify what, and how, through the arguments we write in the parantheses. In this case, __c()__ is telling _R_ to "combine" (c for combine) some elements (numbers or words) into a vector.  
+<br>
+b. To assign this vector to our variable, say __temperatureF__, we follow the same steps for assigning one value to a variable, and then type in its name to ask _R_ to retrieve the value.  
+<br>
+Type this in your script and Run each line. Does it appear in the console? What do you see in your environment?
+```{r echo = T, results = 'hide'}
+     temperatureF <- c(32, 31, 31, 29, 29, 24, 22)
+     temperatureF
+```
+
+<br>
+3\. In our last exercise, we saw that _R_ can be used as a calculator, via basic operations or functions, and we can run those calculations with our variables. This is also true of variables that have been assigned to vectors. Try the following in your scripts.
+
+a) Convert __temperature F__ to __temperatureC__, and assign your converted numbers to a new variable, __temperatureC__. This can be done simultaneously!
+```{r echo = TRUE, results ='hide'}
+     temperatureC <- (temperatureF - 32) * 5/9 
+     temperatureC
+```
+
+b) Calculate the mean of __temperatureF__.
+```{r echo = TRUE, results ='hide'}
+     mean(temperatureF)
+```
+
+c) Calculate the sum of __temperatureF__.
+```{r echo = TRUE, results ='hide'}
+     sum(temperatureF)
+```
+<br>  
+
+4\. Sometimes we want to know which value is in the _nth_ position of a vector. To do this, we can use square brackets to specify the value we want to retrieve from a variable. Obtain the _2nd_ value in the variable __temperatureF__. What about the _5th_ value?
+```{r echo = TRUE, results ='hide'}
+     temperatureF[2]
+     temperatureF[5]
+```
+<br>
+
+5\. But, what if we _already_ have a beautiful dataset with multiple columns and rows, and we want to import it into _R_? To do this, we have to read in the file.  
+
+All files we use in this class will be ".csv" files. CSV files, or comma-separated value files, are plain text files that save tabular data. You can easily save your data in Excel into a CSV format.  
+
+To read in a .csv file, we use the function: __read.csv( )__. 
+
+a. __Reading in a file from a URL__: We can read files into _R_ directly from the internet. To do this, we need the __URL__. Let's read in a file directly from our GitHub. Type this into your script and hit Run. 
+```{r echo = T, results = 'hide'}
+     birds <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv", header = TRUE)
+```
+__read.csv( )__ looks for the csv file on the GitHub via the URL. The first argument in this function is the location of the file you're looking for, and the second argument we have added, __"header = TRUE"__ tells _R_ that the first row in the file has column names.  
+
+Notice we assign the data to an object to read it in. In this case, we have named it __birds__. _R_ will recognise from now on that __birds__ contains all this bird richness data _(to view more arguments in read.csv, type ?read.csv into your console)_.
+
+You will now see the object __birds__ in your Environment. You can view the dataset by clicking on it directly in the Environment, or typing in:
+```{r echo = T, eval = F}
+     View(birds)
+```
+
+To view only the first few rows, type in:
+```{r echo = T, eval = F}
+     head(birds)
+```
+
+Or the last few rows:
+```{r echo = T, eval = F}
+     tail(birds)
+```
+<br>
+
+b. What if you already downloaded the .csv file from the GitHub, or have a dataset on your computer? To read in data from your computer, we need to know the __location__ of the file. We can do this in two ways:
+
+__(1) Copy pathname and read it in by pathname__: Go to the GitHub and download the file to your computer. Locate the file, and copy the pathname. On Windows, hold Shift and right-click on the file, then select "Copy as path". On Mac, right-click on the file, hold Option, and scroll down to where it says "Copy 'bird-richness.csv' as Pathname" and click. You should now be able to paste the pathname into your first argument below.
+```{r echo = T, eval = F}
+     birds <- read.csv("YOUR PATHNAME HERE", header = TRUE)
+```
+
+<br>
+__(2) Set a working directory, and read it in directly from that location__: Go to the toolbar at the top of _RStudio_, go to Session -> Set Working Directory -> Choose Directory. Select a folder on your computer where you will save your datasets for _R_ to read from. Once set, make sure you put __"bird-richness.csv" in this folder.
+<br>
+First, let's check that _R_ is reading in from the correct directory.
+```{r echo = T, results = 'hide'}
+     getwd() #checks directory
+     list.files() #lists files in folder
+```
+<br>
+Once confirmed, we can read in our data by _just_ using the __file name__ as our argument.
+```{r echo = T, eval = F}
+     birds <- read.csv("bird-richness.csv", header = TRUE)
+```
+<br>
+
+c. _R_ also has some pre-loaded datasets that can be accessed directly in _R_ for practice. We will also use some of these during the course. To view all of these datasets, you can type __data()__ into the console. Type in the following datasets and look at the data. To learn more about each dataset, you can type in ?datasetname (_e.g._ ?iris).
+```{r echo = T, results = 'hide'}
+     iris
+     mtcars
+```
+<br>
+<br>
+**Now it's time to practice on your own.** 
+  
+1. People are notoriously dishonest about revealing how often they perform antisocial behaviors like peeing in swimming pools. In addition to being disgusting, the nitrogenous chemicals in urine combine with the pool’s chlorine to produce some toxic chemicals like trichloramine, the source of most skin irritations for swimmers. A group of researchers (Jmaiff Blackstock et al. 2017) recently realized that an artificial sweetener called ACE passes out in urine unmetabolized and in known average quantities. Therefore, by measuring ACE concentrations we can measure the amount of urine in a pool. (question adopted from: Whitlock & Schluter 2020)  
+<br>
+Here is a list of measurements, each from a different pool, of the concentration of ACE (measured in ng/L) for 23 different pools in Canada.  
+<br>
+640, 1070, 780, 70, 160, 130, 60, 50, 2110, 70, 350, 30, 210, 90, 470, 580, 250, 310, 460, 430, 140, 1070, 130
+
+    a\. In R, create a vector of these data, and name it appropriately.  
+    
+    b\. What is the mean ACE concentration of these 23 pools?  
+    
+    c\. Urine on average has 4000 ng ACE/mL. We want to know how many mL of urine are in the pool per L. Make a new vector that shows the concentration of urine in mL/L in these 23 pools. Give it a suitable name. (conversion note: there are 4000 ng ACE/mL of urine, so we need to divide our ACE values by 4000 to get mL of urine/L).  
+    
+    d\. What is the mean concentration of urine per liter? How did this change relative to the mean measurement of ng ACE/L ?  
+    
+    e\. Use R to calculate the average amount of urine (in ml) in a 500,000 L pool.  
+
+```{r include = F}
+#Answer:
+ACE_Canada <- c(640, 1070, 780, 70, 160, 130, 60, 50, 2110, 70, 350, 30, 210, 90, 470, 580, 250, 310, 460, 430, 140, 1070, 130) #a
+mean(ACE_Canada) #b
+urineperL <- ACE_Canada/4000 #c
+
+#d - get mean, and then divide means (ACE should be 4000x higher)
+mean(urineperL)
+mean(ACE_Canada)/mean(urineperL) 
+
+#e - 0.105 mL/1 L = x mL/500,000 L
+#    0.105 mL*500,000 L = x
+mean(urineperL)*500000
+```
+<br>
+2. Read in the file "student-height.csv" directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv. Now download the file, save it to your working directory, and read it into _R_ directly.
+<br>
+**Finally, save your script: File -> Save As -> Save to Desktop. Email the file to yourself, or save to USB to use for future study/practice.**
+
+
+

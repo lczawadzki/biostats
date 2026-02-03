@@ -1713,9 +1713,7 @@ pre code {
 <p><br></p>
 <p>5. But, what if we <em>already</em> have a beautiful dataset with multiple columns and rows, and we want to import it into <em>R</em>? To do this, we have to read in the file. All files we use in this class will be “.csv” files. CSV files, or comma-separated value files, are plain text files that save tabular data. You can easily save your data in Excel into a CSV format.</p>
 <p>To read in a .csv file, we use the function: <strong>read.csv( )</strong>.</p>
-<ol style="list-style-type: lower-alpha">
-<li><strong>Reading in a file from a URL</strong>: We can read files into <em>R</em> directly from the internet. To do this, we need the <strong>URL</strong>. Let’s read in a file directly from our GitHub. Type this into your script and hit Run.</li>
-</ol>
+<p>a. <strong>Reading in a file from a URL (easiest in-class option)</strong>: We can read files into <em>R</em> directly from the internet. To do this, we need the <strong>URL</strong>. Let’s read in a file directly from our GitHub. Type this into your script and hit Run.</p>
 <pre class="r"><code>     birds &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv&quot;, header = TRUE)</code></pre>
 <p><strong>read.csv( )</strong> looks for the csv file on the GitHub via the URL. The first argument in this function is the location of the file you’re looking for, and the second argument we have added, <strong>“header = TRUE”</strong> tells <em>R</em> that the first row in the file has column names. Notice we assign the data to an object to read it in. In this case, we have named it <strong>birds</strong>. <em>R</em> will recognise from now on that <strong>birds</strong> contains all this bird richness data <em>(to view more arguments in read.csv, type ?read.csv into your console)</em>.<br />
 <br> You will now see the object <strong>birds</strong> in your Environment. You can view the dataset by clicking on it directly in the Environment, or typing in:</p>
@@ -1725,12 +1723,11 @@ pre code {
 <p>Or the last few rows:</p>
 <pre class="r"><code>     tail(birds)</code></pre>
 <p><br></p>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>What if you already downloaded the .csv file from the GitHub, or have a dataset on your computer? To read in data from your computer, we need to know the <strong>location</strong> of the file. We can do this in two ways:</li>
-</ol>
-<p><strong>(1) Copy pathname and read it in by pathname</strong>: Go to the GitHub and download the file to your computer. Locate the file, and copy the pathname. On Windows, hold Shift and right-click on the file, then select “Copy as path”. On Mac, right-click on the file, hold Option, and scroll down to where it says “Copy ‘bird-richness.csv’ as Pathname” and click. You should now be able to paste the pathname into your first argument below.</p>
-<pre class="r"><code>     birds &lt;- read.csv(&quot;YOUR PATHNAME HERE&quot;, header = TRUE)</code></pre>
-<p><br> <strong>(2) Set a working directory, and read it in directly from that location</strong>: Go to the toolbar at the top of <em>RStudio</em>, go to Session -&gt; Set Working Directory -&gt; Choose Directory. Select a folder on your computer where you will save your datasets for <em>R</em> to read from. Once set, make sure you put __“bird-richness.csv” in this folder.<br />
+<p>b. If you already downloaded the .csv file from the GitHub, or have a dataset on your computer, we can need to know the <strong>location</strong> of the file. We can do this in two ways:</p>
+<p><strong>(1) Copy pathname and read it in by pathname (good at-home option</strong>_: Go to the GitHub and download the file to your computer. Locate the file, and copy the pathname. On Windows, hold Shift and right-click on the file, then select “Copy as path”. On Mac, right-click on the file, hold Option, and scroll down to where it says “Copy ‘bird-richness.csv’ as Pathname” and click. You should now be able to paste the pathname into your first argument below.</p>
+<p><em>Note: IF YOU USE WINDOWS YOU WILL GET AN ERROR. Windows pathnames use back slashes \. R hates back slashes. On Windows, either change ALL back slashes \ to forward slashes / OR replace ALL back slashes with a double slash \. It should now work. If you are on a Mac, you are safe.</em></p>
+<pre class="r"><code>     birds &lt;- read.csv(&quot;YOUR PATHNAME HERE; USE / only&quot;, header = TRUE)</code></pre>
+<p><br> <strong>(2) Set a working directory, and read it in directly from that location (best at-home option)</strong>: Go to the toolbar at the top of <em>RStudio</em>, go to Session -&gt; Set Working Directory -&gt; Choose Directory. Select a folder on your computer where you will save your datasets for <em>R</em> to read from. Once set, make sure you put __“bird-richness.csv” in this folder.<br />
 <br> First, let’s check that <em>R</em> is reading in from the correct directory.</p>
 <pre class="r"><code>     getwd() #checks directory
      list.files() #lists files in folder</code></pre>
@@ -1753,9 +1750,11 @@ Once confirmed, we can read in our data by <em>just</em> using the <strong>file 
 <p>c. Urine on average has 4000 ng ACE/mL. We want to know how many mL of urine are in the pool per L. Make a new vector that shows the concentration of urine in mL/L in these 23 pools. Give it a suitable name. (conversion note: there are 4000 ng ACE/mL of urine, so we need to divide our ACE values by 4000 to get mL of urine/L).</p>
 <p>d. What is the mean concentration of urine per liter? How did this change relative to the mean measurement of ng ACE/L ?</p>
 <p>e. Use R to calculate the average amount of urine (in ml) in a 500,000 L pool.</p></li>
+<li><p>Read in the file “student-height.csv”.</p>
+<p>a. Directly from the GitHub using the following URL: <a href="https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv</a></p>
+<p>b. By saving it to your working directory, and reading it into <em>R</em> directly.<br />
+<br> <br> **Finally, save your script: File -&gt; Save As -&gt; Save to Desktop. Email the file to yourself, or save to USB to use for future study/practice.**</p></li>
 </ol>
-<p><br> 2. Read in the file “student-height.csv” directly from the GitHub using the following URL: <a href="https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv</a>. Now download the file, save it to your working directory, and read it into <em>R</em> directly.<br />
-<br> <br> <strong>Finally, save your script: File -&gt; Save As -&gt; Save to Desktop. Email the file to yourself, or save to USB to use for future study/practice.</strong></p>
 
 
 

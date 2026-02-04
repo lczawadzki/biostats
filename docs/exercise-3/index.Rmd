@@ -1,0 +1,122 @@
+---
+title: "R Exercise 3: Displaying and describing data (Ch 2, 3)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Chapters 2 & 3: Displaying and describing data
+
+## Activities drawn from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+## 2) Statistics for Linguists by Winter
+## 3) Getting Started with R (2nd Edition) by Beckerman, Childs, and Petchey
+```
+
+Let's apply what we've learned in Chapters 2 and 3 to _R_.
+<br>  
+__Objectives__  
+
+- Review reading in data.
+- Be able to create basic graphs: bar graphs, histograms, and scatter plots.
+- 
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 3__  
+1\. Open _RStudio_ and prepare a new script.
+
+a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. Let's work with the file "student-height.csv" in the GitHub.
+
+a. Read the file into _R_, either directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv, or by downloading the data, and using the pathname/working directory. Remember to assign it to a name. 
+```{r echo = T, results = 'hide'}
+     studht <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv", header = TRUE)
+```
+
+b. Look at the structure of the dataframe using the function __str( )__. This tells you information about the dataframe, including how many observations, how many variables, and what those variables are.
+```{r echo = T}
+     str(studht)
+```
+
+c. Use the function __head( )__ to look at the first few lines of the dataframe.
+```{r echo = T, results = 'hide'}
+     head(studht)
+```
+
+d. Our data consists of one numerical variable. To plot one numerical variable, we use a __histogram__. To plot histograms in _R_, we can use the function __hist( )__. However, we cannot just type in the dataframe as the argument, we need to specify both the dataframe and the variable, using the notation: _dataframe$variable_.
+```{r echo = T, fig.keep = "none"}
+     hist(studht$height)
+```
+__Look at your histogram__:  
+- What is the shape of our distribution (symmetric, asymmetric)?  
+- How many peaks do we have?
+
+e. We can change the labels by adding the argument _xlab = ""_ for the x-axis label, and _main = ""_ for the title of the graph. Test this out.
+```{r echo = T, fig.keep = "none"}
+     hist(studht$height, xlab = "Student Height (in)", main = "Frequency of Student Height")
+```
+
+f. Let's calculate our summary statistics, using the following functions. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
+```{r echo = T, results = 'hide'}
+     mean(studht$height)
+     median(studht$height)
+     sd(studht$height)  #standard deviation
+     var(studht$height) #variance
+     IQR(studht$height) #interquartile range
+```
+Notice, we do ___not___ have a function for the __mode__. To find the mode, we can always look at the __peak__ of our histogram!
+
+We also do ___not___ have a function for the __coefficient of variation__. We will need to calculate this directly, using our knowledge of the formula, and the functions for standard deviation (__sd__) and mean (__mean__). The formula is: CV = (sd/mean)*100%. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
+```{r echo = T, results = 'hide'}
+     (sd(studht$height)/mean(studht$height))*100
+```
+
+A faster way to get all of these statistics in one go is to use the __summary( )__ function. This will give you the minimum value, first quartile, median, mean, third quartile, and maximum value. YOU will still need to calculate the standard deviation (__sd__),variance (__var__), and __interquartile range (__IQR__) using their functions.
+```{r echo = T}
+     summary(studht)
+```
+
+g. We can also make a box plot of our data, to examine the median, first quartile, third quartile, and interquartile ranges. The function for a box plot is __boxplot( )__. You can add labels in the same way you did with your histogram, except this time we'll want to label the y-axis using _ylab = ""_. The argument for boxplot is just _dataframe_.
+```{r echo = T, fig.keep = "none"}
+     boxplot(studht, ylab = "Student Height (in)", main = "Box Plot of Student Heights")
+```
+__Examine your boxplot__:  
+- What does the black line represent?  
+- What do the edges of your box represent?  
+- What does the range from one end of the box to the other represent?  
+- What do the whiskers show?  
+
+```{r include = F}
+     #NEED A DIFFERENT DATASET FOR PRACTICE, ONE VARIABLE SO THEY CAN DO MEAN ETC. MAYBE SNAKE EXAMPLE? ADD LATER. NO TIME.
+```

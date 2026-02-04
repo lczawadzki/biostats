@@ -1629,7 +1629,7 @@ pre code {
 <strong>Objectives</strong></p>
 <ul>
 <li>Review reading in data.</li>
-<li>Be able to create basic graphs: bar graphs, histograms, and scatter plots.</li>
+<li>Be able to create basic graphs: histograms and box plots.</li>
 <li><br></li>
 </ul>
 <p><strong>Reminder</strong>: Save your script for practice at home! :) <br></p>
@@ -1678,43 +1678,36 @@ pre code {
 # Description: (describe what this script is for)</code></pre>
 <p><br></p>
 <p>2. Let’s work with the file “student-height.csv” in the GitHub.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Read the file into <em>R</em>, either directly from the GitHub using the following URL: <a href="https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv</a>, or by downloading the data, and using the pathname/working directory. Remember to assign it to a name.</li>
-</ol>
+<p><strong>Pt I: Reading in the file</strong><br />
+Read the file into <em>R</em>, either directly from the GitHub using the following URL: <a href="https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv</a>, or by downloading the data, and using the pathname/working directory. Remember to assign it to a name.</p>
 <pre class="r"><code>     studht &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv&quot;, header = TRUE)</code></pre>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Look at the structure of the dataframe using the function <strong>str( )</strong>. This tells you information about the dataframe, including how many observations, how many variables, and what those variables are.</li>
-</ol>
+<p><br><br />
+<strong>Pt II: Displaying data (view format, make histogram)</strong><br />
+a. Look at the structure of the dataframe using the function <strong>str( )</strong>. This tells you information about the dataframe, including how many observations, how many variables, and what those variables are.</p>
 <pre class="r"><code>     str(studht)</code></pre>
 <pre><code>## 'data.frame':    81 obs. of  1 variable:
 ##  $ height: int  57 60 61 61 61 61 62 62 62 62 ...</code></pre>
-<ol start="3" style="list-style-type: lower-alpha">
-<li>Use the function <strong>head( )</strong> to look at the first few lines of the dataframe.</li>
-</ol>
+<p><br> b. Use the function <strong>head( )</strong> to look at the first few lines of the dataframe.</p>
 <pre class="r"><code>     head(studht)</code></pre>
-<ol start="4" style="list-style-type: lower-alpha">
-<li>Our data consists of one numerical variable. To plot one numerical variable, we use a <strong>histogram</strong>. To plot histograms in <em>R</em>, we can use the function <strong>hist( )</strong>. However, we cannot just type in the dataframe as the argument, we need to specify both the dataframe and the variable, using the notation: <em>dataframe$variable</em>.</li>
-</ol>
+<p><br> c. Our data consists of one numerical variable. To plot one numerical variable, we use a <strong>histogram</strong>. To plot histograms in <em>R</em>, we can use the function <strong>hist( )</strong>. However, we cannot just type in the dataframe as the argument, we need to specify both the dataframe and the variable, using the notation: <em>dataframe$variable</em>.</p>
 <pre class="r"><code>     hist(studht$height)</code></pre>
-<p><strong>Look at your histogram</strong>:<br />
-- What is the shape of our distribution (symmetric, asymmetric)?<br />
-- How many peaks do we have?</p>
-<ol start="5" style="list-style-type: lower-alpha">
-<li>We can change the labels by adding the argument <em>xlab = &quot;&quot;</em> for the x-axis label, and <em>main = &quot;&quot;</em> for the title of the graph. Test this out.</li>
-</ol>
+<p><br> d. We can change the labels by adding the argument <em>xlab = &quot;&quot;</em> for the x-axis label, and <em>main = &quot;&quot;</em> for the title of the graph. Test this out.</p>
 <pre class="r"><code>     hist(studht$height, xlab = &quot;Student Height (in)&quot;, main = &quot;Frequency of Student Height&quot;)</code></pre>
-<ol start="6" style="list-style-type: lower-alpha">
-<li>Let’s calculate our summary statistics, using the following functions. <strong>Remember</strong>, we need to specify which variable we are looking at using the notation: <em>dataframe$variable</em>.</li>
-</ol>
+<p><br> <strong>e. Now, look at your histogram</strong>:<br />
+- What is the <strong>shape</strong> of our distribution (symmetric, asymmetric)?<br />
+- How many <strong>peaks</strong> do we have (this is the mode)?<br />
+<br><br />
+<strong>Pt III: Describing data (summary statistics)</strong><br />
+a. Let’s calculate our summary statistics, using the following functions. <strong>Remember</strong>, we need to specify which variable we are looking at using the notation: <em>dataframe$variable</em>.</p>
 <pre class="r"><code>     mean(studht$height)
      median(studht$height)
      sd(studht$height)  #standard deviation
      var(studht$height) #variance
      IQR(studht$height) #interquartile range</code></pre>
-<p>Notice, we do <strong><em>not</em></strong> have a function for the <strong>mode</strong>. To find the mode, we can always look at the <strong>peak</strong> of our histogram!</p>
-<p>We also do <strong><em>not</em></strong> have a function for the <strong>coefficient of variation</strong>. We will need to calculate this directly, using our knowledge of the formula, and the functions for standard deviation (<strong>sd</strong>) and mean (<strong>mean</strong>). The formula is: CV = (sd/mean)*100%. <strong>Remember</strong>, we need to specify which variable we are looking at using the notation: <em>dataframe$variable</em>.</p>
+<p><strong>Note:</strong> we do <strong><em>not</em></strong> have a function for the <strong>mode</strong>. To find the mode, we can always look at the <strong>peak</strong> of our histogram! <br><br />
+b. We also do <strong><em>not</em></strong> have a function for the <strong>coefficient of variation</strong>. We will need to calculate this directly, using our knowledge of the formula, and the functions for standard deviation (<strong>sd</strong>) and mean (<strong>mean</strong>). The formula is: CV = (sd/mean)*100%. <strong>Remember</strong>, we need to specify which variable we are looking at using the notation: <em>dataframe$variable</em>.</p>
 <pre class="r"><code>     (sd(studht$height)/mean(studht$height))*100</code></pre>
-<p>A faster way to get all of these statistics in one go is to use the <strong>summary( )</strong> function. This will give you the minimum value, first quartile, median, mean, third quartile, and maximum value. YOU will still need to calculate the standard deviation (<strong>sd</strong>),variance (<strong>var</strong>), and __interquartile range (<strong>IQR</strong>) using their functions.</p>
+<p><br> c. A faster way to get all of these statistics in one go is to use the <strong>summary( )</strong> function. This will give you the minimum value, first quartile, median, mean, third quartile, and maximum value. You will still need to calculate the standard deviation (<strong>sd</strong>),variance (<strong>var</strong>), and __interquartile range (<strong>IQR</strong>) separately if you use <strong>summary( )</strong>!</p>
 <pre class="r"><code>     summary(studht)</code></pre>
 <pre><code>##      height     
 ##  Min.   :57.00  
@@ -1723,15 +1716,24 @@ pre code {
 ##  Mean   :66.11  
 ##  3rd Qu.:69.00  
 ##  Max.   :74.00</code></pre>
-<ol start="7" style="list-style-type: lower-alpha">
-<li>We can also make a box plot of our data, to examine the median, first quartile, third quartile, and interquartile ranges. The function for a box plot is <strong>boxplot( )</strong>. You can add labels in the same way you did with your histogram, except this time we’ll want to label the y-axis using <em>ylab = &quot;&quot;</em>. The argument for boxplot is just <em>dataframe</em>.</li>
-</ol>
+<p><br> d. We can also make a box plot of our data, to examine the median, first quartile, third quartile, and interquartile ranges. The function for a box plot is <strong>boxplot( )</strong>. You can add labels in the same way you did with your histogram, except this time we’ll want to label the y-axis using <em>ylab = &quot;&quot;</em>. The argument for boxplot is just <em>dataframe</em>.</p>
 <pre class="r"><code>     boxplot(studht, ylab = &quot;Student Height (in)&quot;, main = &quot;Box Plot of Student Heights&quot;)</code></pre>
-<p><strong>Examine your boxplot</strong>:<br />
+<p><strong>e. Now, examine your boxplot</strong>:<br />
 - What does the black line represent?<br />
 - What do the edges of your box represent?<br />
 - What does the range from one end of the box to the other represent?<br />
-- What do the whiskers show?</p>
+- What do the whiskers show?<br />
+<br><br />
+<strong>Let’s practice with another file.</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Read in the file “bird-richness.csv” from the GitHub using the following URL: <a href="https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv</a> (or by downloading the data). Assign it the name “birds”.</p>
+<p>a. View the data using str() and head().</p>
+<p>b. Suppose we are interested in the number of birds found at a particular location (the Richness column). We would make a histogram. Plot a histogram, using the notation: <em>dataframe$variable</em>.</p>
+<p>c.Plot a boxplot of species richness using the notation: <em>dataframe$variable</em>.</p>
+<p>d. What if we wanted to do a comparison of bird species richnesses in different habitats? [Possible habitats in this file are “forest” and “grassland”.] In your boxplot, you will need to use the notation <em>y~x</em>, where <em>y</em> is the variable on the <em>y-axis</em>, and <em>x</em> the variable on the <em>x-axis</em>. Plot the following.</p></li>
+</ol>
+<pre class="r"><code>     boxplot(birds$Richness ~ birds$habitat)</code></pre>
+<p>e. What pattern do you see? What is the effect of treatment group on number of shoots? How do the medians vary? The IQR?</p>
 
 
 

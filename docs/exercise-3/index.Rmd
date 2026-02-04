@@ -24,7 +24,7 @@ Let's apply what we've learned in Chapters 2 and 3 to _R_.
 __Objectives__  
 
 - Review reading in data.
-- Be able to create basic graphs: bar graphs, histograms, and scatter plots.
+- Be able to create basic graphs: histograms and box plots.
 - 
 <br>
   
@@ -59,35 +59,39 @@ a) Open a new script. All of your code for today's exercises, and your notes and
 
 2\. Let's work with the file "student-height.csv" in the GitHub.
 
-a. Read the file into _R_, either directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv, or by downloading the data, and using the pathname/working directory. Remember to assign it to a name. 
+__Pt I: Reading in the file__  
+Read the file into _R_, either directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv, or by downloading the data, and using the pathname/working directory. Remember to assign it to a name.  
 ```{r echo = T, results = 'hide'}
      studht <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/student-height.csv", header = TRUE)
 ```
-
-b. Look at the structure of the dataframe using the function __str( )__. This tells you information about the dataframe, including how many observations, how many variables, and what those variables are.
+<br>  
+__Pt II: Displaying data (view format, make histogram)__  
+a. Look at the structure of the dataframe using the function __str( )__. This tells you information about the dataframe, including how many observations, how many variables, and what those variables are.
 ```{r echo = T}
      str(studht)
 ```
-
-c. Use the function __head( )__ to look at the first few lines of the dataframe.
+<br>
+b\. Use the function __head( )__ to look at the first few lines of the dataframe.
 ```{r echo = T, results = 'hide'}
      head(studht)
 ```
-
-d. Our data consists of one numerical variable. To plot one numerical variable, we use a __histogram__. To plot histograms in _R_, we can use the function __hist( )__. However, we cannot just type in the dataframe as the argument, we need to specify both the dataframe and the variable, using the notation: _dataframe$variable_.
+<br>
+c\. Our data consists of one numerical variable. To plot one numerical variable, we use a __histogram__. To plot histograms in _R_, we can use the function __hist( )__. However, we cannot just type in the dataframe as the argument, we need to specify both the dataframe and the variable, using the notation: _dataframe$variable_.
 ```{r echo = T, fig.keep = "none"}
      hist(studht$height)
 ```
-__Look at your histogram__:  
-- What is the shape of our distribution (symmetric, asymmetric)?  
-- How many peaks do we have?
-
-e. We can change the labels by adding the argument _xlab = ""_ for the x-axis label, and _main = ""_ for the title of the graph. Test this out.
+<br>
+d\. We can change the labels by adding the argument _xlab = ""_ for the x-axis label, and _main = ""_ for the title of the graph. Test this out.
 ```{r echo = T, fig.keep = "none"}
      hist(studht$height, xlab = "Student Height (in)", main = "Frequency of Student Height")
 ```
-
-f. Let's calculate our summary statistics, using the following functions. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
+<br>
+__e\. Now, look at your histogram__:  
+- What is the __shape__ of our distribution (symmetric, asymmetric)?  
+- How many __peaks__ do we have (this is the mode)?  
+<br>  
+__Pt III: Describing data (summary statistics)__  
+a. Let's calculate our summary statistics, using the following functions. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
 ```{r echo = T, results = 'hide'}
      mean(studht$height)
      median(studht$height)
@@ -95,28 +99,57 @@ f. Let's calculate our summary statistics, using the following functions. __Reme
      var(studht$height) #variance
      IQR(studht$height) #interquartile range
 ```
-Notice, we do ___not___ have a function for the __mode__. To find the mode, we can always look at the __peak__ of our histogram!
-
-We also do ___not___ have a function for the __coefficient of variation__. We will need to calculate this directly, using our knowledge of the formula, and the functions for standard deviation (__sd__) and mean (__mean__). The formula is: CV = (sd/mean)*100%. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
+__Note:__ we do ___not___ have a function for the __mode__. To find the mode, we can always look at the __peak__ of our histogram!
+<br>  
+b\. We also do ___not___ have a function for the __coefficient of variation__. We will need to calculate this directly, using our knowledge of the formula, and the functions for standard deviation (__sd__) and mean (__mean__). The formula is: CV = (sd/mean)*100%. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
 ```{r echo = T, results = 'hide'}
      (sd(studht$height)/mean(studht$height))*100
 ```
-
-A faster way to get all of these statistics in one go is to use the __summary( )__ function. This will give you the minimum value, first quartile, median, mean, third quartile, and maximum value. YOU will still need to calculate the standard deviation (__sd__),variance (__var__), and __interquartile range (__IQR__) using their functions.
+<br>
+c\. A faster way to get all of these statistics in one go is to use the __summary( )__ function. This will give you the minimum value, first quartile, median, mean, third quartile, and maximum value. You will still need to calculate the standard deviation (__sd__),variance (__var__), and __interquartile range (__IQR__) separately if you use __summary( )__!
 ```{r echo = T}
      summary(studht)
 ```
-
-g. We can also make a box plot of our data, to examine the median, first quartile, third quartile, and interquartile ranges. The function for a box plot is __boxplot( )__. You can add labels in the same way you did with your histogram, except this time we'll want to label the y-axis using _ylab = ""_. The argument for boxplot is just _dataframe_.
+<br>
+d\. We can also make a box plot of our data, to examine the median, first quartile, third quartile, and interquartile ranges. The function for a box plot is __boxplot( )__. You can add labels in the same way you did with your histogram, except this time we'll want to label the y-axis using _ylab = ""_. The argument for boxplot is just _dataframe_.
 ```{r echo = T, fig.keep = "none"}
      boxplot(studht, ylab = "Student Height (in)", main = "Box Plot of Student Heights")
 ```
-__Examine your boxplot__:  
+__e\. Now, examine your boxplot__:  
 - What does the black line represent?  
 - What do the edges of your box represent?  
 - What does the range from one end of the box to the other represent?  
 - What do the whiskers show?  
+<br>  
+**Let's practice with another file.** 
+  
+1. Read in the file "bird-richness.csv" from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv (or by downloading the data). Assign it the name "birds". 
+```{r include = F}
+#Answer:
+birds <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bird-richness.csv", header = T)
+```
+    a\. View the data using str() and head().  
+    
+    b\. Suppose we are interested in the number of birds found at a particular location (the Richness column). We would make a histogram. Plot a histogram, using the notation: _dataframe$variable_.   
+    
+    c\.Plot a boxplot of species richness using the notation: _dataframe$variable_.
+    
+    d\. What if we wanted to do a comparison of bird species richnesses in different habitats? [Possible habitats in this file are “forest” and “grassland”.] In your boxplot, you will need to use the notation _y~x_, where _y_ is the variable on the _y-axis_, and _x_ the variable on the _x-axis_. Plot the following.  
+```{r echo = T, fig.keep = "none"}
+     boxplot(birds$Richness ~ birds$habitat)
+```
+      
+  e\. What pattern do you see? What is the effect of treatment group on number of shoots? How do the medians vary? The IQR? 
 
 ```{r include = F}
-     #NEED A DIFFERENT DATASET FOR PRACTICE, ONE VARIABLE SO THEY CAN DO MEAN ETC. MAYBE SNAKE EXAMPLE? ADD LATER. NO TIME.
+#Answer:
+str(birds)
+head(birds)
+hist(birds$Richness)
+boxplot(birds$Richness)
+boxplot(birds$Richness~birds$habitat)
+```
+```{r include = F}
+     
+#NEED A DIFFERENT DATASET FOR PRACTICE, ONE VARIABLE SO THEY CAN DO MEAN ETC. MAYBE SNAKE EXAMPLE? ADD LATER. MAYBE FOR NEXT EXERCISE CH 3 AND 4. NO TIME.
 ```

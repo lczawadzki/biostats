@@ -1,0 +1,94 @@
+---
+title: "R Exercise 4: Estimating with Uncertainty (Ch 4)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Chapter 4: Estimating with Uncertainty
+
+## Activities drawn from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+## 2) Statistics for Linguists by Winter
+## 3) Getting Started with R (2nd Edition) by Beckerman, Childs, and Petchey
+```
+
+Let's apply what we've learned in Chapter 4 to _R_.
+<br>  
+__Objectives__  
+
+- Be able to calculate standard error of a sample.
+- Be able to calculate the 95% confidence interval of a sample.
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 4__  
+1\. Open _RStudio_ and prepare a new script.
+
+a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. Let's work with the file "SystolicBP.csv" in the GitHub. This file contains 101 samples of systolic blood pressure (in units of mm Hg). Samples were taken during preventative health exams from patients in Dallas, Texas. 
+
+__Pt I: Reading in the file__  
+Read the file into _R_, either directly from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/SystolicBP.csv. Remember to assign it to a name.  
+```{r echo = T, results = 'hide'}
+     systolic <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/SystolicBP.csv", header = TRUE)
+```
+<br>  
+__Pt II: Review: summary statistics__  
+Calculate the mean, median, standard deviation, and interquartile range of your dataframe. __Remember__, we need to specify which variable we are looking at using the notation: _dataframe$variable_.
+```{r echo = T, results = 'hide'}
+     mean(systolic$systolicBP)
+     median(systolic$systolicBP)
+     sd(systolic$systolicBP)  #standard deviation
+     IQR(systolic$systolicBP) #interquartile range
+```
+<br>  
+__Pt III: Calculate the standard error of the mean.__  
+There is no function in _R_ to do this, so we need to recall the formula. Standard error = standard deviation / sqrt(sample size). Calculate the standard error.
+```{r echo = T, results = 'hide'}
+     sd(systolic$systolicBP)/sqrt(nrow(systolic))
+```
+Notice, we use the argument __nrow( )__ to count the number of rows in our dataframe. This gives us the sample size!
+<br>
+__Pt IV: Calculate the 95% confidence interval of the mean.__  
+There is also no function in _R_ to do this. We can use the __t.test( )__ function to ask _R_ to give us the confidence interval of this sample. 
+```{r echo = T, results = 'hide'}
+     t.test(systolic$systolicBP)$conf.int
+```
+Your output should give you the upper and lower bound of the confidence interval.
+<br>
+If we want the 99% confidence interval, we can specify this as an argument in the t-test.
+```{r echo = T, results = 'hide'}
+     t.test(systolic$systolicBP, conf.level = 0.99)$conf.int
+```
+Your output should give you the upper and lower bound of the confidence interval, but this time for the 99% CI. 

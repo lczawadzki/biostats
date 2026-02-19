@@ -25,7 +25,9 @@ __Objectives__
 
 - Review reading in data.
 - Be able to create basic graphs: histograms and box plots.
-- 
+- Know how to interpret histograms and boxplots.
+- Be able to calculate summary statistics for location (central tendency).
+- Be able to calculate summary statistics for spread.
 <br>
   
 __Reminder__: Save your script for practice at home! :)

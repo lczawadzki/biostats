@@ -1691,10 +1691,12 @@ Calculate the mean, median, standard deviation, and interquartile range of your 
 <strong>Pt III: Calculate the standard error of the mean.</strong><br />
 There is no function in <em>R</em> to do this, so we need to recall the formula. Standard error = standard deviation / sqrt(sample size). Calculate the standard error.</p>
 <pre class="r"><code>     sd(systolic$systolicBP)/sqrt(nrow(systolic))</code></pre>
-<p>Notice, we use the argument <strong>nrow( )</strong> to count the number of rows in our dataframe. This gives us the sample size! <br> <strong>Pt IV: Calculate the 95% confidence interval of the mean.</strong><br />
+<p>Notice, we use the argument <strong>nrow( )</strong> to count the number of rows in our dataframe. This gives us the sample size! <br><br />
+<strong>Pt IV: Calculate the 95% confidence interval of the mean.</strong><br />
 There is also no function in <em>R</em> to do this. We can use the <strong>t.test( )</strong> function to ask <em>R</em> to give us the confidence interval of this sample.</p>
 <pre class="r"><code>     t.test(systolic$systolicBP)$conf.int</code></pre>
-<p>Your output should give you the upper and lower bound of the confidence interval. <br> If we want the 99% confidence interval, we can specify this as an argument in the t-test.</p>
+<p>Your output should give you the upper and lower bound of the confidence interval. <br><br />
+If we want the 99% confidence interval, we can specify this as an argument in the t-test.</p>
 <pre class="r"><code>     t.test(systolic$systolicBP, conf.level = 0.99)$conf.int</code></pre>
 <p>Your output should give you the upper and lower bound of the confidence interval, but this time for the 99% CI.</p>
 

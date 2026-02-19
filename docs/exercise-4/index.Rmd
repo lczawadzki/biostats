@@ -79,14 +79,14 @@ There is no function in _R_ to do this, so we need to recall the formula. Standa
      sd(systolic$systolicBP)/sqrt(nrow(systolic))
 ```
 Notice, we use the argument __nrow( )__ to count the number of rows in our dataframe. This gives us the sample size!
-<br>
+<br>  
 __Pt IV: Calculate the 95% confidence interval of the mean.__  
 There is also no function in _R_ to do this. We can use the __t.test( )__ function to ask _R_ to give us the confidence interval of this sample. 
 ```{r echo = T, results = 'hide'}
      t.test(systolic$systolicBP)$conf.int
 ```
 Your output should give you the upper and lower bound of the confidence interval.
-<br>
+<br>  
 If we want the 99% confidence interval, we can specify this as an argument in the t-test.
 ```{r echo = T, results = 'hide'}
      t.test(systolic$systolicBP, conf.level = 0.99)$conf.int

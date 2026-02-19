@@ -139,7 +139,7 @@ birds <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bird-ric
      boxplot(birds$Richness ~ birds$habitat)
 ```
       
-  e\. What pattern do you see? What is the effect of treatment group on number of shoots? How do the medians vary? The IQR? 
+  e\. What pattern do you see? What is the effect of habitat on species richness? How do the medians vary? The IQR? 
 
 ```{r include = F}
 #Answer:

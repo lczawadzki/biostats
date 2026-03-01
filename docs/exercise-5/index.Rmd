@@ -19,7 +19,7 @@ output:
 ## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
 ```
 
-Let's apply what we've learned in Chapters 7 and 8 to _R_.
+Let's apply what we've learned in Chapter 7 to _R_.
 <br>  
 __Objectives__  
 

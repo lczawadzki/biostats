@@ -1679,20 +1679,17 @@ pre code {
 
 # Description: (describe what this script is for)</code></pre>
 <p><br></p>
-<p>2. Let’s revisit the tumbling toast and Murphy’s Law example, using data from: <em>Matthews, RAJ. (1995). Tumbling toast, Murphy’s Law and fundamental constants. Eur. J. Phys. 16:172-176.</em></p>
-<p>Matthews (1995) found that 6101 out of 9821 slices of toast thrown in the air landed butter side down. The null hypothesis would be that toast thrown in the air would land butter side up and down in equal proportion.<br />
+<p>2. Let’s revisit the tumbling toast and Murphy’s Law example, using data from: <em>Matthews, RAJ. (1995). Tumbling toast, Murphy’s Law and fundamental constants. Eur. J. Phys. 16:172-176.</em> Matthews (1995) found that 6101 out of 9821 slices of toast thrown in the air landed butter side down. The null hypothesis would be that toast thrown in the air would land butter side up and down in equal proportion.<br />
 <br><br />
 <strong>Pt I: Calculating Proportions and Standard Error</strong><br />
-If you are asked, “What is the best estimate of the proportion?”, you can calculate this directly in <em>R</em> by dividing the number of successes, <em>X</em>, by the number of trials, <em>n</em>.</p>
-<p>What is the best estimate of the proportion of toast that lands butter side down when dropped?</p>
+If you are asked, “What is the best estimate of the proportion?”, you can calculate this directly in <em>R</em> by dividing the number of successes, <em>X</em>, by the number of trials, <em>n</em>. What is the best estimate of the proportion of toast that lands butter side down when dropped?</p>
 <pre class="r"><code>     6101/9821</code></pre>
-<p>If you are asked, “Calculate the standard error of the sample proportion,” we would use the formula from Chapter 7: SE = sqrt((sample proportion*(1-sample proportion))/n)</p>
-<p>What is the standard error of the sample proportion of toast that lands butter side down?</p>
+<p>If you are asked, “Calculate the standard error of the sample proportion,” we would use the formula from Chapter 7: SE = sqrt((sample proportion*(1-sample proportion))/n). What is the standard error of the sample proportion of toast that lands butter side down?</p>
 <pre class="r"><code>     sqrt((0.62*(1-0.62))/9821)</code></pre>
 <p><br></p>
 <p><strong>Pt II: Conducting a binomial test</strong><br />
 What if we want to test the hypothesis that toast lands butter side down more often than it lands butter side up? You would need to undergo a hypothesis test. For proportional data, where there are only two outcomes, we use the binomial test.</p>
-<p>In <em>R</em>, we use the function <strong>binom.test( )</strong>. You do NOT have to read in any data. You only need three pieces of information:</p>
+<p>In <em>R</em>, we use the function <strong>binom.test( )</strong>. You do NOT have to read in any data. You only need to enter in three pieces of information:</p>
 <ol style="list-style-type: decimal">
 <li><strong>x</strong> - the number of successes (<em>X</em> in our formula)<br />
 </li>
@@ -1755,8 +1752,7 @@ The point of running a binomial test is to test if there <em>is</em> an effect. 
 <p>b. What is the observed value of the test statistic?</p>
 <p>c. Researchers hypothesised that individuals would prefer one ear over the year. Test this hypothesis using the data. Report your null hypothesis, your p-value, and your biological conclusion.</p>
 <p>d. What is the 95% confidence interval? Report as a statement. If your confidence interval is broad, what can researchers do to increase precision in their next experiment?</p>
-<p>e. Using the above data, what is the probability that exactly 19 out of 25 participants favored their right ear?</p>
-<p><strong>NOTE</strong>: You will need to calculate this directly in <em>R</em>. Recall the binomial formula: Pr[X] = (n choose x) * p^X * (1-p)^n-X, where (n choose x) equals n! / (X!(n-X)!). To calculate factorials in <em>R</em>, use the function <strong>factorial()</strong>. This is because we are asking for the Pr[19] alone. What is the probability of exactly 19 participants using their right ear? A binomial test, on the other hand, compares the sample to the sampling distribution. It calculates the probability of a sample from the null distribution being <em>as extreme</em> or <em>more extreme</em> than our data. If we were to calculate the binomial test, you would essentially be calculating the probability of obtaining 19 or 20 or 21 or 22 or 23 or 24 or 25 participants using their right ear: Pr[19] + Pr[20] + Pr[21] + Pr[22] + Pr[23] + Pr[24] + Pr[25], like we did in part (c)! Since we JUST want Pr[19], we can use the binomial formula.</p></li>
+<p>e. Using the above data, what is the probability that exactly 19 out of 25 participants favored their right ear? <strong>NOTE</strong>: You will need to calculate this directly in <em>R</em>. Recall the binomial formula: Pr[X] = (n choose x) * p^X * (1-p)^n-X, where (n choose x) equals n! / (X!(n-X)!). To calculate factorials in <em>R</em>, use the function <strong>factorial()</strong>. This is because we are asking for the Pr[19] alone. What is the probability of exactly 19 participants using their right ear? A binomial test, on the other hand, compares the sample to the sampling distribution. It calculates the probability of a sample from the null distribution being <em>as extreme</em> or <em>more extreme</em> than our data. If we were to calculate the binomial test, you would essentially be calculating the probability of obtaining 19 or 20 or 21 or 22 or 23 or 24 or 25 participants using their right ear: Pr[19] + Pr[20] + Pr[21] + Pr[22] + Pr[23] + Pr[24] + Pr[25], like we did in part (c)! Since we JUST want Pr[19], we can use the binomial formula.</p></li>
 </ol>
 <p><br></p>
 

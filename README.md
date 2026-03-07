@@ -13,5 +13,7 @@ https://lczawadzki.github.io/biostats/exercise-4/index.html
 <br>
 Exercise 5 (Ch 7):
 https://lczawadzki.github.io/biostats/exercise-5/index.html
+Exercise 6 (Ch 8):
+https://lczawadzki.github.io/biostats/exercise-6/index.html
 # Data
 All data for in-class exercises, quizzes, and exams is in the <a href = "https://github.com/lczawadzki/biostats/tree/main/data"> data folder</a>.

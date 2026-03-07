@@ -1789,7 +1789,7 @@ The output of <strong>pchisq</strong> is one number. This is your <strong><em>P<
 </ol>
 <pre class="r"><code>     expfreq &lt;- nrow(worldcup)*exp
      expfreq</code></pre>
-<p>Unfortunately, if we look at our data, we see that we defy assumptions of a chi-squared test. That is, one category has an expected value that is less than or equal to 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.</p>
+<p>Unfortunately, if we look at our data, we see that we defy assumptions of a chi-squared test. That is, one category has an expected value that is less than 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.</p>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create a variable for our observed data, which we can assign to the variable <em>obs</em>. We need the observed values to calculate chi-squared later.</li>
 </ol>

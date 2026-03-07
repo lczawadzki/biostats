@@ -174,7 +174,7 @@ d. We need to see if our expected values meet chi-squared assumptions before we 
      expfreq <- nrow(worldcup)*exp
      expfreq
 ```
-Unfortunately, if we look at our data, we see that we defy assumptions of a chi-squared test. That is, one category has an expected value that is less than or equal to 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.  
+Unfortunately, if we look at our data, we see that we defy assumptions of a chi-squared test. That is, one category has an expected value that is less than 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.  
 
 e. Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create a variable for our observed data, which we can assign to the variable _obs_. We need the observed values to calculate chi-squared later.
 ```{r echo = T, results = 'hide'}

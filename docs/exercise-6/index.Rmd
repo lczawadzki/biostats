@@ -1,0 +1,203 @@
+---
+title: "R Exercise 6: Frequency data (Ch 8)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 8: Fitting probability models to frequency data
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 7 to _R_.
+<br>  
+
+__Objectives__
+
+- Calculate the chi-squared test statistic.    
+- Be able to conduct a chi-squared test when you: (1) know chi-squared, and (2) when you don't know chi-squared.
+- Estimate the µ frequency of Poisson data.  
+- Calculate the expected probability and frequency of Poisson data.    
+- Be able to conduct a chi-squared hypothesis test under the Poisson model.  
+
+
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 5__  
+1\. Open _RStudio_ and prepare a new script.
+
+a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. We will learn how to conduct a chi-squared test under the proportional model.  
+<br>
+__Pt I: Conducting a chi-squared test__  
+There are two ways to conduct a chi-squared test under the proportional model in _RStudio_. We will review both methods.
+
+__a\)__ __Method I: You do NOT know X^2__  
+If you do not know or have yet to calculate X^2, you can use the function: __chisq.test( )__  
+
+You only need to enter in three pieces of information:  
+
+1. __x__ - your observed values (df$var or vector)  
+2. __p__ - your expected proportions (df$var or vector)  
+3. __rescale.p = T__ - if your proportions do NOT equal 1, R needs to rescale them to 1 for the test to work  
+
+__b\)__ __Method II: You already know X^2__  
+If you already know or calculated X^2 by hand, you can use the function: __pchisq( )__  
+
+You only need to enter in three pieces of information:  
+
+1. __q__ - your observed values (df$var or vector)  
+2. __df__ - your expected proportions (df$var or vector)  
+3. __lower.tail = T__ - specifies a one-taile test  
+
+___Note___: Chi-squared tests are always one-tailed!  
+<br>
+__Pt II: Method I with M and Ms__  
+M and M's are drawn from a bag and the colour of each M and M is recorded.  
+
+a. Read the file into _R_ from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/MandMlist.csv.
+```{r echo = T, results = 'hide'}
+     MMlist <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/MandMlist.csv")
+```
+b. This dataframe lists the colours, but doesn't tell us the frequency directly. To be able to view the frequency of each colour, we need to sum the data into a table using: __table(df$var)__. Type the following below. Now we can see the frequency of colours in this bag of M and Ms.
+```{r echo = T}
+     MMtable <- table(MMlist$color)
+     MMtable
+```
+
+c. Our observed values are in the table. We can assign these to the variable _obs_ using the function __c()__, which will "contain" all of the observed values.
+```{r echo = T}
+     obs <- c(10,5,12,11,6,11)
+     obs
+```
+d. The M&M company states that 24% are blue, 14% brown, 16% green, 20% orange, 13% red, and 13% yellow. These are our expected proportions. We can assign these to the variable _exp_ using the function __c()__.
+```{r echo = T}
+     exp <- c(0.24,0.14,0.16,0.20,0.13,0.13)
+     exp
+```
+e. If you are asked for the expected frequency of each M and M, you will multiply the expected proportions by the TOTAL number of MandMs in our sample.
+```{r echo = T, results = 'hide'}
+     exp*sum(MMtable)
+```
+f. Now that we have our observed values and expected proportions, we can run a chi-squared test. Remember, the function is __chisq.test__. All you need are your observed values (x), expected proportions (p), and to specify rescale.p = T.
+```{r echo = T, results = 'hide'}
+     chisq.test(obs, p = exp, rescale.p = T)
+```
+<br>  
+__Understanding your output__  
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you where your observed values are coming from.
+2. Line 2 states __X-squared__ which is your chi-squared test statistic, __df__ which is your degrees of freedom, and your ___p___ __-value__. Remember, the _P_-value is the probability that a sample from the null model would be as extreme, or more extreme, than your sample. That is, it is the probability of obtaining your data under the null hypothesis or expectation.  
+
+So, from our output, we know that:  
+
+1. Our data comes from the variable _obs_.
+2. Our __X-squared test statisic equals 5.017__, our __df (degrees of freedom) equals 5__, and our ___P___ __-value = 0.4138__.  
+
+We can conclude: "p > 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the frequency of colours of M and Ms in our bag matches the expectations of the M and M company."  
+<br>
+
+__Pt III: Method II with M and Ms__  
+
+If you already calculated X^2 in R or by hand, you can use the function __pchisq__. All you need is your chi-squared test statistic (q), your degrees of freedom (df), and to specify that the lower tail is FALSE.
+```{r echo = T, results = 'hide'}
+     pchisq(5.017, df = 5, lower.tail = F)
+```
+__Understanding your output__  
+The output of __pchisq__ is one number. This is your ___P___ __-value__. You will end up with the __same__ _P_-value as you did with the output of __chisq.test__, since the df for both is the same.
+
+So, from our output, we know that our ___P___ __-value = 0.4138__.  
+
+We can conclude: "p > 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the frequency of colours of M and Ms in our bag matches the expectations of the M and M company."  
+<br>  
+3\. We will learn how to conduct a chi-squared test under the Poisson model.  
+
+Data on number of extinctions of marine invertebrate families during distinct time periods on Earth are recorded. 
+
+a. Read the file into _R_ from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/MassExtinctions.csv.
+```{r echo = T, results = 'hide'}
+     extinct <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/MassExtinctions.csv")
+```
+b. This dataframe lists the extinctions, but doesn't tell us the frequency directly. To be able to view the frequency of each extinction, we need to sum the data into a table using: __table(df$var)__. Type the following below.
+```{r echo = T, results = 'hide'}
+     exttable <- table(extinct$numberOfExtinctions)
+     exttable
+```
+c. Next, we find our mean expected frequency (µ or lambda). Even though we have frequency data, since each observation is listed in a single column, __mean()__ will calculate the mean correctly.
+```{r echo = T, results = 'hide'}
+     mean(extinct$numberOfExtinctions) #this is µ or lambda
+```
+c. Then, find expected proportions for each extinction category. We use the function __dpois()__, and specify arguments __x__ which is a vector of the category values, and __lambda__ your expected mean value. We will assign this to the variable _exp_, so that we can plug this directly into our chi-squared function.
+```{r echo = T, results = 'hide'}
+     exp <- dpois(x = 0:20, lambda = 4.21)
+     exp
+```
+d. We need to see if our expected values meet chi-squared assumptions before we proceed. Use the expected proportions to find the expected frequency of each category. To do this, you will multiply the expected proportions by the TOTAL frequency in your sample.
+```{r echo = T, results = 'hide'}
+     expfreq <- nrow(extinct)*exp
+     expfreq
+```
+e. Unfortunately, if we look at our data, we see that we defy assumptions of a chi-squared test. That is, some categories have expected values less than or equal to 1 (8, 10, 11, 14, 20) AND more than 20% have expected values less than 5 (0, and 8 through 20). We need to combine some categories together to meet the assumptions of the chi-squared test.  
+
+We can combine categories so that 0 or 1 extinctions is one category, and 8+ is another. Let's look at our observed values, and combine frequency values from category 0 and 1, and categories 8+. We can assign these to the variable _obs_ using the function __c()__, which will "contain" all of the observed values from our new categories.
+```{r echo = T}
+     exttable
+     obs <- c(13, 15, 16, 7, 10, 4, 2, 9)
+```
+You will also need to do this for your expected frequencies, since we need the expected values for our chi-squared test (to calculate the test statistic).
+```{r echo = T}
+     exp <- c(sum(expfreq[1:2]), expfreq[3:8], sum(expfreq[9:20])) #you can do this by hand, but here is a shortcut so R will add 0 and 1 for you, print out 2 through 7, and add 8 through 20. The reason it says 1:2 and not 0:1, is because 0 is your first category, which R designates as "category 1".
+     exp
+```
+f. Now that we have our observed values and expected proportions, we can run a chi-squared test to get our test statistic. Remember, the function is __chisq.test__. All you need are your observed values (x), expected proportions (p), and to specify rescale.p = T. 
+```{r echo = T, results = 'hide'}
+     chisq.test(obs, p = exp, rescale.p = T)
+```
+g. Then we will use __pchisq__ to get our _P_-value. The reason we do NOT use the _P_-value from __chisq.test__ is because it does NOT use the correct degrees of freedom for a Poisson model. Remember, that df = number of categories - 1 - number of parameters. Since we calculated one parameter (µ) to make our estimations, the df for a Poisson model is df = number of categories - 1 - 1. For our data, this is df = 8 - 1 - 1 = 6.
+```{r echo = T, results = 'hide'}
+     pchisq(23.939, df = 6, lower.tail = F)
+```
+So, from both outputs, we know that:  
+
+1. Our data comes from the variable _obs_.
+2. Our __X-squared test statisic equals 23.939__.
+3. Our ___P-value___ with the correct df, equals __0.0005__.
+
+We can conclude: "p < 0.05, therefore our results are statistically significant, and we reject the H0. We conclude that the number of extinctions of marine invertebrate family across 76 blocks of time is not random, but may be clumped or dispersed in time."  
+<br>

@@ -29,7 +29,14 @@ __Objectives__
 - Calculate the expected probability and frequency of Poisson data.    
 - Be able to conduct a chi-squared hypothesis test under the Poisson model.  
 
+__Shortcuts__:  
 
+| R Command | Notes |
+| --- | --- |
+| table(df) | creates a frequency table of your dataframe | 
+| chisq.test(x, p, rescale.p = T) | runs a chi-squared test; x is your observed data, p is your expected probabilities or values, and rescale.p = T rescales probabilities if they do not equal 1. Do not use for Poisson p-value. | 
+| pchisq(q, df, lower.tail = F) | use if you know your chi-squared value AND/OR for the correct p-value for Poisson distributions; q is your chi-squared test statistic, df is your degrees of freedom, and lower.tail = F specifies it is a one-tailed test | 
+| dpois(x, lambda) | calculates expected probabilities for Poisson distributions; x is a vector of category values (e.g. 0:20), and lambda is the mean expected frequency (µ) | 
 <br>
   
 __Reminder__: Save your script for practice at home! :)
@@ -148,7 +155,7 @@ We can conclude: "p > 0.05, therefore our results are statistically insignifican
 <br>  
 3\. We will learn how to conduct a chi-squared test under the Poisson model.  
 
-It is thought that the World Cup decides the best soccer team in the world. But how much do skill differences determine the outcome? We will look at data on number of goals scored by one or two teams (randomy chosen) in every game of the knockout round of the World Cup from 1986 through 2010 to determine if the number of goals scored is random (follows a Poisson distribution).
+It is thought that the World Cup decides the best soccer team in the world. But how much do skill differences determine the outcome? We will look at data on number of goals scored by one or two teams (randomly chosen) in every game of the knockout round of the World Cup from 1986 through 2010 to determine if the number of goals scored is random (follows a Poisson distribution).
 
 a. Read the file into _R_ from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/WorldCup.csv.
 ```{r echo = T, results = 'hide'}
@@ -164,35 +171,41 @@ c. Next, we find our mean expected frequency (µ or lambda). Even though we have
 ```{r echo = T, results = 'hide'}
      mean(worldcup$score) #this is µ or lambda
 ```
-c. Then, find expected proportions for each "number of goals" category. We use the function __dpois()__, and specify arguments __x__ which is a vector of the category values, and __lambda__ your expected mean value. We will assign this to the variable _exp_, so that we can plug this directly into our chi-squared function.
+c. We need to calculate our expected probabilities (these are how we specify the null expectation). We use the function __dpois()__, and specify arguments __x__ which is a vector of the category values, and __lambda__ your expected mean value. We will assign this to the variable _exp_, so that we can plug this directly into our chi-squared function.
 ```{r echo = T, results = 'hide'}
      exp <- dpois(x = 0:5, lambda = 1.22)
      exp
 ```
-d. We need to see if our expected values meet chi-squared assumptions before we proceed. Use the expected proportions to find the expected frequency of each category. To do this, you will multiply the expected proportions by the TOTAL frequency in your sample.
+d. Now that we have our observed and expected proportions, we can run a chi-squared test to get our test statistic. Remember, the function is __chisq.test__. All you need are your observed values (x), expected proportions (p), and to specify rescale.p = T. 
+```{r echo = T, results = 'hide'}
+     chisq.test(obs, p = exp, rescale.p = T)
+```
+Notice an error has occurred! And p = NA! This error means we have violated an assumption of the chi-squared test. Some categories have expected values that are too small. How can you tell what those expected values are?
 ```{r echo = T, results = 'hide'}
      expfreq <- nrow(worldcup)*exp
      expfreq
 ```
-Unfortunately, if we look at our data, we see that we defy assumptions of a chi-squared test. That is, one category has an expected value that is less than 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.  
+We see that one category has an expected value that is less than 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.    
 
-e. Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create a variable for our observed data, which we can assign to the variable _obs_. We need the observed values to calculate chi-squared later.
+e. Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create a new vector for our observed data, which we can assign to the variable _obs_. 
 ```{r echo = T, results = 'hide'}
      cuptable #check original observed values from table
      4 + 1 #find the sum of category 4 and category 5
      obs <- c(32, 44, 21, 10, 5) #observed values
 ```
-f. We also need to create a variable for our observed data, which we can assign to the variable _exp_ We need the expected values to calculate chi-squared later.
+f. We also need to create a new vector for our expected proportions, which we can assign to the variable _exp_ We need the expected values to calculate chi-squared later.
 ```{r echo = T, results = 'hide'}
-     expfreq #check original expected values
-     3.0521568 + 0.7447263 #find the sum of category 4 and category 5
-     exp <- c(33.0657787, 40.3402500, 24.6075525, 10.0070714, 3.796883) #expected values
+     exp #check original expected proportions
+     0.027251400 + 0.006649342 #find the sum of category 4 and category 5
+     exp <- c(0.295230167, 0.360180804, 0.219710290, 0.089348851, 0.03390074) #expected values
      exp
 ```
-g. Now that we have our observed and expected values, we can run a chi-squared test to get our test statistic. Remember, the function is __chisq.test__. All you need are your observed values (x), expected proportions (p), and to specify rescale.p = T. 
+g. Now that we have our new observed and expected values that meet assumptions, we can run a chi-squared test to get our test statistic. 
 ```{r echo = T, results = 'hide'}
      chisq.test(obs, p = exp, rescale.p = T)
 ```
+We can ignore the error this time because we know our expected values meet assumptions. It is just warning us that we have an expected value less than 5.
+
 g. Then we will use __pchisq__ to get our _P_-value. The reason we do NOT use the _P_-value from __chisq.test__ is because it does NOT use the correct degrees of freedom for a Poisson model. Remember, that df = number of categories - 1 - number of parameters. Since we calculated one parameter (µ) to make our estimations, the df for a Poisson model is df = number of categories - 1 - 1. For our data, this is df = 5 - 1 - 1 = 3.
 ```{r echo = T, results = 'hide'}
      pchisq(1.2741, df = 3, lower.tail = F)
@@ -209,4 +222,35 @@ Is this supported by the variance? Recall, if the variance = mean then data foll
 ```{r echo = T, results = 'hide'}
      var(worldcup$score)
 ```
-The variance = 1.256, which is close to the mean of 1.223. Additionally, the ratio of variance to mean = 1.02, which is very close to 1. We thus expect the data to follow a Poisson distribution.
+The variance = 1.256, which is close to the mean of 1.223. Additionally, the ratio of variance to mean = 1.02, which is very close to 1. We thus expect the data to follow a Poisson distribution.  
+<br>
+**Now it's time to practice on your own.**  
+
+1. Let's look at a sample of birthdays over different days of the week.  
+
+| Day of week | # of birthdays |  
+| --- | --- |
+| Monday | 33 |
+| Tuesday | 41 |
+| Wednesday | 63 |
+| Thursday | 63 |
+| Friday | 47 |
+| Saturday | 56 |
+| Sunday | 47 |
+| Total	| 350 |  
+
+    a\. Enter the observed data (counts of birthdays across weekdays)   
+    
+    b\. Assume we expect equal numbers of birthdays on all days of the week. What is your null hypothesis?  
+    
+    c\. Conduct a chi-squared test to test this hypothesis. Note, if we expect equal numbers of birthdays on all days of the week, we do not need to enter "p" in the chi-squared test.  
+    
+    d\. Do you reject or fail to reject your H0?  
+      
+    ```{r include = F}
+#Answer:
+obs <- c(33, 41, 63, 63, 47, 56, 47)
+#H0: The numbers of birthdays will be the same on every day of the week.
+chisq.test(obs)
+#p < 0.05, reject H0
+    ```

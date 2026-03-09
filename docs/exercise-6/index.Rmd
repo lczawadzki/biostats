@@ -18,7 +18,7 @@ output:
 ## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
 ```
 
-Let's apply what we've learned in Chapter 7 to _R_.
+Let's apply what we've learned in Chapter 8 to _R_.
 <br>  
 
 __Objectives__
@@ -33,7 +33,7 @@ __Shortcuts__:
 
 | R Command | Notes |
 | --- | --- |
-| table(df) | creates a frequency table of your dataframe | 
+| table(df) | creates a frequency table of your dataframe; df is the name of your dataframe; if your dataframe has more than one column, you need specify each column using df$var |
 | chisq.test(x, p, rescale.p = T) | runs a chi-squared test; x is your observed data, p is your expected probabilities or values, and rescale.p = T rescales probabilities if they do not equal 1. Do not use for Poisson p-value. | 
 | pchisq(q, df, lower.tail = F) | use if you know your chi-squared value AND/OR for the correct p-value for Poisson distributions; q is your chi-squared test statistic, df is your degrees of freedom, and lower.tail = F specifies it is a one-tailed test | 
 | dpois(x, lambda) | calculates expected probabilities for Poisson distributions; x is a vector of category values (e.g. 0:20), and lambda is the mean expected frequency (µ) | 

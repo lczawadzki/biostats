@@ -1,0 +1,177 @@
+---
+title: "R Exercise 7: Contingency analysis (Ch 9)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 9: Contingency tests
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 9 to _R_.
+<br>  
+
+__Objectives__
+
+- Create a contingency table in R (table with URL data, matrix with entered data)
+- Conduct a chi-squared test with matrix data
+- Conduct fisher's exact test with matrix data
+
+__Shortcuts__:  
+
+| R Command | Notes |
+| --- | --- |
+| table(df) | creates a frequency table of your dataframe; df is the name of your dataframe; if your dataframe has more than one column, you need specify each column using df$var |
+| matrix_name <- matrix(data, nrow, byrow = T) | creates a matrix with numbers you provide; matrix_name is a name you will assign your matrix to, data is your vector of values (e.g. c(1, 2, 3, 4)) that you enter in row by row, nrow is your number of rows in the matrix, and byrow = T specifies that your vector should be filled by rows |
+| rownames(matrix_name) <- c("row name 1", "row name 2") | specifies names for each row in the matrix, where matrix_name is the name you assigned your matrix |  
+| colnames(matrix_name) <- c("col name 1", "col name 2") | specifies names for each col in the matrix, where matrix_name is the name you assigned your matrix |  
+| chisq.test(matrix_name) | runs a chi-squared test of independence between rows and cols of a matrix; matrix_name is the name you assigned your matrix | 
+| fisher.test(matrix_name) | runs a fisher test for a 2x2 contingency table when data violate chi-squared assumptions; matrix_name is the name you assigned your matrix | 
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 5__  
+1\. Open _RStudio_ and prepare a new script.
+
+a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. We'll go through a few examples of the chi-squared contingency test together.  
+
+__Example 1: Does toxoplasmosis infection in humans increase risky behaviour leading to car accidents?__  
+
+|  | Infected | Uninfected |
+| --- | --- | --- |
+| Drivers with accidents | 61 | 124 |
+| Drivers without accidents | 16 | 169 |
+
+Step 1: Make your matrix in R, and check data for correct placement.
+```{r echo = T, results = 'hide'}
+     toxo <- matrix(c(61, 124, 16, 169), nrow = 2, byrow = T)
+     toxo
+```
+Step 2: Add row and column names. Check matrix.
+```{r echo = T, results = 'hide'}
+     rownames(toxo) <- c("drivers with accidents", "drivers without accidents")
+     colnames(toxo) <- c("infected", "uninfected")
+     toxo
+```
+Step 3: Run chi-squared test. If you receive a warning message, you have violated assumptions and will need to use Fisher's exact test instead.
+```{r echo = T, results = 'hide'}
+     chisq.test(toxo)
+```
+Step 4: Assumptions met! State your conclusion based on your p-value.  
+- p-value = 1.753e-08, meaning p < 0.05. Reject H0. Toxoplasmosis infection is associated with risky behaviour (car accidents).  
+<br>
+__Example 2: Was survival on the Titanic associated with gender?__  
+
+Step 1: We have a data file for this. All we need to do is read in the data in R, and convert it into a table. Check your table.
+```{r echo = T, results = 'hide'}
+     surv <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/survival-titanic.csv")
+     surv_table <- table(surv$gender, surv$survival)
+     surv_table
+```
+Step 2: Run chi-squared test. If you receive a warning message, you have violated assumptions and will need to use Fisher's exact test instead.
+```{r echo = T, results = 'hide'}
+     chisq.test(surv_table)
+```
+Step 3: Assumptions met! State your conclusion based on your p-value.  
+- p-value < 2.2e-16, meaning p < 0.05. Reject H0. Survival was associated with gender on the Titanic (why do you think this is the case?).  
+<br>
+__Example 3: Do vampire bats prefer cows in estrus?__  
+
+|  | Cows in estrus | Cows not in estrus |
+| --- | --- | --- |
+| Bitten by vampire bat | 15 | 6 |
+| Not bitten by vampire bat | 7 | 322 |
+
+Step 1: Make your matrix in R, and check data for correct placement.
+```{r echo = T, results = 'hide'}
+     cows <- matrix(c(15, 6, 7, 322), nrow = 2, byrow = T)
+     cows
+```
+Step 2: Add row and column names. Check matrix.
+```{r echo = T, results = 'hide'}
+     rownames(cows) <- c("bitten by vampire bat", "not bitten by vampire bat")
+     colnames(cows) <- c("cows in estrus", "cows not in estrus")
+     cows
+```
+Step 3: Run chi-squared test. If you receive a warning message, you have violated assumptions and will need to use Fisher's exact test instead.
+```{r echo = T, results = 'hide'}
+     chisq.test(cows)
+```
+Step 4: We have violated assumptions! Run fisher's exact test instead.
+```{r echo = T, results = 'hide'}
+     fisher.test(cows)
+```
+Step 5: State your conclusion based on your p-value.  
+- p-value < 2.2e-16, meaning p < 0.05. Reject H0. There is an association between being in estrus and being bitten by a vampire bat.  
+<br>
+**Now it's time to practice on your own.**  
+
+1. Is there an association between rump colour and predation by peregrine falcons in pigeons? Run an appropriate test and state your conclusions. 
+
+|  | White-rumped | Blue-rumped |
+| --- | --- | --- |
+| Predated on | 9 | 92 |
+| Not predated on | 92 | 10 |
+
+    ```{r include = F}
+#Answer:
+pigeon <- matrix(c(9, 92, 92, 10), nrow = 2, byrow = T)
+rownames(pigeon) <- c("predated on", "not predated on")
+colnames(pigeon) <- c("white-rumped", "blue-rumped")
+pigeon
+chisq.test(pigeon)
+#p < 0.05, reject H0, association between rump colour and predation
+    ```
+
+2. Female Australian redback spiders eat males during mating. Is a female more likely to accept sperm from a male she has eaten? Researchers watched mating bouts to see whether females ate her first mate, and if so, whether they rejected advances of a second male. Is there an association between eating a male and accepting their sperm? Run an appropriate test and state your conclusions. 
+
+|  | 1st male eaten | 1st male escapes |
+| --- | --- | --- |
+| 2nd male accepted | 3 | 22 |
+| 2nd male rejected | 6 | 1 |
+
+    ```{r include = F}
+#Answer:
+males <- matrix(c(3, 22, 6, 1), nrow = 2, byrow = T)
+rownames(males) <- c("1st male eaten", "1st male escapes")
+colnames(males) <- c("2nd male accepted", "2nd male rejected")
+males
+chisq.test(males) ## warning; violates assumptions
+fisher.test(males)
+#p < 0.05, reject H0, association between eating 1st male and acceptance of 2nd
+    ```

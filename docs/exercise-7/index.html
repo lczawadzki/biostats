@@ -1751,7 +1751,8 @@ pre code {
 <pre class="r"><code>     chisq.test(toxo)</code></pre>
 <p>Step 4: Assumptions met! State your conclusion based on your p-value.<br />
 - p-value = 1.753e-08, meaning p &lt; 0.05. Reject H0. Toxoplasmosis infection is associated with risky behaviour (car accidents).<br />
-<br> <strong>Example 2: Was survival on the Titanic associated with gender?</strong></p>
+<br><br />
+<strong>Example 2: Was survival on the Titanic associated with gender?</strong></p>
 <p>Step 1: We have a data file for this. All we need to do is read in the data in R, and convert it into a table. Check your table.</p>
 <pre class="r"><code>     surv &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/survival-titanic.csv&quot;)
      surv_table &lt;- table(surv$gender, surv$survival)
@@ -1760,7 +1761,8 @@ pre code {
 <pre class="r"><code>     chisq.test(surv_table)</code></pre>
 <p>Step 3: Assumptions met! State your conclusion based on your p-value.<br />
 - p-value &lt; 2.2e-16, meaning p &lt; 0.05. Reject H0. Survival was associated with gender on the Titanic (why do you think this is the case?).<br />
-<br> <strong>Example 3: Do vampire bats prefer cows in estrus?</strong></p>
+<br><br />
+<strong>Example 3: Do vampire bats prefer cows in estrus?</strong></p>
 <table>
 <thead>
 <tr class="header">
@@ -1796,7 +1798,8 @@ pre code {
 <pre class="r"><code>     fisher.test(cows)</code></pre>
 <p>Step 5: State your conclusion based on your p-value.<br />
 - p-value &lt; 2.2e-16, meaning p &lt; 0.05. Reject H0. There is an association between being in estrus and being bitten by a vampire bat.<br />
-<br> <strong>Now it’s time to practice on your own.</strong></p>
+<br><br />
+<strong>Now it’s time to practice on your own.</strong></p>
 <ol style="list-style-type: decimal">
 <li>Is there an association between rump colour and predation by peregrine falcons in pigeons? Run an appropriate test and state your conclusions.</li>
 </ol>

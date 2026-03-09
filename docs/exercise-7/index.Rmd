@@ -94,7 +94,7 @@ Step 3: Run chi-squared test. If you receive a warning message, you have violate
 ```
 Step 4: Assumptions met! State your conclusion based on your p-value.  
 - p-value = 1.753e-08, meaning p < 0.05. Reject H0. Toxoplasmosis infection is associated with risky behaviour (car accidents).  
-<br>
+<br>  
 __Example 2: Was survival on the Titanic associated with gender?__  
 
 Step 1: We have a data file for this. All we need to do is read in the data in R, and convert it into a table. Check your table.
@@ -109,7 +109,7 @@ Step 2: Run chi-squared test. If you receive a warning message, you have violate
 ```
 Step 3: Assumptions met! State your conclusion based on your p-value.  
 - p-value < 2.2e-16, meaning p < 0.05. Reject H0. Survival was associated with gender on the Titanic (why do you think this is the case?).  
-<br>
+<br>  
 __Example 3: Do vampire bats prefer cows in estrus?__  
 
 |  | Cows in estrus | Cows not in estrus |
@@ -138,7 +138,7 @@ Step 4: We have violated assumptions! Run fisher's exact test instead.
 ```
 Step 5: State your conclusion based on your p-value.  
 - p-value < 2.2e-16, meaning p < 0.05. Reject H0. There is an association between being in estrus and being bitten by a vampire bat.  
-<br>
+<br>  
 **Now it's time to practice on your own.**  
 
 1. Is there an association between rump colour and predation by peregrine falcons in pigeons? Run an appropriate test and state your conclusions. 
@@ -157,7 +157,7 @@ pigeon
 chisq.test(pigeon)
 #p < 0.05, reject H0, association between rump colour and predation
     ```
-
+  
 2. Female Australian redback spiders eat males during mating. Is a female more likely to accept sperm from a male she has eaten? Researchers watched mating bouts to see whether females ate her first mate, and if so, whether they rejected advances of a second male. Is there an association between eating a male and accepting their sperm? Run an appropriate test and state your conclusions. 
 
 |  | 1st male eaten | 1st male escapes |

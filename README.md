@@ -13,8 +13,10 @@ https://lczawadzki.github.io/biostats/exercise-4/index.html
 <br>
 Exercise 5 (Ch 7):
 https://lczawadzki.github.io/biostats/exercise-5/index.html
+<br>
 Exercise 6 (Ch 8):
 https://lczawadzki.github.io/biostats/exercise-6/index.html
+<br>
 Exercise 7 (Ch 9):
 https://lczawadzki.github.io/biostats/exercise-7/index.html
 # Data

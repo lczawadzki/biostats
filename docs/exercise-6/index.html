@@ -1735,7 +1735,7 @@ If you already know or calculated X^2 by hand, you can use the function: <strong
 </li>
 <li><strong>df</strong> - your expected proportions (df$var or vector)<br />
 </li>
-<li><strong>lower.tail = T</strong> - specifies a one-taile test</li>
+<li><strong>lower.tail = F</strong> - specifies a one-taile test</li>
 </ol>
 <p><strong><em>Note</em></strong>: Chi-squared tests are always one-tailed!<br />
 <br> <strong>Pt II: Method I with M and Ms</strong><br />
@@ -1782,13 +1782,13 @@ Let’s read through the output. The output tells you a number of things about y
 <p>So, from our output, we know that:</p>
 <ol style="list-style-type: decimal">
 <li>Our data comes from the variable <em>obs</em>.</li>
-<li>Our <strong>X-squared test statisic equals 5.017</strong>, our <strong>df (degrees of freedom) equals 5</strong>, and our <strong><em>P</em></strong> <strong>-value = 0.4138</strong>.</li>
+<li>Our <strong>X-squared test statisic equals 5.1442</strong>, our <strong>df (degrees of freedom) equals 5</strong>, and our <strong><em>P</em></strong> <strong>-value = 0.3985</strong>.</li>
 </ol>
 <p>We can conclude: “p &gt; 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the frequency of colours of M and Ms in our bag matches the expectations of the M and M company.”<br />
 <br></p>
 <p><strong>Pt III: Method II with M and Ms</strong></p>
 <p>If you already calculated X^2 in R or by hand, you can use the function <strong>pchisq</strong>. All you need is your chi-squared test statistic (q), your degrees of freedom (df), and to specify that the lower tail is FALSE.</p>
-<pre class="r"><code>     pchisq(5.017, df = 5, lower.tail = F)</code></pre>
+<pre class="r"><code>     pchisq(5.1442, df = 5, lower.tail = F)</code></pre>
 <p><strong>Understanding your output</strong><br />
 The output of <strong>pchisq</strong> is one number. This is your <strong><em>P</em></strong> <strong>-value</strong>. You will end up with the <strong>same</strong> <em>P</em>-value as you did with the output of <strong>chisq.test</strong>, since the df for both is the same.</p>
 <p>So, from our output, we know that our <strong><em>P</em></strong> <strong>-value = 0.4138</strong>.</p>
@@ -1807,6 +1807,12 @@ The output of <strong>pchisq</strong> is one number. This is your <strong><em>P<
 <pre class="r"><code>     cuptable &lt;- table(worldcup$score)
      cuptable</code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
+<li>Our observed values are in the table. We can assign these to the variable <em>obs</em> using the function <strong>c()</strong>, which will “contain” all of the observed values.</li>
+</ol>
+<pre class="r"><code>     obs &lt;- c(32, 44, 21, 10, 4, 1)
+     obs</code></pre>
+<pre><code>## [1] 32 44 21 10  4  1</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
 <li>Next, we find our mean expected frequency (µ or lambda). Even though we have frequency data, since each observation is listed in a single column, <strong>mean()</strong> will calculate the mean correctly.</li>
 </ol>
 <pre class="r"><code>     mean(worldcup$score) #this is µ or lambda</code></pre>

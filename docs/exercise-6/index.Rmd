@@ -89,7 +89,7 @@ You only need to enter in three pieces of information:
 
 1. __q__ - your observed values (df$var or vector)  
 2. __df__ - your expected proportions (df$var or vector)  
-3. __lower.tail = T__ - specifies a one-taile test  
+3. __lower.tail = F__ - specifies a one-taile test  
 
 ___Note___: Chi-squared tests are always one-tailed!  
 <br>
@@ -135,7 +135,7 @@ The output tells you a number of things about your data:
 So, from our output, we know that:  
 
 1. Our data comes from the variable _obs_.
-2. Our __X-squared test statisic equals 5.017__, our __df (degrees of freedom) equals 5__, and our ___P___ __-value = 0.4138__.  
+2. Our __X-squared test statisic equals 5.1442__, our __df (degrees of freedom) equals 5__, and our ___P___ __-value = 0.3985__.  
 
 We can conclude: "p > 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the frequency of colours of M and Ms in our bag matches the expectations of the M and M company."  
 <br>
@@ -144,7 +144,7 @@ __Pt III: Method II with M and Ms__
 
 If you already calculated X^2 in R or by hand, you can use the function __pchisq__. All you need is your chi-squared test statistic (q), your degrees of freedom (df), and to specify that the lower tail is FALSE.
 ```{r echo = T, results = 'hide'}
-     pchisq(5.017, df = 5, lower.tail = F)
+     pchisq(5.1442, df = 5, lower.tail = F)
 ```
 __Understanding your output__  
 The output of __pchisq__ is one number. This is your ___P___ __-value__. You will end up with the __same__ _P_-value as you did with the output of __chisq.test__, since the df for both is the same.
@@ -167,7 +167,12 @@ b. This dataframe lists the number of goals, but doesn't tell us the frequency d
      cuptable <- table(worldcup$score)
      cuptable
 ```
-c. Next, we find our mean expected frequency (µ or lambda). Even though we have frequency data, since each observation is listed in a single column, __mean()__ will calculate the mean correctly.
+c. Our observed values are in the table. We can assign these to the variable _obs_ using the function __c()__, which will "contain" all of the observed values.
+```{r echo = T}
+     obs <- c(32, 44, 21, 10, 4, 1)
+     obs
+```
+d. Next, we find our mean expected frequency (µ or lambda). Even though we have frequency data, since each observation is listed in a single column, __mean()__ will calculate the mean correctly.
 ```{r echo = T, results = 'hide'}
      mean(worldcup$score) #this is µ or lambda
 ```
@@ -185,7 +190,7 @@ Notice an error has occurred! And p = NA! This error means we have violated an a
      expfreq <- nrow(worldcup)*exp
      expfreq
 ```
-We see that one category has an expected value that is less than 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.    
+We see that one category has an expected value that is less than 1 (5 goals), and more than 20% of our expected values are less than 5 (4 goals and 5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1, and less than 20% of our expected values are less than 5.    
 
 e. Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create a new vector for our observed data, which we can assign to the variable _obs_. 
 ```{r echo = T, results = 'hide'}
@@ -204,7 +209,7 @@ g. Now that we have our new observed and expected values that meet assumptions, 
 ```{r echo = T, results = 'hide'}
      chisq.test(obs, p = exp, rescale.p = T)
 ```
-We can ignore the error this time because we know our expected values meet assumptions. It is just warning us that we have an expected value less than 5.
+We can ignore the error this time because we know our expected values meet assumptions. It is just warning us that we have one expected value less than 5. This is fine in this case, because we have 5 observations, so 1/5 = only 20% of observations have an expected value of less than 5. We still meet assumptions.
 
 g. Then we will use __pchisq__ to get our _P_-value. The reason we do NOT use the _P_-value from __chisq.test__ is because it does NOT use the correct degrees of freedom for a Poisson model. Remember, that df = number of categories - 1 - number of parameters. Since we calculated one parameter (µ) to make our estimations, the df for a Poisson model is df = number of categories - 1 - 1. For our data, this is df = 5 - 1 - 1 = 3.
 ```{r echo = T, results = 'hide'}

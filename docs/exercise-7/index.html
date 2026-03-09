@@ -1628,7 +1628,7 @@ pre code {
 <p>Let’s apply what we’ve learned in Chapter 9 to <em>R</em>. <br></p>
 <p><strong>Objectives</strong></p>
 <ul>
-<li>Create a contingency table in R.</li>
+<li>Create a contingency table in R (table with URL data, matrix with entered data)</li>
 <li>Conduct a chi-squared test with matrix data</li>
 <li>Conduct fisher’s exact test with matrix data</li>
 </ul>
@@ -1646,22 +1646,26 @@ pre code {
 </thead>
 <tbody>
 <tr class="odd">
+<td>table(df)</td>
+<td>creates a frequency table of your dataframe; df is the name of your dataframe; if your dataframe has more than one column, you need specify each column using df$var</td>
+</tr>
+<tr class="even">
 <td>matrix_name &lt;- matrix(data, nrow, byrow = T)</td>
 <td>creates a matrix with numbers you provide; matrix_name is a name you will assign your matrix to, data is your vector of values (e.g. c(1, 2, 3, 4)) that you enter in row by row, nrow is your number of rows in the matrix, and byrow = T specifies that your vector should be filled by rows</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>rownames(matrix_name) &lt;- c(“row name 1”, “row name 2”)</td>
 <td>specifies names for each row in the matrix, where matrix_name is the name you assigned your matrix</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>colnames(matrix_name) &lt;- c(“col name 1”, “col name 2”)</td>
 <td>specifies names for each col in the matrix, where matrix_name is the name you assigned your matrix</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>chisq.test(matrix_name)</td>
 <td>runs a chi-squared test of independence between rows and cols of a matrix; matrix_name is the name you assigned your matrix</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>fisher.test(matrix_name)</td>
 <td>runs a fisher test for a 2x2 contingency table when data violate chi-squared assumptions; matrix_name is the name you assigned your matrix</td>
 </tr>
@@ -1713,61 +1717,134 @@ pre code {
 
 # Description: (describe what this script is for)</code></pre>
 <p><br></p>
-<p>2.</p>
-<p><strong>Now it’s time to practice on your own.</strong></p>
-<ol style="list-style-type: decimal">
-<li>Let’s look at a sample of birthdays over different days of the week.</li>
-</ol>
+<p>2. We’ll go through a few examples of the chi-squared contingency test together.</p>
+<p><strong>Example 1: Does toxoplasmosis infection in humans increase risky behaviour leading to car accidents?</strong></p>
 <table>
 <thead>
 <tr class="header">
-<th>Day of week</th>
-<th># of birthdays</th>
+<th></th>
+<th>Infected</th>
+<th>Uninfected</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Monday</td>
-<td>33</td>
+<td>Drivers with accidents</td>
+<td>61</td>
+<td>124</td>
 </tr>
 <tr class="even">
-<td>Tuesday</td>
-<td>41</td>
-</tr>
-<tr class="odd">
-<td>Wednesday</td>
-<td>63</td>
-</tr>
-<tr class="even">
-<td>Thursday</td>
-<td>63</td>
-</tr>
-<tr class="odd">
-<td>Friday</td>
-<td>47</td>
-</tr>
-<tr class="even">
-<td>Saturday</td>
-<td>56</td>
-</tr>
-<tr class="odd">
-<td>Sunday</td>
-<td>47</td>
-</tr>
-<tr class="even">
-<td>Total</td>
-<td>350</td>
+<td>Drivers without accidents</td>
+<td>16</td>
+<td>169</td>
 </tr>
 </tbody>
 </table>
-<pre><code>a\. Enter the observed data (counts of birthdays across weekdays)   
-
-b\. Assume we expect equal numbers of birthdays on all days of the week. What is your null hypothesis?  
-
-c\. Conduct a chi-squared test to test this hypothesis. Note, if we expect equal numbers of birthdays on all days of the week, we do not need to enter &quot;p&quot; in the chi-squared test.  
-
-d\. Do you reject or fail to reject your H0?  
-  </code></pre>
+<p>Step 1: Make your matrix in R, and check data for correct placement.</p>
+<pre class="r"><code>     toxo &lt;- matrix(c(61, 124, 16, 169), nrow = 2, byrow = T)
+     toxo</code></pre>
+<p>Step 2: Add row and column names. Check matrix.</p>
+<pre class="r"><code>     rownames(toxo) &lt;- c(&quot;drivers with accidents&quot;, &quot;drivers without accidents&quot;)
+     colnames(toxo) &lt;- c(&quot;infected&quot;, &quot;uninfected&quot;)
+     toxo</code></pre>
+<p>Step 3: Run chi-squared test. If you receive a warning message, you have violated assumptions and will need to use Fisher’s exact test instead.</p>
+<pre class="r"><code>     chisq.test(toxo)</code></pre>
+<p>Step 4: Assumptions met! State your conclusion based on your p-value.<br />
+- p-value = 1.753e-08, meaning p &lt; 0.05. Reject H0. Toxoplasmosis infection is associated with risky behaviour (car accidents).<br />
+<br> <strong>Example 2: Was survival on the Titanic associated with gender?</strong></p>
+<p>Step 1: We have a data file for this. All we need to do is read in the data in R, and convert it into a table. Check your table.</p>
+<pre class="r"><code>     surv &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/survival-titanic.csv&quot;)
+     surv_table &lt;- table(surv$gender, surv$survival)
+     surv_table</code></pre>
+<p>Step 2: Run chi-squared test. If you receive a warning message, you have violated assumptions and will need to use Fisher’s exact test instead.</p>
+<pre class="r"><code>     chisq.test(surv_table)</code></pre>
+<p>Step 3: Assumptions met! State your conclusion based on your p-value.<br />
+- p-value &lt; 2.2e-16, meaning p &lt; 0.05. Reject H0. Survival was associated with gender on the Titanic (why do you think this is the case?).<br />
+<br> <strong>Example 3: Do vampire bats prefer cows in estrus?</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Cows in estrus</th>
+<th>Cows not in estrus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bitten by vampire bat</td>
+<td>15</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Not bitten by vampire bat</td>
+<td>7</td>
+<td>322</td>
+</tr>
+</tbody>
+</table>
+<p>Step 1: Make your matrix in R, and check data for correct placement.</p>
+<pre class="r"><code>     cows &lt;- matrix(c(15, 6, 7, 322), nrow = 2, byrow = T)
+     cows</code></pre>
+<p>Step 2: Add row and column names. Check matrix.</p>
+<pre class="r"><code>     rownames(cows) &lt;- c(&quot;bitten by vampire bat&quot;, &quot;not bitten by vampire bat&quot;)
+     colnames(cows) &lt;- c(&quot;cows in estrus&quot;, &quot;cows not in estrus&quot;)
+     cows</code></pre>
+<p>Step 3: Run chi-squared test. If you receive a warning message, you have violated assumptions and will need to use Fisher’s exact test instead.</p>
+<pre class="r"><code>     chisq.test(cows)</code></pre>
+<pre><code>## Warning in chisq.test(cows): Chi-squared approximation may be incorrect</code></pre>
+<p>Step 4: We have violated assumptions! Run fisher’s exact test instead.</p>
+<pre class="r"><code>     fisher.test(cows)</code></pre>
+<p>Step 5: State your conclusion based on your p-value.<br />
+- p-value &lt; 2.2e-16, meaning p &lt; 0.05. Reject H0. There is an association between being in estrus and being bitten by a vampire bat.<br />
+<br> <strong>Now it’s time to practice on your own.</strong></p>
+<ol style="list-style-type: decimal">
+<li>Is there an association between rump colour and predation by peregrine falcons in pigeons? Run an appropriate test and state your conclusions.</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>White-rumped</th>
+<th>Blue-rumped</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Predated on</td>
+<td>9</td>
+<td>92</td>
+</tr>
+<tr class="even">
+<td>Not predated on</td>
+<td>92</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<ol start="2" style="list-style-type: decimal">
+<li>Female Australian redback spiders eat males during mating. Is a female more likely to accept sperm from a male she has eaten? Researchers watched mating bouts to see whether females ate her first mate, and if so, whether they rejected advances of a second male. Is there an association between eating a male and accepting their sperm? Run an appropriate test and state your conclusions.</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>1st male eaten</th>
+<th>1st male escapes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2nd male accepted</td>
+<td>3</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>2nd male rejected</td>
+<td>6</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 
 
 

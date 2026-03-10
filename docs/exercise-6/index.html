@@ -1791,7 +1791,7 @@ Let’s read through the output. The output tells you a number of things about y
 <pre class="r"><code>     pchisq(5.1442, df = 5, lower.tail = F)</code></pre>
 <p><strong>Understanding your output</strong><br />
 The output of <strong>pchisq</strong> is one number. This is your <strong><em>P</em></strong> <strong>-value</strong>. You will end up with the <strong>same</strong> <em>P</em>-value as you did with the output of <strong>chisq.test</strong>, since the df for both is the same.</p>
-<p>So, from our output, we know that our <strong><em>P</em></strong> <strong>-value = 0.4138</strong>.</p>
+<p>So, from our output, we know that our <strong><em>P</em></strong> <strong>-value = 0.3985</strong>.</p>
 <p>We can conclude: “p &gt; 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the frequency of colours of M and Ms in our bag matches the expectations of the M and M company.”<br />
 <br><br />
 3. We will learn how to conduct a chi-squared test under the Poisson model.</p>
@@ -1819,7 +1819,7 @@ The output of <strong>pchisq</strong> is one number. This is your <strong><em>P<
 <ol start="3" style="list-style-type: lower-alpha">
 <li>We need to calculate our expected probabilities (these are how we specify the null expectation). We use the function <strong>dpois()</strong>, and specify arguments <strong>x</strong> which is a vector of the category values, and <strong>lambda</strong> your expected mean value. We will assign this to the variable <em>exp</em>, so that we can plug this directly into our chi-squared function.</li>
 </ol>
-<pre class="r"><code>     exp &lt;- dpois(x = 0:5, lambda = 1.22)
+<pre class="r"><code>     exp &lt;- dpois(x = 0:5, lambda = 1.223214)
      exp</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Now that we have our observed and expected proportions, we can run a chi-squared test to get our test statistic. Remember, the function is <strong>chisq.test</strong>. All you need are your observed values (x), expected proportions (p), and to specify rescale.p = T.</li>
@@ -1830,7 +1830,7 @@ The output of <strong>pchisq</strong> is one number. This is your <strong><em>P<
 <p>Notice an error has occurred! And p = NA! This error means we have violated an assumption of the chi-squared test. Some categories have expected values that are too small. How can you tell what those expected values are?</p>
 <pre class="r"><code>     expfreq &lt;- nrow(worldcup)*exp
      expfreq</code></pre>
-<p>We see that one category has an expected value that is less than 1 (5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1.</p>
+<p>We see that one category has an expected value that is less than 1 (5 goals), and more than 20% of our expected values are less than 5 (4 goals and 5 goals). We need to combine some categories together to meet the assumptions of the chi-squared test. We can combine categories for 4 and 5, so the expected value is more than 1, and less than 20% of our expected values are less than 5.</p>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create a new vector for our observed data, which we can assign to the variable <em>obs</em>.</li>
 </ol>
@@ -1841,8 +1841,8 @@ The output of <strong>pchisq</strong> is one number. This is your <strong><em>P<
 <li>We also need to create a new vector for our expected proportions, which we can assign to the variable <em>exp</em> We need the expected values to calculate chi-squared later.</li>
 </ol>
 <pre class="r"><code>     exp #check original expected proportions
-     0.027251400 + 0.006649342 #find the sum of category 4 and category 5
-     exp &lt;- c(0.295230167, 0.360180804, 0.219710290, 0.089348851, 0.03390074) #expected values
+     0.027451333+0.006715771 #find the sum of category 4 and category 5
+     exp &lt;- c(0.294282820, 0.359970866, 0.220160701, 0.089767884, 0.0341671) #expected values
      exp</code></pre>
 <ol start="7" style="list-style-type: lower-alpha">
 <li>Now that we have our new observed and expected values that meet assumptions, we can run a chi-squared test to get our test statistic.</li>
@@ -1850,16 +1850,16 @@ The output of <strong>pchisq</strong> is one number. This is your <strong><em>P<
 <pre class="r"><code>     chisq.test(obs, p = exp, rescale.p = T)</code></pre>
 <pre><code>## Warning in chisq.test(obs, p = exp, rescale.p = T): Chi-squared approximation
 ## may be incorrect</code></pre>
-<p>We can ignore the error this time because we know our expected values meet assumptions. It is just warning us that we have an expected value less than 5.</p>
+<p>We can ignore the error this time because we know our expected values meet assumptions. It is just warning us that we have one expected value less than 5. This is fine in this case, because we have 5 observations, so 1/5 = only 20% of observations have an expected value of less than 5. We still meet assumptions.</p>
 <ol start="7" style="list-style-type: lower-alpha">
 <li>Then we will use <strong>pchisq</strong> to get our <em>P</em>-value. The reason we do NOT use the <em>P</em>-value from <strong>chisq.test</strong> is because it does NOT use the correct degrees of freedom for a Poisson model. Remember, that df = number of categories - 1 - number of parameters. Since we calculated one parameter (µ) to make our estimations, the df for a Poisson model is df = number of categories - 1 - 1. For our data, this is df = 5 - 1 - 1 = 3.</li>
 </ol>
-<pre class="r"><code>     pchisq(1.2741, df = 3, lower.tail = F)</code></pre>
+<pre class="r"><code>     pchisq(1.2647, df = 3, lower.tail = F)</code></pre>
 <p>So, from both outputs, we know that:</p>
 <ol style="list-style-type: decimal">
 <li>Our data comes from the variable <em>obs</em>.</li>
 <li>Our <strong>X-squared test statisic equals 1.2741</strong>.</li>
-<li>Our <strong><em>P-value</em></strong> with the correct df, equals _<strong>0.735</strong>.</li>
+<li>Our <strong><em>P-value</em></strong> with the correct df, equals <strong>0.737532</strong>.</li>
 </ol>
 <p>We can conclude: &quot;p &gt; 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. We conclude that the number of goals scored in the knockout round of the World Cup follows a Poisson distribution.</p>
 <p>Is this supported by the variance? Recall, if the variance = mean then data follow a Poisson distribution.</p>
@@ -1917,7 +1917,7 @@ b\. Assume we expect equal numbers of birthdays on all days of the week. What is
 
 c\. Conduct a chi-squared test to test this hypothesis. Note, if we expect equal numbers of birthdays on all days of the week, we do not need to enter &quot;p&quot; in the chi-squared test.  
 
-d\. Do you reject or fail to reject your H0?  
+d\. Do you reject or fail to reject your H0? What is your conclusion statement? 
   </code></pre>
 
 

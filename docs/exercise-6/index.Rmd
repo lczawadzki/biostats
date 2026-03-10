@@ -149,7 +149,7 @@ If you already calculated X^2 in R or by hand, you can use the function __pchisq
 __Understanding your output__  
 The output of __pchisq__ is one number. This is your ___P___ __-value__. You will end up with the __same__ _P_-value as you did with the output of __chisq.test__, since the df for both is the same.
 
-So, from our output, we know that our ___P___ __-value = 0.4138__.  
+So, from our output, we know that our ___P___ __-value = 0.3985__.  
 
 We can conclude: "p > 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the frequency of colours of M and Ms in our bag matches the expectations of the M and M company."  
 <br>  
@@ -178,7 +178,7 @@ d. Next, we find our mean expected frequency (µ or lambda). Even though we have
 ```
 c. We need to calculate our expected probabilities (these are how we specify the null expectation). We use the function __dpois()__, and specify arguments __x__ which is a vector of the category values, and __lambda__ your expected mean value. We will assign this to the variable _exp_, so that we can plug this directly into our chi-squared function.
 ```{r echo = T, results = 'hide'}
-     exp <- dpois(x = 0:5, lambda = 1.22)
+     exp <- dpois(x = 0:5, lambda = 1.223214)
      exp
 ```
 d. Now that we have our observed and expected proportions, we can run a chi-squared test to get our test statistic. Remember, the function is __chisq.test__. All you need are your observed values (x), expected proportions (p), and to specify rescale.p = T. 
@@ -201,8 +201,8 @@ e. Now that we know our categories will be 0, 1, 2, 3, and 4+, we need to create
 f. We also need to create a new vector for our expected proportions, which we can assign to the variable _exp_ We need the expected values to calculate chi-squared later.
 ```{r echo = T, results = 'hide'}
      exp #check original expected proportions
-     0.027251400 + 0.006649342 #find the sum of category 4 and category 5
-     exp <- c(0.295230167, 0.360180804, 0.219710290, 0.089348851, 0.03390074) #expected values
+     0.027451333+0.006715771 #find the sum of category 4 and category 5
+     exp <- c(0.294282820, 0.359970866, 0.220160701, 0.089767884, 0.0341671) #expected values
      exp
 ```
 g. Now that we have our new observed and expected values that meet assumptions, we can run a chi-squared test to get our test statistic. 
@@ -213,13 +213,13 @@ We can ignore the error this time because we know our expected values meet assum
 
 g. Then we will use __pchisq__ to get our _P_-value. The reason we do NOT use the _P_-value from __chisq.test__ is because it does NOT use the correct degrees of freedom for a Poisson model. Remember, that df = number of categories - 1 - number of parameters. Since we calculated one parameter (µ) to make our estimations, the df for a Poisson model is df = number of categories - 1 - 1. For our data, this is df = 5 - 1 - 1 = 3.
 ```{r echo = T, results = 'hide'}
-     pchisq(1.2741, df = 3, lower.tail = F)
+     pchisq(1.2647, df = 3, lower.tail = F)
 ```
 So, from both outputs, we know that:  
 
 1. Our data comes from the variable _obs_.
 2. Our __X-squared test statisic equals 1.2741__.
-3. Our ___P-value___ with the correct df, equals ___0.735__.
+3. Our ___P-value___ with the correct df, equals __0.737532__.
 
 We can conclude: "p > 0.05, therefore our results are statistically insignificant, and we fail to reject the H0. We conclude that the number of goals scored in the knockout round of the World Cup follows a Poisson distribution.
 
@@ -250,12 +250,13 @@ The variance = 1.256, which is close to the mean of 1.223. Additionally, the rat
     
     c\. Conduct a chi-squared test to test this hypothesis. Note, if we expect equal numbers of birthdays on all days of the week, we do not need to enter "p" in the chi-squared test.  
     
-    d\. Do you reject or fail to reject your H0?  
+    d\. Do you reject or fail to reject your H0? What is your conclusion statement? 
       
     ```{r include = F}
 #Answer:
 obs <- c(33, 41, 63, 63, 47, 56, 47)
 #H0: The numbers of birthdays will be the same on every day of the week.
 chisq.test(obs)
-#p < 0.05, reject H0
+#p < 0.05, reject H0;
+#the number of birthdays is NOT the same on every day of the week.
     ```

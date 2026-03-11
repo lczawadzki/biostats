@@ -1646,26 +1646,22 @@ pre code {
 </thead>
 <tbody>
 <tr class="odd">
-<td>table(df)</td>
-<td>creates a frequency table of your dataframe; df is the name of your dataframe; if your dataframe has more than one column, you need specify each column using df$var</td>
-</tr>
-<tr class="even">
 <td>matrix_name &lt;- matrix(data, nrow, byrow = T)</td>
 <td>creates a matrix with numbers you provide; matrix_name is a name you will assign your matrix to, data is your vector of values (e.g. c(1, 2, 3, 4)) that you enter in row by row, nrow is your number of rows in the matrix, and byrow = T specifies that your vector should be filled by rows</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>rownames(matrix_name) &lt;- c(“row name 1”, “row name 2”)</td>
 <td>specifies names for each row in the matrix, where matrix_name is the name you assigned your matrix</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>colnames(matrix_name) &lt;- c(“col name 1”, “col name 2”)</td>
 <td>specifies names for each col in the matrix, where matrix_name is the name you assigned your matrix</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>chisq.test(matrix_name)</td>
 <td>runs a chi-squared test of independence between rows and cols of a matrix; matrix_name is the name you assigned your matrix</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>fisher.test(matrix_name)</td>
 <td>runs a fisher test for a 2x2 contingency table when data violate chi-squared assumptions; matrix_name is the name you assigned your matrix</td>
 </tr>

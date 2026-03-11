@@ -31,7 +31,6 @@ __Shortcuts__:
 
 | R Command | Notes |
 | --- | --- |
-| table(df) | creates a frequency table of your dataframe; df is the name of your dataframe; if your dataframe has more than one column, you need specify each column using df$var |
 | matrix_name <- matrix(data, nrow, byrow = T) | creates a matrix with numbers you provide; matrix_name is a name you will assign your matrix to, data is your vector of values (e.g. c(1, 2, 3, 4)) that you enter in row by row, nrow is your number of rows in the matrix, and byrow = T specifies that your vector should be filled by rows |
 | rownames(matrix_name) <- c("row name 1", "row name 2") | specifies names for each row in the matrix, where matrix_name is the name you assigned your matrix |  
 | colnames(matrix_name) <- c("col name 1", "col name 2") | specifies names for each col in the matrix, where matrix_name is the name you assigned your matrix |  

@@ -1647,6 +1647,10 @@ pre code {
 <td>t.test(df$var, mu =)</td>
 <td>runs a one sample t-test to test whether sample data are consistent with a hypothesized population mean, where df is the name of your dataframe, var is the name of your column, and mu is the expected mean if the H0 is true</td>
 </tr>
+<tr class="even">
+<td>qchisq(p =, df =)</td>
+<td>gives critical value from chi-square distribution, where p is 1-alpha/2 for the lower bound of your confidence interval and alpha/2 for the upper bound of your confidence interval, and df are your degrees of freedom. DON’T CONFUSE THIS WITH <strong>pchisq</strong></td>
+</tr>
 </tbody>
 </table>
 <p><br></p>
@@ -1727,11 +1731,28 @@ From our data, we know that our dataframe is “bodytemp”, our column of inter
 <li>Our sample mean (the estimate) equals <strong>98.5ºF</strong>.</li>
 </ol>
 <p><strong>Pt IV: Interpreting your results</strong><br />
-The point of running a one-sample t-test is to test if there <em>is</em> an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? “P &gt; 0.05, therefore our results are NOT statistically significant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the the sample mean does not differ from the population mean. Additionally, we are 95% confident that the true population mean lies between 98.2ºF and 98.8ºF.”<br />
-<br></p>
+The point of running a one-sample t-test is to test if there <em>is</em> an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? “P &gt; 0.05, therefore our results are NOT statistically significant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the the sample mean does not differ from the population mean. Additionally, we are 95% confident that the true population mean lies between 98.2ºF and 98.8ºF.”</p>
+<p><strong>Pt V: Calculating the 95% confidence interval of the variance</strong> Sometimes we are more interested in the variance than the mean. We look at this through confidence intervals. To calculate the confidence interval of the variance, we use the following equations:<br />
+- lower bound = df * variance/chi-square(1-alpha/2, df) - upper bound = df * variance/chi-square(alpha/2, df)</p>
+<p>To calculate the chi-square statistic to find our lower and upper bounds, we can use <strong>qchisq( )</strong>. For <strong>qchisq( )</strong> we need to know our significance level (alpha) and our degrees of freedom.</p>
+<p>Let’s calculate the confidence interval for our temperature data.</p>
+<ol style="list-style-type: lower-alpha">
+<li>First we calculate the variance.</li>
+</ol>
+<pre class="r"><code>var(bodytemp$tempF)</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>Next, we determine our significance level and degrees of freedom, so we can find the chi-square statistic. We want the 95% confidence interval, so our alpha level is 0.05, and we have 25 observations, so our degrees of freedom are 25 - 1 = 24.</p></li>
+<li><p>Now we can find the chi-square statistic for our lower and upper bounds. With an alpha level of 0.05, this means our lower bound has p = 0.975, and our upper bound has p = 0.025. The maths to find this are below.</p></li>
+</ol>
+<pre class="r"><code>lowerq &lt;- 1-(0.05/2)
+upperq &lt;- 0.05/2
+qchisq(p = lowerq, 24) #lower bound
+qchisq(p = upperq, 24)   #upper bound</code></pre>
+<p><br></p>
 <p><strong>Now it’s time to practice on your own.</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Let’s revisit our dataset on the human genome: <a href="https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv</a>&quot;. A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist’s sample consistent with the population mean? <strong>Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).</strong></p></li>
+<li><p>Let’s revisit our dataset on the human genome: <a href="https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv</a>&quot;. A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist’s sample consistent with the population mean?</p>
+<p>a. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem). b. What is the confidence interval of the variance?</p></li>
 <li><p>Let’s revisit our dataset on seal oxygen levels: <a href="https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv</a>&quot;. This dataset contains information on metabolic costs of feeding and non-feeding dives (in ml O2/kg) for ten Weddell seals. It is hypothesized that the metabolic cost of a feeding dive should be 95 ml O2/kg. Test this hypothesis with your sample.</p>
 <p>a. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).<br />
 b. Calculate the standard error. Report this with the sample mean as a statement. Recall: standard error = sd/sqrt(n).<br />

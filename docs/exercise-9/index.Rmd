@@ -31,6 +31,7 @@ __New Commands__:
 | R Command | Notes |
 | --- | --- |
 | t.test(df$var, mu =) | runs a one sample t-test to test whether sample data are consistent with a hypothesized population mean, where df is the name of your dataframe, var is the name of your column, and mu is the expected mean if the H0 is true |
+| qchisq(p =, df =) | gives critical value from chi-square distribution, where p is 1-alpha/2 for the lower bound of your confidence interval and alpha/2 for the upper bound of your confidence interval, and df are your degrees of freedom. DON'T CONFUSE THIS WITH __pchisq__ |
 <br>
   
 __Reminder__: Save your script for practice at home! :)
@@ -103,11 +104,47 @@ So, from our output, we know that:
 __Pt IV: Interpreting your results__  
 The point of running a one-sample t-test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
 "P > 0.05, therefore our results are NOT statistically significant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the the sample mean does not differ from the population mean. Additionally, we are 95% confident that the true population mean lies between 98.2ºF and 98.8ºF."  
+
+__Pt V: Calculating the 95% confidence interval of the variance__
+Sometimes we are more interested in the variance than the mean. We look at this through confidence intervals. To calculate the confidence interval of the variance, we use the following equations:  
+- lower bound = df * variance/chi-square(1-alpha/2, df)
+- upper bound = df * variance/chi-square(alpha/2, df)  
+
+To calculate the chi-square statistic to find our lower and upper bounds, we can use __qchisq( )__. For __qchisq( )__ we need to know our significance level (alpha) and our degrees of freedom.  
+
+Let's calculate the confidence interval for our temperature data.  
+
+a) First we calculate the variance.
+```{r echo = T, results = 'hide'}
+var(bodytemp$tempF)
+```
+b) Next, we determine our significance level and degrees of freedom, so we can find the chi-square statistic. We want the 95% confidence interval, so our alpha level is 0.05, and we have 25 observations, so our degrees of freedom are 25 - 1 = 24.  
+
+c) Now we can find the chi-square statistic for our lower and upper bounds. With an alpha level of 0.05, this means our lower bound has p = 0.975, and our upper bound has p = 0.025. The maths to find this are below.  
+```{r echo = T, results = 'hide'}
+lowerq <- 1-(0.05/2)
+upperq <- 0.05/2
+
+qchisq(p = lowerq, 24) #lower bound chi-square
+qchisq(p = upperq, 24)   #upper bound chi-square
+```
+d) Use your chi-square values to calculate the confidence intervals. Remember, the formula is: df*variance/chisq
+```{r echo = T, results = 'hide'}
+#variance = 0.4594
+#lower bound chi square = 39.36408
+#upper bound chi square = 12.40115
+
+24*0.4594/39.36408 #lower bound
+24*0.4594/12.40115 #upper bound
+```
+Finally, report your confidence interval. We are 95% confident that the variance of our data lies between 0.28 and 0.89. 
 <br>  
 
 **Now it's time to practice on your own.** 
 
-1. Let's revisit our dataset on the human genome: https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv". A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist's sample consistent with the population mean? __Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).__
+1. Let's revisit our dataset on the human genome: https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv". A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist's sample consistent with the population mean?
+
+    a\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).
 
     ```{r include = F}
 #Answer:
@@ -123,7 +160,8 @@ t.test(genes$gene.length, mu = 2622)
 
     a\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).  
     b\. Calculate the standard error. Report this with the sample mean as a statement. Recall: standard error = sd/sqrt(n).  
-    c\. Report the confidence interval as a statement.  
+    c\. Report the 95% confidence interval of the mean as a statement.  
+    d\. Calculate and report the 95% confidence interval of the variance.
 
     ```{r include = F}
 #Answer:
@@ -142,4 +180,18 @@ mean <- mean(seals$feeding)
 #The mean metabolic cost in our sample is 106.5 +/- 7.6(SE) mL O2/kg.
 
 #c) We are 95% confident that the true population mean lies between 89.2 and 123.7 mL O2/kg.
+
+#d)
+var <- var(seals$feeding)
+lowerq <- 1-(0.05/2)
+upperq <- 0.05/2
+df <- nrow(seals)-1
+
+lowerchi <- qchisq(p = lowerq, df = df) #lower bound chi-square
+upperchi <- qchisq(p = upperq, df = df) #upper bound chi-square
+
+df*var/lowerchi #lower bound
+df*var/upperchi #upper bound
+
+#We are 95% confident the variance lies between 274.7 and 1934.8.
     ```

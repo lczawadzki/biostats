@@ -1,0 +1,177 @@
+---
+title: "R Exercise 8: Normal distributions (Ch 10)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 10: The normal distribution
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 10 to _R_.
+<br>  
+
+__Objectives__
+
+- Finding the probability of an event given that the data follow a normal distribution
+- Finding the probability of a sample mean, given that the data follow a normal distribution
+- Probability of X successes, given a normal approximation of the binomial distribution
+
+
+__New Commands__:  
+
+| R Command | Notes |
+| --- | --- |
+| pnorm(q =, mean =, sd =, lower.tail =) | calculates a Z-value and returns the p-value from a statistical table, where q is your sample value, mean is the mean of the normal distribution, sd is the standard deviation of the normal distribution, and lower.tail = F when we want the upper tail (Z > Z-value), and lower.tail = T when we want the lower tail (Z < Z-value) |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 5__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. Normal distributions are continuous probability distributions that describe a number of biological variables They have a characteristic bell-shaped curve, and can be used to determine the probability of obtaining a certain value from your sample -- whether that is a value, a sample mean, or an _X_ number of successes.  
+
+To calculate the probability of an observation if the data are normally distributed, we use the function __pnorm ( )__. The arguments for __pnorm( )__ are described above. Note well that the arguments will depend on your scenario: are you looking to calculate the probability of a given event? a sample mean? or _X_ successes from a binomial distribution? Carefully examine your question before inputting your information.  
+
+Here is a table that you can use as reference to determine what to do!  
+
+| Scenario | Argument values |
+| --- | --- |
+| Probability of a given event | q is your sample estimate, mean is the population mean (µ), and sd is the population standard deviation |
+| Probability of a sample mean | q is your sample mean, mean is the population mean (µ), and sd is the standard deviation of the sampling distribution (the standard error = sd/sqrt(n)) |
+| Probability of _X_ successes | q is your number of successes, mean is equal to _np_ (n is the total trial, p is your expected probability), and sd is equal to sqrt(_np_(1-_p_)) |  
+<br>
+
+3\. Work through these examples. Be sure you understand how to carry out __pnorm( )__ for each scenario.
+
+__Example 1: It was rumoured that Britain's domestic intelligence service MI5 had a height restriction for spies. Male spies could not be taller than 5 feet 11 inches (180.3 cm). The mean height of males in Britain is 177.0 cm, with standard deviation 7.1 cm. Assuming a normal distribution of male height, what fraction of males meet the height standard for application to MI5?__  
+
+__Step 1:__ Check what you are being asked. We are being asked to calculate the probability of a given event, assuming a normal distribution. Particularly, we want to know how many males are excluded from being a spy (taller than 177.0 cm). So, q = 180.3, mean = 177.0, and sd = 7.1.  
+
+__Step 2:__ Once you have identified your problem, and your arguments, ask what tail you are looking for. We want to know the fraction TALLER than 180.3. That is, we want to know the probability of values more extreme than 180.3...that is, values to the __right__ of 180.3. Right tail --> lower.tail = F.  
+
+__Step 3:__ Solve your problem using __pnorm( )__.
+```{r echo = T, results = 'hide'}
+pnorm(q = 180.3, mean = 177.0, sd = 7.1, lower.tail = F)
+```
+__Step 4:__ State your conclusion. Our output gives us a value of 0.321, meaning that 32.1% of male Britons are unable to become spies.  
+<br>
+__Example 2: Let's revisit our the tumbling toast and Murphy's Law example, using data from: _Matthews, RAJ. (1995). Tumbling toast, Murphy’s Law and fundamental constants. Eur. J. Phys. 16:172-176._ Matthews (1995) found that 6101 out of 9821 slices of toast thrown in the air landed butter side down. We expect that toast thrown in the air would land butter side up and down in equal proportion. Test this hypothesis, assuming a normal distribution.__  
+
+__Step 1:__ Check what you are being asked. We are being asked to calculate the probability of a _X_ successes, assuming a normal distribution. Particularly, we want to know if the proportion of toast landing butter side down equals that landing butter side up in our tests. So, q = 6101 (our number of successes), mean = 9821 x 0.5 ( _np_; _n_ trials times _p_ expected probability), and sd = sqrt((9821 x 0.5)(1-0.5) (sqrt(_np_(1-_p_))).
+
+__Step 2:__ Once you have identified your problem, and your arguments, ask what tail you are looking for. We want to know the probability of values as extreme, or more extreme than 6101 successes...that is, values to the __right__ of 6101. Right tail --> lower.tail = F.  
+
+__Step 3:__ Solve your problem using __pnorm( )__. Note that 
+```{r echo = T, results = 'hide'}
+n <- 9821
+p <- 0.5
+mean <- n*p
+sd <- sqrt(n*p*(1-p))
+pnorm(q = 6101, mean = mean, sd = sd, lower.tail = F)
+```
+__Step 4:__ State your conclusion. Our output gives us a p-value of 7.44e-128, meaning _P_ < 0.05. We reject our H0, and state that toast lands butter side down more than is expected due to chance.
+<br>
+<br>
+**Great! You have used __pnorm( )__ to solve a problem. Now it's time to practice on your own.**
+
+1. Data from 1995 to 2008 in the USA show that 531 out of 648 people struck by lightning were men. We expect the proportion of men to be struck to be 50%. Given a normal approximation of the binomial distribution, test this hypothesis. Remember to follow the steps above. Consult the scenario table for help!
+
+    ```{r include = F}
+#Answer:
+n <- 648
+p <- 0.5
+mean <- n*p
+sd <- sqrt(n*p*(1-p))
+pnorm(q = 531, mean = mean, sd = sd, lower.tail = F)
+#p < 0.05, reject H0, the proportion of men struck by lightning is higher than expected due to chance
+    ```
+
+2. The table below lists the means and standard deviations for several normal distributions. For each, a sample of 10 individuals was taken, and the mean calculated. Calculate the probability of obtaining this sample mean from a random sample of 10 individuals. Follow your steps, and consult the scenario table.
+
+| mean  | standard deviation | sample mean |
+| --- | --- | --- |
+| 14 | 5 | 15 |
+| 15 | 3 | 15.5 |
+| 72 | 50 | 45 |
+
+    ```{r include = F}
+#Answer:
+mean <- 14
+sd <- 5
+se <- sd/sqrt(10)
+pnorm(q = 15, mean = mean, sd = se, lower.tail = F)
+#p = 0.264, fail to reject H0, our sample mean is expected under our H0
+
+mean <- 15
+sd <- 3
+se <- sd/sqrt(10)
+pnorm(q = 15.5, mean = mean, sd = se, lower.tail = F)
+#p = 0.299, fail to reject H0, our sample mean is expected under our H0
+
+mean <- 72
+sd <- 50
+se <- sd/sqrt(10)
+pnorm(q = 45, mean = mean, sd = se, lower.tail = F)
+#p = 0.956, fail to reject H0, our sample mean is expected under our H0
+    ```
+
+3. In 1991, birth weights in the United States were recorded. Birth weights followed a normal distribution with a mean of 3432 grams, and a standard devation of 482 g. What probability of babies fall outside of these expectations (weigh less than 2000 g and more than 5000 g)? What probability weigh between 2950 and 3914 g?
+    ```{r include = F}
+#Answer:
+mean <- 3432
+sd <- 482
+
+#For less than 2000 g, we want the lower tail. lower.tail = T
+pnorm(q = 2000, mean = mean, sd = sd, lower.tail = T)
+    #p = 0.00148
+
+#For more than 5000 g, we want the upper tail. lower.tail = F
+pnorm(q = 5000, mean = mean, sd = sd, lower.tail = F)
+    #p = 0.0057
+
+#The fraction of babies overall outside of expectations:
+0.00148+0.00057
+#0.002 or 0.2%
+
+#In between 3000 and 4000 requires: upper tail of 3000, upper tail of 4000, subtract the two.
+lb <- pnorm(q = 2950, mean = mean, sd = sd, lower.tail = F)
+ub <- pnorm(q = 3914, mean = mean, sd = sd, lower.tail = F)
+lb-ub
+#0.0683 or 68.3% of babies; 2/3 of our data! one sd above and below the mean!
+    ```

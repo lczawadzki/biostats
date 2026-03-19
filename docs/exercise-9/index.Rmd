@@ -1,0 +1,145 @@
+---
+title: "R Exercise 9: One-sample t-test (Ch 11)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 11: Inference for a normal population
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 10 to _R_.
+<br>  
+
+__Objectives__
+
+- Conduct a one-sample t-test in R
+
+
+__New Commands__:  
+
+| R Command | Notes |
+| --- | --- |
+| t.test(df$var, mu =) | runs a one sample t-test to test whether sample data are consistent with a hypothesized population mean, where df is the name of your dataframe, var is the name of your column, and mu is the expected mean if the H0 is true |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 5__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. We are going to dive back into numerical data! When conducting research, scientists often have an expectation of a population mean, and want to ask if their sample meets these expectations. To do this, we need to undergo a hypothesis test. In this case, we will conduct a one-sample t-test.
+
+In _R_, we use the function ___t.test( )__. Once you read in your data, you need two pieces of information:  
+
+1. __df$var__ - the name of your dataframe, and the column of interest
+2. __mu = __ - the population mean proposed under the null hypothesis (H0)
+
+Let's practice with an example.
+
+__Example 1: We are taught that the average human body temperature is 98.6ºF. A researcher obtained body-temperature measurements for 25 randomly selected healthy individuals. Test the hypothesis that mean human body temperature is equal to 98.6º.__  
+
+__Pt I: Reading in your data__   
+Read the file into _R_ from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/bodytemp.csv.
+```{r echo = T, results = 'hide'}
+     bodytemp <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bodytemp.csv")
+```
+__Pt II: Running the t-test__  
+From our data, we know that our dataframe is "bodytemp", our column of interest is "tempF", and our population mean proposed under the null hypothesis is 98.6ºF. Using this information, we can run t.test.
+```{r echo = T, results = 'hide'}
+t.test(bodytemp$tempF, mu = 98.6)
+```
+__Pt III: Understanding your output__   
+
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you what data you used for the test.
+2. Line 2 states specifically your __test statistic (t)__, the __degrees of freedom (df)__, and your ___P___ __-value__. Remember, the _P_-value is the probability of obtaining a mean as extreme, or more extreme, than your sample mean. That is, it is the probability of obtaining your mean under the null hypothesis.  
+3. Line 3 tells you the 95% confidence interval of the proportion, which are values between which you are 95% confident that the true population proportion lies between.    
+4. Line 4 tells you information about your sample estimates, specifically, the mean of _your_ sample data.  
+
+So, from our output, we know that:  
+
+1. Our data comes from the dataframe __bodytemp__ and the variable __tempF__.
+2. Our __test statistic (t) is -0.56__, our __degrees of freedom (df) are 24__, and our ___P___ __-value = 0.58__.  
+3. We are 95% confident that the __true population mean__ lies between __98.2ºF__ and __98.8ºF__.  
+5. Our sample mean (the estimate) equals __98.5ºF__.   
+
+__Pt IV: Interpreting your results__  
+The point of running a one-sample t-test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
+"P > 0.05, therefore our results are NOT statistically significant, and we fail to reject the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that the the sample mean does not differ from the population mean. Additionally, we are 95% confident that the true population mean lies between 98.2ºF and 98.8ºF."  
+<br>  
+
+**Now it's time to practice on your own.** 
+
+1. Let's revisit our dataset on the human genome: https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv". A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist's sample consistent with the population mean? __Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).__
+
+    ```{r include = F}
+#Answer:
+
+#H0: The true population mean is 2622 nucleotides.
+genes <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/genes_sample2.csv")
+t.test(genes$gene.length, mu = 2622)
+#p = 0.2466
+#p > 0.05, fail to reject H0, the true population mean is 2622 nucleotides. Our sample is consistent with these expectations, and does not significantly differ from the population mean. 
+    ```
+
+2. Let's revisit our dataset on seal oxygen levels: https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv". This dataset contains information on metabolic costs of feeding and non-feeding dives (in ml O2/kg) for ten Weddell seals. It is hypothesized that the metabolic cost of a feeding dive should be 95 ml O2/kg. Test this hypothesis with your sample.  
+
+    a\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).  
+    b\. Calculate the standard error. Report this with the sample mean as a statement. Recall: standard error = sd/sqrt(n).  
+    c\. Report the confidence interval as a statement.  
+
+    ```{r include = F}
+#Answer:
+
+#a)
+#H0: The true population mean is 95 mL O2/kg.
+seals <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv")
+t.test(seals$feeding, mu = 95)
+#p = 0.1668
+#p > 0.05, fail to reject H0, the true population mean is 95 mL O2/kg Our sample is consistent with these expectations, and does not significantly differ from the population mean. 
+
+#b)
+se <-  sd(seals$feeding)/sqrt(nrow(seals))
+mean <- mean(seals$feeding)
+
+#The mean metabolic cost in our sample is 106.5 +/- 7.6(SE) mL O2/kg.
+
+#c) We are 95% confident that the true population mean lies between 89.2 and 123.7 mL O2/kg.
+    ```

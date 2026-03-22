@@ -1746,17 +1746,28 @@ The point of running a one-sample t-test is to test if there <em>is</em> an effe
 </ol>
 <pre class="r"><code>lowerq &lt;- 1-(0.05/2)
 upperq &lt;- 0.05/2
-qchisq(p = lowerq, 24) #lower bound
-qchisq(p = upperq, 24)   #upper bound</code></pre>
-<p><br></p>
+
+qchisq(p = lowerq, 24) #lower bound chi-square
+qchisq(p = upperq, 24)   #upper bound chi-square</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Use your chi-square values to calculate the confidence intervals. Remember, the formula is: df*variance/chisq</li>
+</ol>
+<pre class="r"><code>#variance = 0.4594
+#lower bound chi square = 39.36408
+#upper bound chi square = 12.40115
+
+24*0.4594/39.36408 #lower bound
+24*0.4594/12.40115 #upper bound</code></pre>
+<p>Finally, report your confidence interval. We are 95% confident that the variance of our data lies between 0.28 and 0.89. <br></p>
 <p><strong>Now it’s time to practice on your own.</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Let’s revisit our dataset on the human genome: <a href="https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv</a>&quot;. A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist’s sample consistent with the population mean?</p>
-<p>a. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem). b. What is the confidence interval of the variance?</p></li>
+<p>a. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).</p></li>
 <li><p>Let’s revisit our dataset on seal oxygen levels: <a href="https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv</a>&quot;. This dataset contains information on metabolic costs of feeding and non-feeding dives (in ml O2/kg) for ten Weddell seals. It is hypothesized that the metabolic cost of a feeding dive should be 95 ml O2/kg. Test this hypothesis with your sample.</p>
 <p>a. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).<br />
 b. Calculate the standard error. Report this with the sample mean as a statement. Recall: standard error = sd/sqrt(n).<br />
-c. Report the confidence interval as a statement.</p></li>
+c. Report the 95% confidence interval of the mean as a statement.<br />
+d. Calculate and report the 95% confidence interval of the variance.</p></li>
 </ol>
 
 

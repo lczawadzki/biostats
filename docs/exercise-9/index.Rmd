@@ -18,7 +18,7 @@ output:
 ## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
 ```
 
-Let's apply what we've learned in Chapter 10 to _R_.
+Let's apply what we've learned in Chapter 11 to _R_.
 <br>  
 
 __Objectives__
@@ -49,7 +49,7 @@ __Shortcuts__:
 <br>  
 
 
-__Exercise 5__  
+__Exercise 9__  
 1\. Open _RStudio_ and prepare a new script.
 
 Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
@@ -142,7 +142,7 @@ Finally, report your confidence interval. We are 95% confident that the variance
 
 **Now it's time to practice on your own.** 
 
-1. Let's revisit our dataset on the human genome: https://github.com/lczawadzki/biostats/raw/main/data/genelength.csv". A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist's sample consistent with the population mean?
+1. Let's revisit our dataset on the human genome: https://github.com/lczawadzki/biostats/raw/main/data/genes_sample2.csv". A geneticist takes a sample of 500 genes from the human genome. It is known that the mean human gene length is 2622 nucleotides. Are the results from the geneticist's sample consistent with the population mean?
 
     a\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).
 
@@ -158,9 +158,9 @@ t.test(genes$gene.length, mu = 2622)
 
 2. Let's revisit our dataset on seal oxygen levels: https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv". This dataset contains information on metabolic costs of feeding and non-feeding dives (in ml O2/kg) for ten Weddell seals. It is hypothesized that the metabolic cost of a feeding dive should be 95 ml O2/kg. Test this hypothesis with your sample.  
 
-    a\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).  
+    a\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem).
     b\. Calculate the standard error. Report this with the sample mean as a statement. Recall: standard error = sd/sqrt(n).  
-    c\. Report the 95% confidence interval of the mean as a statement.  
+    c\. Report the 95% confidence interval of the mean as a statement.
     d\. Calculate and report the 95% confidence interval of the variance.
 
     ```{r include = F}

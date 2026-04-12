@@ -53,7 +53,7 @@ __Shortcuts__:
 <br>  
 
 
-__Exercise 5__  
+__Exercise 7__  
 1\. Open _RStudio_ and prepare a new script.
 
 a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 

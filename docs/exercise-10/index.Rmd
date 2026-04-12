@@ -1,0 +1,231 @@
+---
+title: "R Exercise 10: Comparing two means (Ch 12)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 12: Comparing two means
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 12 to _R_.
+<br>  
+
+__Objectives__
+
+- Conduct a paired t-test in R
+- Conduct a two-sample t-test in R
+- Test if between-group variances differ
+- Use Welch's t-test when variance assumption is violated
+
+__New Commands__:  
+
+| Arguments | Notes |
+| --- | --- |
+| df\$x | df is name of dataframe, x is column of first treatment/group |
+| df\$y | df is name of dataframe, y is column of second treatment/group |
+| mu = | expected mean difference if H0 is true (typically 0) |
+| paired = | paired = T if paired t-test, paired = F if two-sample |
+| var.equal = | var.equal = T if variances equal, var.equal = F if not |  
+
+| R Command | Notes |
+| --- | --- |
+| t.test(df\$x, df\$y, mu =, paired = T) | Paired t-test to test whether the mean difference of paired measurements equals a null value |
+| t.test(df\$x, df\$y, mu =, paired = F, var.equal = T) | Two-sample t-test to compare the difference between means of two groups |
+| t.test(df\$x~df\$y, mu =, paired = F, var.equal = T) | Different syntax for two-sample t-test; use when both groups are in ONE column, and second column is the group names |
+| t.test(df\$x, df\$y, mu =, paired = F, var.equal = F) | Welch's t-test to compare the difference between means of two groups, where everything is the same for a two-sample t-test EXCEPT var.equal = F, specifying the variance of both groups are NOT equal |
+| var.test(df\$x, df\$y, ratio = 1) | F test to compare variance of two groups; only use if data are normally distributed |
+| var.test(df\$x~df\$y, ratio = 1) | Different syntax for F-test; use when both groups are in ONE column, and second column is the group names |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 10__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. Let's continue with t-tests, except this time we have two treatments or groups. When conducting research, scientists often expect one treatment or group to differ from the other, and need to compare means to ask whether their data simply meet null expectations or show a significant difference between the two treatments/groups. To do this, we need to perform a hypothesis test. In this case, we will conduct either a paired or two-sample t-test depending on how the dat were collected.
+
+In _R_, we use the function ___t.test( )__. Once you read in your data, you need the following information:  
+
+1. __df$x__ - the name of your dataframe, and your first group column
+2. __df$y__ - the name of your dataframe, and your second group column
+3. __mu = __ - the difference in means proposed under the null hypothesis (H0)
+4. __paired = __ - whether your data are paired (T) or two-sample (F)
+
+If __paired = F__ (two-sample t-test), you also need to know:  
+
+5. __var.equal = __ - whether the group variances are equal (T) or false (F). If variances are equal, _R_ will run a two-sample t-test, and if they are not equal, _R_ will run Welch's t-test. We can test for equal variance beforehand with an F test (normally distributed data) or Barlett's test (non-normal data).
+
+
+Let's practice through example.
+
+__Example 1: Hasselquist et al. (1999) studied the effect of high testosterone levels on immunocompetence in 13 red-winged blackbirds, under the hypothesis that males with higher testosterone levels have reduced immunocompotence. To test this, they implanted males with tubes filled with testosterone, and recorded their antibody production before and after implantation. Do higher testosterone levels actually impact immune response?__  
+
+__Step 1:__ Read in the data (available here: https://github.com/lczawadzki/biostats/raw/main/data/blackbirds.csv)
+```{r echo = T, results = 'hide'}
+blackbirds <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/blackbirds.csv")
+```
+
+__Step 2:__ Read the problem/look at the data and ask yourself, what sample design is being used? Is this a paired or two-sample design? Since each male is sampled twice, this is a __paired__ design. That is, the sampling unit is each male bird, and the samples taken are antibody production before and after implantation. 
+
+__Step 3:__ Once you have identified the sample design, ask yourself, which t-test should I run? Paired design = paired t-test. 
+
+__Step 4:__ State your null and alternate hypotheses. This will help you decide what __mu = __ in your t.test. Here, the H0: Mean antibody production does not differ after implantation ($µ_d$ = 0), and HA: Mean antibody production differs after implantation ($µ_d \not =$ 0). Therefore, mu = 0 (no difference).
+
+__Step 5:__ Run your paired t-test using __t.test( )__. Note for this data, we want to use the log-transformed data columns.
+```{r echo = T, results = 'hide'}
+t.test(blackbirds$logBeforeImplant, blackbirds$logAfterImplant, mu = 0, paired = T)
+```
+__Step 6:__ Interpret your output and state your conclusion.  
+
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you what data you used for the test.
+2. Line 2 states specifically your __test statistic (t)__, the __degrees of freedom (df)__, and your ___P___ __-value__. Remember, the _P_-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.  
+3. Line 3 tells you the alternative hypothesis.
+4. Line 4 tells you the 95% confidence interval of the proportion, which are values between which you are 95% confident that the true population proportion lies between.    
+5. Line 5 tells you information about your sample estimates, specifically, the mean difference of _your_ sample data.  
+
+So, from our output, the first thing we notice is that _R_ ran a "Paired t-test". This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our data comes from the dataframe __blackbirds__ and our variables are __logBeforeImplant__ and __logAfterImplant__.
+2. Our __test statistic (t) is -1.2714__, our __degrees of freedom (df) are 12__, and our ___P___ __-value = 0.2277__.  
+3. Our alternative hypothesis is that the difference in means is not equal to 0.
+4. We are 95% confident that the __true mean difference__ lies between __-0.152__ and __0.0401__. Recall these are (natural) log-transformed values. You can transform them back using e^x to be more interpretable.  
+5. Our sample mean difference (the estimate) equals __-0.056__, again a (natural) log-transformed value.   
+
+The point of running a paired t-test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
+"P > 0.05, therefore our results are NOT statistically significant, and we __fail to reject__ the H0. Our data match our null expectations, and are likely to occur due to chance. We conclude that testosterone has no effect on immunocompetence in red-winged blackbirds."
+
+__Example 2: Loggerhead shrikes prey on horned lizards. Young et al. (2004) wanted to investigate whether lizards predated on had shorter horns than living lizards, under the speculation that these horns help protect lizards from predation. To test this, they measured horns from 30 lizards killed by shrikes, and 154 living lizards. Do living horned lizards have longer horns than dead ones?__  
+
+__Step 1:__ Read in the data (available here: https://github.com/lczawadzki/biostats/raw/main/data/hornedlizards.csv)
+```{r echo = T, results = 'hide'}
+lizards <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/hornedlizards.csv")
+```
+
+__Step 2:__ Read the problem/look at the data and ask yourself, what sample design is being used? Is this a paired or two-sample design? Since each lizard is only sampled once, but we have two groups, this is an __unpaired__ design. That is, the sampling unit is each individual lizard, and the sample taken is horn length. 
+
+__Step 3:__ Once you have identified the sample design, ask yourself, which t-test should I run? Unpaired design = two-sample t-test. 
+
+__Step 4:__ State your null and alternate hypotheses. This will help you decide what __mu = __ in your t.test. Here, the H0: Living and killed lizards do not differ in mean horn length ($µ_1$ = $µ_2$), and HA: Living and killed lizards differ in mean horn length ($µ_1 \not = µ_2$). Therefore, mu = 0 (no difference in means).
+
+__Step 5:__ Before we run our two-sample t-test, first check that you meet assumptions of equal variance for between groups using __var.test( )__. Note that we use the notation x~y, since our numerical data are grouped in ONE column. (F-tests assume data are normally distributed. We will discuss checking for normality in the next exercise. If data are non-normal, you would use Bartlett's test here).
+```{r echo = T, results = 'hide'}
+var.test(lizards$squamosalHornLength~lizards$Survival, ratio = 1)
+```
+We see that the ___P___ __-value__ equals 0.7859, so we fail to reject the H0 that variances are equal. Therefore, we can assume equal variance, and use __var.equal = T__.
+
+__Step 6:__ Now that you know mu = 0 and var.equal = T, run your t-test. Note that we use the notation x~y, since our numerical data are grouped in ONE column.
+```{r echo = T, results = 'hide'}
+t.test(lizards$squamosalHornLength~lizards$Survival, mu = 0, paired = F, var.equal = T)
+```
+__Step 7:__ Interpret your output and state your conclusion.  
+
+Let's read through the output. It has the same format as a paired t-test.  
+
+So, from our output, the first thing we notice is that _R_ ran a "Two-sample t-test". This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our data comes from the dataframe __lizards__ and our variables are __SquamosalHornLength__ by __Survival__.
+2. Our __test statistic (t) is -4.394__, our __degrees of freedom (df) are 182__, and our ___P___ __-value = 2.27e-05__.  
+3. Our alternative hypothesis is that the difference in means is not equal to 0.
+4. We are 95% confident that the __true mean difference__ in horn length between living and killed lizards lies between __-3.335 mm__ and __-1.254 mm__. 
+5. Our sample means (the estimates) equals __21.987 mm__ for killed lizards, and __24.281 mm__ for living lizards.   
+
+The point of running a two-sample t-test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
+"P < 0.05, therefore our results are statistically significant, and we __reject__ the H0. Our data deviate from our null expectations, and are not due to chance. We conclude that living lizards have longer horns than killed lizards."
+
+__What if the variance was NOT equal? (p < 0.05)__
+If the variance in Step 5 was not equal (F-test had a P < 0.05), you would run Welch's t-test instead, using the same syntax, except __var.equal = F__ rather than T.
+```{r echo = T, results = 'hide'}
+t.test(lizards$squamosalHornLength~lizards$Survival, mu = 0, paired = F, var.equal = F)
+```
+Notice that the output is very similar to the two-sample t-test we conducted above, except that the first line of the output tells us that _R_ conducted a Welch’s Two Sample t-test.  
+
+
+**Now it's time to practice on your own.** 
+
+1. Let's revisit our dataset on seal oxygen levels: https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv. This dataset contains information on metabolic costs of feeding and non-feeding dives (in ml O2/kg) for ten Weddell seals. It is hypothesized that feeding changes the metabolic costs of a dive. Test this hypothesis with your sample.  
+
+    a\. Is this a paired or two-sample design?  
+    b\. Which type of t-test should you use?  
+    c\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem). If using a two-sample t-test, be sure to check for equal variances with an F-test before running your t-test. 
+
+    ```{r include = F}
+#Answer:
+
+#a)
+# Paired design
+
+#b) 
+#Paired t-test
+
+#c)
+##H0: Mean metabolic cost of feeding dives do not differ from non-feeding dives ($µ_d$ = 0). 
+seals <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/sealoxygen.csv")
+t.test(seals$feeding, seals$non.feeding, mu = 0, paired = T)
+#p = 1.849e-07
+#p < 0.05, reject H0, mean metabolic costs of feeding dives differ from non-feeding dives, by an amount somewhere between 25.87 mL O2/kg and 35.69 mL O2/kg. That is, whether a seal is feeding or non-feeding during a dive has an effect on metabolic costs of the dive.
+    ```
+
+2. Patient data on heart attacks is in the GitHub: https://github.com/lczawadzki/biostats/raw/main/data/heart_attack.csv. Each datapoint is a single individual. It is hypothesized that the age at which you have a heart attack depends on whether a patient is male or female, with males experiencing heart attacks earlier than females. Test this hypothesis with your sample. NOTE: when you read in the data for this sample, include the argument, "stringsAsFactors = T". 
+
+    a\. Is this a paired or two-sample design?  
+    b\. Which type of t-test should you use?  
+    c\. Report your null hypothesis, run your test in R, and state your conclusion (statistical and in language relevant to the problem). If using a two-sample t-test, be sure to check for equal variances with an F-test before running your t-test.   
+
+```{r include = F}
+#Answer:
+
+#a)
+# Two-sample design
+
+#b) 
+#Two-sample t-test
+
+#c)
+##H0: Males and females do not differ in mean age at which they experience a heart attack ($µ_1 = µ_2$).
+ 
+#heart <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/heart_attack.csv", stringsAsFactors = T)
+
+#var.test(heart$AGE~heart$GENDER, ratio = 1)
+
+#t.test(heart$AGE~heart$GENDER, mu = 0, paired = F, var.equal = F)
+#p < 2.2e-16
+#p < 0.05, reject H0, males and females differ in the mean age of a heart attack, by an amount somewhere between 7.797 and 8.722 years. We conclude that females experience heart attacks later than males. 
+```

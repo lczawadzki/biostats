@@ -50,7 +50,7 @@ __Shortcuts__:
 <br>  
 
 
-__Exercise 5__  
+__Exercise 8__  
 1\. Open _RStudio_ and prepare a new script.
 
 Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
@@ -74,7 +74,7 @@ Here is a table that you can use as reference to determine what to do!
 | --- | --- |
 | Probability of a given event | q is your sample estimate, mean is the population mean (µ), and sd is the population standard deviation |
 | Probability of a sample mean | q is your sample mean, mean is the population mean (µ), and sd is the standard deviation of the sampling distribution (the standard error = sd/sqrt(n)) |
-| Probability of _X_ successes | q is your number of successes, mean is equal to _np_ (n is the total trial, p is your expected probability), and sd is equal to sqrt(_np_(1-_p_)) |  
+| Probability of _X_ successes | q is your number of successes, mean is equal to _np_ (n is the total trials, p is your expected probability), and sd is equal to sqrt(_np_(1-_p_)) |  
 <br>
 
 3\. Work through these examples. Be sure you understand how to carry out __pnorm( )__ for each scenario.
@@ -122,7 +122,7 @@ pnorm(q = 531, mean = mean, sd = sd, lower.tail = F)
 #p < 0.05, reject H0, the proportion of men struck by lightning is higher than expected due to chance
     ```
 
-2. The table below lists the means and standard deviations for several normal distributions. For each, a sample of 10 individuals was taken, and the mean calculated. Calculate the probability of obtaining this sample mean from a random sample of 10 individuals. Follow your steps, and consult the scenario table.
+2. The table below lists the means and standard deviations for several normal distributions. For each, a sample of 10 individuals was taken, and the mean calculated. Calculate the probability of obtaining a sample mean as extreme or more extreme than the sample means below from a random sample of 10 individuals. Follow your steps, and consult the scenario table.
 
 | mean  | standard deviation | sample mean |
 | --- | --- | --- |

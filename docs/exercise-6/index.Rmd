@@ -29,7 +29,7 @@ __Objectives__
 - Calculate the expected probability and frequency of Poisson data.    
 - Be able to conduct a chi-squared hypothesis test under the Poisson model.  
 
-__Shortcuts__:  
+__New Commands__:  
 
 | R Command | Notes |
 | --- | --- |
@@ -54,7 +54,7 @@ __Shortcuts__:
 <br>  
 
 
-__Exercise 5__  
+__Exercise 6__  
 1\. Open _RStudio_ and prepare a new script.
 
 a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
@@ -96,7 +96,7 @@ ___Note___: Chi-squared tests are always one-tailed!
 __Pt II: Method I with M and Ms__  
 M and M's are drawn from a bag and the colour of each M and M is recorded.  
 
-a. Read the file into _R_ from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/MandMlist.csv.
+5a. Read the file into _R_ from the GitHub using the following URL: https://github.com/lczawadzki/biostats/raw/main/data/MandMlist.csv.
 ```{r echo = T, results = 'hide'}
      MMlist <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/MandMlist.csv")
 ```

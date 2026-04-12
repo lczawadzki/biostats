@@ -222,7 +222,6 @@ t.test(seals$feeding, seals$non.feeding, mu = 0, paired = T)
 ##H0: Males and females do not differ in mean age at which they experience a heart attack ($µ_1 = µ_2$).
  
 #heart <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/heart_attack.csv", stringsAsFactors = T)
-
 #var.test(heart$AGE~heart$GENDER, ratio = 1)
 
 #t.test(heart$AGE~heart$GENDER, mu = 0, paired = F, var.equal = F)

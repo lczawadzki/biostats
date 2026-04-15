@@ -229,32 +229,33 @@ __Steps Recap:__
 
 1. It can be difficult to know when a QQ plot is normal without visual experience. The best way to build up your visual practice is to plot lots of QQ plots of normal distributions, to get an understanding of the variety of QQ plots that are considered "normal". 
 
-    a\. Generate a list of 10 random numbers from a normal distribution with mean 15 and standard deviation 3, using the following command:
-```{r echo = T, results = 'hide'}
-norm <- rnorm(n = 10, mean = 15, sd = 3) 
-```
+    a\. Generate a list of 10 random numbers from a normal distribution with mean 15 and standard deviation 3, using the following command: norm <- rnorm(n = 10, mean = 15, sd = 3)  
     
-    b\. Use hist() to plot a histogram of these numbers from part a.
-    c\. Use qqnorm() to plot a QQ plot from the numbers in part a.
-    d\. Repeat a through c at least a dozen times. For each, look at the histograms and QQ plots. Think about the ways in which these look different from your expectations of a normal distribution graph. Remember, all of these samples come from a truly normal population, so these are simulated examples of what real normal data looks like!
+    b\. Use hist() to plot a histogram of these numbers from part a.  
+    
+    c\. Use qqnorm() to plot a QQ plot from the numbers in part a.  
+    
+    d\. Repeat (a) through (c) at least a dozen times. For each, look at the histograms and QQ plots. Think about the ways in which these look different from your expectations of a normal distribution graph. Remember, all of these samples come from a truly normal population, so these are simulated examples of what real normal data looks like!
 
-```{r echo = F, results = 'hide'}
+```{r echo = F, fig.keep = "none"}
 norm <- rnorm(n = 10, mean = 15, sd = 3)
 hist(norm)
 qqnorm(norm)
 qqline(norm)
 ```
+<br>  
 
-2. In 1898, after a severe winter storm in Providence, Rhode Island, hundreds of house sparrows (_Passer domesticus_) were found immobilized on the ground. 136 were brought to the Anatomical Laboratory of Brown University, where Hermon Bumpus (1898) studied them. 76 recovered, while 64 died. Bumpus identified the sex and age of each individual, noted whether they survived or died, and took a series of morphological measurements, including weight, skull width, and femur length. He used this data to ask questions about natural selection, and whether natural selection acted on any of the measured traits in these birds. Data can be found here: https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv.
+2. In 1898, after a severe winter storm in Providence, Rhode Island, hundreds of house sparrows (_Passer domesticus_) were found immobilized on the ground. 136 were brought to the Anatomical Laboratory of Brown University, where Hermon Bumpus (1898) studied them. 76 recovered, while 64 died. Bumpus identified the sex and age of each individual, noted whether they survived or died, and took a series of morphological measurements, including weight, skull width, and femur length. He used this data to ask questions about natural selection, and whether natural selection acted on any of the measured traits in these birds. Data can be found here: https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv. Did natural selection act on body weight of house sparrows (_i.e._ do birds that survived differ in mean body weight from those that died)?  
 
-Did natural selection act on body weight of house sparrows (_i.e._ do birds that survived differ in mean body weight from those that died)?
-
-    a\. Is this a paired or two-sample design?
-    b\. Do the distributions for each group (survived vs. dead) look approximately normal? _Note: Our data are grouped into a numerical variable column (weight_g) and a categorical variable column (survival). To plot separate histograms for survived and died, use the following notation - hist(df$numvar[which(df$catvar == "category")],)_
-    c\. Are the variances between groups equal? Run an F-test.
-    d\. Based on (a) (b) and (c), which test should you run?
-    e\. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).
-
+    a\. Is this a paired or two-sample design?  
+    
+    b\. Do the distributions for each group (survived vs. dead) look approximately normal? _Note: Our data are grouped into a numerical variable column (weight_g) and a categorical variable column (survival). To plot separate histograms for survived and died, use the following notation - hist(df$numvar[which(df$catvar == "category")],)_  
+    
+    c\. Are the variances between groups equal? Run an F-test.  
+    
+    d\. Based on (a) (b) and (c), which test should you run?  
+    
+    e\. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).  
     ```{r include = F}
 #Answer:
 #a) Two-sample design
@@ -283,12 +284,16 @@ Did natural selection act on body weight of house sparrows (_i.e._ do birds that
 #Overall...from his graphs that males survived better than females and that shorter, lighter birds with longer legs, wings and sternums and larger brain size (“skull width”) also survived better.
 
     ```
+<br>  
 
 3. Swimmers often get ear infections from water remaining trapped in the ear canal. 14 swimmers were given a medication that claimed to reduce ear infections. The number of ear infections they developed before starting the medication, and the number of ear infections they developed after starting the medication, were recorded. Data can be found here: https://github.com/lczawadzki/biostats/raw/main/data/swimmers.csv. Does this medication reduce ear infections in swimmers? 
 
-    a\. Is the data normally distributed? Note: this is a paired study design, so the DIFFERENCES between groups need to be normally distributed, NOT the groups themselves. 
-    b\. Based on your histogram, which test should you run?
+    a\. Is the data normally distributed? Note: this is a paired study design, so the DIFFERENCES between groups should be normally distributed, NOT the groups themselves.   
+    
+    b\. Based on your histogram, which test should you run?  
+    
     c\. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).
+    
     ```{r include = F}
 #Answer:
 #a)

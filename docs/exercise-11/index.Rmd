@@ -249,7 +249,7 @@ qqline(norm)
 
     a\. Is this a paired or two-sample design?  
     
-    b\. Do the distributions for each group (survived vs. dead) look approximately normal? _Note: Our data are grouped into a numerical variable column (weight_g) and a categorical variable column (survival). To plot separate histograms for survived and died, use the following notation - hist(df$numvar[which(df$catvar == "category")],)_  
+    b\. Do the distributions for each group (survived vs. dead) look approximately normal? Note: Our data are grouped into a numerical variable column (weight_g) and a categorical variable column (survival). To plot separate histograms for survived and died, use the following notation: hist(df\$numvar[which(df\$catvar == "category")],) 
     
     c\. Are the variances between groups equal? Run an F-test.  
     

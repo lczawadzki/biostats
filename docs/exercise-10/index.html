@@ -1685,7 +1685,7 @@ pre code {
 <td>Two-sample t-test to compare the difference between means of two groups</td>
 </tr>
 <tr class="odd">
-<td>t.test(df$x~df$y, mu =, paired = F, var.equal = T)</td>
+<td>t.test(df$x~df$y, data = df, var.equal = T)</td>
 <td>Different syntax for two-sample t-test; use when both groups are in ONE column, and second column is the group names</td>
 </tr>
 <tr class="even">
@@ -1794,12 +1794,12 @@ pre code {
 <pre class="r"><code>lizards &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/hornedlizards.csv&quot;)</code></pre>
 <p><strong>Step 2:</strong> Read the problem/look at the data and ask yourself, what sample design is being used? Is this a paired or two-sample design? Since each lizard is only sampled once, but we have two groups, this is an <strong>unpaired</strong> design. That is, the sampling unit is each individual lizard, and the sample taken is horn length.</p>
 <p><strong>Step 3:</strong> Once you have identified the sample design, ask yourself, which t-test should I run? Unpaired design = two-sample t-test.</p>
-<p><strong>Step 4:</strong> State your null and alternate hypotheses. This will help you decide what <strong>mu = </strong> in your t.test. Here, the H0: Living and killed lizards do not differ in mean horn length (<span class="math inline">\(µ_1\)</span> = <span class="math inline">\(µ_2\)</span>), and HA: Living and killed lizards differ in mean horn length (<span class="math inline">\(µ_1 \not = µ_2\)</span>). Therefore, mu = 0 (no difference in means).</p>
+<p><strong>Step 4:</strong> State your null and alternate hypotheses. Here, the H0: Living and killed lizards do not differ in mean horn length (<span class="math inline">\(µ_1\)</span> = <span class="math inline">\(µ_2\)</span>), and HA: Living and killed lizards differ in mean horn length (<span class="math inline">\(µ_1 \not = µ_2\)</span>).</p>
 <p><strong>Step 5:</strong> Before we run our two-sample t-test, first check that you meet assumptions of equal variance for between groups using <strong>var.test( )</strong>. Note that we use the notation x~y, since our numerical data are grouped in ONE column. (F-tests assume data are normally distributed. We will discuss checking for normality in the next exercise. If data are non-normal, you would use Bartlett’s test here).</p>
 <pre class="r"><code>var.test(lizards$squamosalHornLength~lizards$Survival, ratio = 1)</code></pre>
 <p>We see that the <strong><em>P</em></strong> <strong>-value</strong> equals 0.7859, so we fail to reject the H0 that variances are equal. Therefore, we can assume equal variance, and use <strong>var.equal = T</strong>.</p>
-<p><strong>Step 6:</strong> Now that you know mu = 0 and var.equal = T, run your t-test. Note that we use the notation x~y, since our numerical data are grouped in ONE column.</p>
-<pre class="r"><code>t.test(lizards$squamosalHornLength~lizards$Survival, mu = 0, paired = F, var.equal = T)</code></pre>
+<p><strong>Step 6:</strong> Now that you know var.equal = T, run your t-test. Note that we use the notation x~y, since our numerical data are grouped in ONE column.</p>
+<pre class="r"><code>t.test(lizards$squamosalHornLength~lizards$Survival, data = lizards, var.equal = T)</code></pre>
 <p><strong>Step 7:</strong> Interpret your output and state your conclusion.</p>
 <p>Let’s read through the output. It has the same format as a paired t-test.</p>
 <p>So, from our output, the first thing we notice is that <em>R</em> ran a “Two-sample t-test”. This is exactly what we wanted to run, so we’re good so far. Now, let’s look at each line:</p>
@@ -1813,7 +1813,7 @@ pre code {
 </ol>
 <p>The point of running a two-sample t-test is to test if there <em>is</em> an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? “P &lt; 0.05, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data deviate from our null expectations, and are not due to chance. We conclude that living lizards have longer horns than killed lizards.”</p>
 <p><strong>What if the variance was NOT equal? (p &lt; 0.05)</strong> If the variance in Step 5 was not equal (F-test had a P &lt; 0.05), you would run Welch’s t-test instead, using the same syntax, except <strong>var.equal = F</strong> rather than T.</p>
-<pre class="r"><code>t.test(lizards$squamosalHornLength~lizards$Survival, mu = 0, paired = F, var.equal = F)</code></pre>
+<pre class="r"><code>t.test(lizards$squamosalHornLength~lizards$Survival, data = lizards, var.equal = F)</code></pre>
 <p>Notice that the output is very similar to the two-sample t-test we conducted above, except that the first line of the output tells us that <em>R</em> conducted a Welch’s Two Sample t-test.</p>
 <p><strong>Now it’s time to practice on your own.</strong></p>
 <ol style="list-style-type: decimal">

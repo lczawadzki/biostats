@@ -1,0 +1,311 @@
+---
+title: "R Exercise 11: Handling Violations of Assumptions (Ch 13)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 13: Handling violations of assumptions
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 12 to _R_.
+<br>  
+
+__Objectives__
+
+- Graphically assess normality with histograms and QQ plots
+- Statistically test for normality with a Shapiro-Wilk test
+- Conduct log data transformations on non-normal data
+- Use nonparametric methods for non-normal data (Sign test and Mann-Whitney _U_ test)
+
+__New (and old) Commands__:  
+
+| Arguments | Notes |
+| --- | --- |
+| df\$var | df is name of dataframe, var is the column of interest |
+
+| R Command | Notes |
+| --- | --- |
+| hist(df\$var) | Makes a histogram of a variable |
+| qqnorm(df\$var) | Makes QQ plot of a variable |
+| qqline(df\$var) | Adds a line to your QQ plot for your specific variable |
+| shapiro.test(df\$var) | Shapiro-Wilk test for normality; if P > 0.05, this means data follow a normal distribution |
+| log(df\$var) | Natural log transformation (ln) of a variable |
+| asin(sqrt(df\$var)) | arcsine transformation of a variable |
+| binom.test(x, n, p = 0.05) | Sign test for non-normal data (paired/one-sample alternative), where x is the number of successes, n is the number of trials, and p = 0.05 since we expect half the data to be above and  below a null constant |
+| wilcox.test(x, y) | Mann-Whitney _U_ test for non-normal data (two-sample alternative), where x is the variable from the first group/treatment, and y is the variable from the second group/treatment |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 11__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+__Pt I: Assessing Normality__  
+t-tests rely on the assumption that data are normally distributed. These tests are fairly robust to minor deviations from the normal (especially with large sample sizes), so our data only need to be approximately normally distributed. However, if data deviate strongly from the normal distribution, we cannot use a t-test, and need to use an alternative option. Therefore, we need to check whether our data are normally distributed before we proceed with hypothesis testing. If they are normal, we can continue with our t-test. If they are not normal, we'll use another method.  
+
+__a\)__ __Graphical Methods__  
+Visually, we can assess normality with histograms and QQ plots. Let's try both.  
+
+__a1\)__ __Histograms__  
+Let's start with data from the Titanic. This data contains information on the ticket class, age, sex, and survival of all passengers onboard the Titanic. Data are available here: https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv.
+
+a. Read the file into _R_.
+```{r echo = T, results = 'hide'}
+titanic <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv")
+```
+b. Create a __histogram__ of the age of passengers aboard the Titanic using __hist( )__. Does age follow a normal distribution? 
+```{r echo = T, results = 'hide'}
+hist(titanic$age)
+```
+Looking at our histogram, while we have some asymmetry, it has a clear, large mode near the center of the distribution. Non-normal data, on the other hand, would have obvious strong skews, or be strongly bimodal. Therefore, the age variable is approximately normal, and does not violate assumptions. We would be able to use a parametric test with this dataset.
+<br>
+
+Let's practice with another dataset, this time on biomass ratio in 32 marine reserves from Halpern (2003). Data are available here: https://github.com/lczawadzki/biostats/raw/main/data/marinereserve.csv. 
+
+a. Read the file into _R_.
+```{r echo = T, results = 'hide'}
+biomass <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/marinereserve.csv")
+```
+b. Let's look at the data with a __histogram__ using __hist( )__. Does biomass ratio follow a normal distribution? 
+```{r echo = T, results = 'hide'}
+hist(biomass$biomassRatio)
+```
+Compared to the Titanic data, this histogram is very clearly right-skewed. From our plot, we can see that this dataset does NOT follow a normal distribution, and is non-normal. We would not be able to use a parametric test, and would need to turn to another option (_i.e._ transformation or a nonparametric test).  
+<br>
+
+__a2\)__ __QQ Plots__  
+Now, let's visualize normality with __QQ plots__ using the same data.
+
+a. Let's start with the Titanic data. Create a __QQ plot__ of the age of passengers aboard the Titanic using __qqnorm( )__. Does age follow a normal distribution?  
+```{r echo = T, results = 'hide'}
+qqnorm(titanic$age)   ##creates QQ plot
+qqline(titanic$age)   ##adds line to QQ plot
+```
+Looking at our QQ plot, notice we have some wiggle around the straight line, but nothing substantial. Non-normal data would have substantial curvature over a large range of values or big jumps in the distribution. Therefore, the age of passengers aboard the Titanic follows a normal distribution. We would be able to use a parametric test with this dataset.  
+<br>  
+
+b. What about the biomass data? Create a __QQ plot__ of the biomass ratios using __qqnorm( )__. Does biomass ratio follow a normal distribution?
+```{r echo = T, results = 'hide'}
+qqnorm(biomass$biomassRatio)
+qqline(biomass$biomassRatio)
+```
+Compared to the Titanic data, notice this QQ plot has substantial curvature over a large range of values, particularly on the right-hand side. This is expected since our histogram showed that the data were clearly right-skewed. Biomass ratio does NOT follow a normal distribution. We would not be able to use a parametric test, and would need to turn to another option (i.e. transformation or a nonparametric test).  
+<br>  
+
+__b\)__ __Statistical Methods (Shapiro-Wilk test)__  
+We can also assess normaliy statistically. Let's try this with data on biomass ratio of 32 marine reserves.
+```{r echo = T, results = 'hide'}
+shapiro.test(biomass$biomassRatio)
+```
+The _P-value_ is < 0.05, therefore, we reject the H0 of normality. Our data are not normal.  
+<br>  
+
+__Pt II: Data Transformations__  
+If data are not normal, we can first try to transform the data to achieve normality. The most common method for biological data is a log transformation (natural log; ln). Other methods include the arcsine transformation.
+
+__a) Log transformation__  
+We use log transformations when data are ratios or products of variables, frequency distribution of data is skewed to the right, variance increases as mean gets larger (in comparisons across groups), or data span several orders of magnitude.  
+
+Let's practice with the biomass dataset. Let's transform our data, and then check for normality with a histogram and QQ plot.  
+
+a. Perform the log transformation using __log( )__. Assign it to a variable so we can use it more easily for making graphs.
+```{r echo = T, results = 'hide'}
+logbiomass <- log(biomass$biomassRatio)
+```
+
+b. Make a histogram of the log-transformed data. Is it normal now?
+```{r echo = T, results = 'hide'}
+hist(logbiomass)
+```
+Looking at our histogram, it's not perfect, like our Titanic data, but it does have a clear, large mode near the center of the distribution, and is not strongly skewed. Therefore, we can say that the log transformation of biomass approximates a normal distribution, and we can run parametric tests with this dataset.
+
+c. Let's check this with a __QQ plot__ using __qqnorm( )__ as well. Is the data normal now?
+```{r echo = T, results = 'hide'}
+qqnorm(logbiomass)
+qqline(logbiomass)
+```
+It's definitely better. Not perfect, but better. Normal QQ plots will always have some wiggle. We would be able to proceed with this.  
+<br>
+
+__Pt III: Nonparametric methods__  
+If data transformations do not make our data follow a normal distribution, there are alternative nonparametric methods we can use to run hypotheses tests with our data. We can use the Sign test in place of a paired/one-sample t-test, and the Mann-Whitney _U_ test in place of the two-sample t-test. 
+
+__a) Sign test (paired and one-sample alternative)__  
+The sign test ranks all of the data as being above or below a certain null constant. Data are either greater than the constant (+) or less than the constant (-). The + values are counted, as are the - values, and we can then run a binomial test where the + values are our "successes" and the total + and - values are the number of trials.  
+
+Let's practice with our biomass dataset. Scientists hypothesized that the biomass ratio in marine reserves should be equal to 1, therefore our null constant for this example is 1. 31 were ranked to be above 1 (+), and 1 was ranked below 1 (-). That is, we have x = 31 successes, n = 32 trials. We expect half of our data to be above 1 and half to be below one, so p = 0.5.    
+```{r echo = T, results = 'hide'}
+binom.test(x = 31, n = 32, p = 0.05)
+```
+We see that the ___P___ __-value__ < 2.2e-16, so we reject the H0 that the biomass ratio of marine reserves equals 1.  
+
+The point of running a Sign test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
+"P < 0.05, therefore our results are statistically significant, and we __reject__ the H0. Our data deviate from our null expectations, and are not due to chance. We conclude that the biomass ratio of marine reserves is greater than unprotected areas."  
+<br>  
+
+__b) Mann-Whitney _U_ test (two-sample alternative)__  
+The Mann-Whitney _U_ test ranks all of the data from smallest to largest, and sums ranks for all individuals within each group.  
+
+Let's practice with data on sage crickets. Johnson et al. (1999) wanted to test whether females that had been starved for at least two days were faster to mate than those that were fed during the same period.  
+
+a. Read the file into _R_. Data are available here: https://github.com/lczawadzki/biostats/raw/main/data/crickets.csv.  
+```{r echo = T, results = 'hide'}
+crickets <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/crickets.csv")
+```
+
+b. Look at a histogram for each group (starved vs. fed)
+```{r echo = T, results = 'hide'}
+hist(crickets$starved)
+hist(crickets$fed)
+```
+We can clearly see that each group has a strong right skew. We _cannot_ use parametric methods. Data also do not become normal when log-transformed, so we need to use a __nonparametric test__.  
+
+c. Since each individual is only sampled once, and there are two groups, this is an __unpaired design__. Since we cannot use the two-sample t-test, we use its alternative, the Mann-Whitney _U_ test.  
+```{r echo = T, results = 'hide'}
+wilcox.test(crickets$starved, crickets$fed)
+```
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you what data you used for the test.
+2. Line 2 states specifically your __test statistic (W)__, and your ___P___ __-value__. Remember, the _P_-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.
+3. Line 3 tells you the alternative hypothesis.
+
+So, from our output, the first thing we notice is that _R_ ran a "Wilcoxon rank sum test", which is the Mann-Whitney U test in _R_. This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our data comes from the dataframe __crickets__ and our variables are __starved__ and __fed__.
+2. Our __test statistic (W) is 55__, and our ___P___ __-value = 0.3607__.  
+3. Our alternative hypothesis is that the location shift (i.e. the distribution shape for each group) is not equal to 0.
+
+The point of running a Mann-Whitney U test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
+"P > 0.05, therefore our results are statistically significant, and we __fail to reject__ the H0. Our data meet our null expectations, and are due to chance. We conclude that there is no difference in time to mating between starved and fed females; i.e. the shape of each distribution is the same."  
+
+<br>
+
+__Steps Recap:__  
+1. Is this a paired or unpaired design?  
+2. Is our data normal? Yes - step 3. No - step 4.  
+3. Run a parametric test based on design type. Paired - paired t-test. Unpaired - two-sample t-test (check for equal variances first!).  
+4. Does transforming the data make it normal? Yes - parametric test with transformed data. No - step 5.  
+5. Run a non-parametric test based on design type. Paired - Sign test. Unpaired - Mann-Whitney _U_ test.  
+<br>  
+
+**Now it's time to practice on your own.** 
+
+1. It can be difficult to know when a QQ plot is normal without visual experience. The best way to build up your visual practice is to plot lots of QQ plots of normal distributions, to get an understanding of the variety of QQ plots that are considered "normal". 
+
+    a\. Generate a list of 10 random numbers from a normal distribution with mean 15 and standard deviation 3, using the following command:
+```{r echo = T, results = 'hide'}
+norm <- rnorm(n = 10, mean = 15, sd = 3) 
+```
+    
+    b\. Use hist() to plot a histogram of these numbers from part a.
+    c\. Use qqnorm() to plot a QQ plot from the numbers in part a.
+    d\. Repeat a through c at least a dozen times. For each, look at the histograms and QQ plots. Think about the ways in which these look different from your expectations of a normal distribution graph. Remember, all of these samples come from a truly normal population, so these are simulated examples of what real normal data looks like!
+
+```{r echo = F, results = 'hide'}
+norm <- rnorm(n = 10, mean = 15, sd = 3)
+hist(norm)
+qqnorm(norm)
+qqline(norm)
+```
+
+2. In 1898, after a severe winter storm in Providence, Rhode Island, hundreds of house sparrows (_Passer domesticus_) were found immobilized on the ground. 136 were brought to the Anatomical Laboratory of Brown University, where Hermon Bumpus (1898) studied them. 76 recovered, while 64 died. Bumpus identified the sex and age of each individual, noted whether they survived or died, and took a series of morphological measurements, including weight, skull width, and femur length. He used this data to ask questions about natural selection, and whether natural selection acted on any of the measured traits in these birds. Data can be found here: https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv.
+
+Did natural selection act on body weight of house sparrows (_i.e._ do birds that survived differ in mean body weight from those that died)?
+
+    a\. Is this a paired or two-sample design?
+    b\. Do the distributions for each group (survived vs. dead) look approximately normal? _Note: Our data are grouped into a numerical variable column (weight_g) and a categorical variable column (survival). To plot separate histograms for survived and died, use the following notation - hist(df$numvar[which(df$catvar == "category")],)_
+    c\. Are the variances between groups equal? Run an F-test.
+    d\. Based on (a) (b) and (c), which test should you run?
+    e\. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).
+
+    ```{r include = F}
+#Answer:
+#a) Two-sample design
+
+#b) 
+#bumpus <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv")
+#hist(bumpus$weight_g[which(bumpus$survival == "survived")],)
+#hist(bumpus$weight_g[which(bumpus$survival == "died")],)
+
+# Yes, normal. Spread fairly evenly about the center, with clear, large mode near center of each distribution.
+
+#c) Variances are unequal
+
+#var.test(bumpus$weight_g~bumpus$survival, ratio = 1)
+# p = 0.03327; p < 0.05, not equal
+
+#d) Unpaired, normal, unequal variances. Welch's t-test.
+
+#e) 
+# H0: Survived and dead sparrows do not differ in mean body weight ($µ_1 = µ_2$).
+
+#t.test(bumpus$weight_g~bumpus$survival, mu = 0, paired = F, var.equal = F)
+#p = 0.01321
+#p < 0.05, reject H0, survived and dead sparrows differ in mean body weight, by an amount somewhere between 0.135 and 1.134 g. From this, Bumpus concluded that lighter birds survived better.
+
+#Overall...from his graphs that males survived better than females and that shorter, lighter birds with longer legs, wings and sternums and larger brain size (“skull width”) also survived better.
+
+    ```
+
+3. Swimmers often get ear infections from water remaining trapped in the ear canal. 14 swimmers were given a medication that claimed to reduce ear infections. The number of ear infections they developed before starting the medication, and the number of ear infections they developed after starting the medication, were recorded. Data can be found here: https://github.com/lczawadzki/biostats/raw/main/data/swimmers.csv. Does this medication reduce ear infections in swimmers? 
+
+    a\. Is the data normally distributed? Note: this is a paired study design, so the DIFFERENCES between groups need to be normally distributed, NOT the groups themselves. 
+    b\. Based on your histogram, which test should you run?
+    c\. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).
+    ```{r include = F}
+#Answer:
+#a)
+swimmers <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/swimmers.csv")
+hist(swimmers$Infections.after-swimmers$Infections.before)
+
+# No, not normal. Differences are right-skewed.
+
+#b) Paired, not-normal. Sign t-test.
+
+#c) 
+# H0: The mean difference in number of infections before medication and after medication is 0 ($µ_d$ = 0).
+
+# 2 have differences greater than 0 (+), and 12 have differences less than 0 (-). That is, we have x = 2 successes, n = 14 trials. We expect half of our data to be above 0 and half to be below 0, so p = 0.5.    
+
+binom.test(x = 2, n = 14, p = 0.05)
+#p = 0.153
+#p > 0.05, fail to reject H0. We cannot conclude that the medication works to decrease ear infections in swimmers.
+
+    ```

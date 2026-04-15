@@ -89,7 +89,7 @@ a. Read the file into _R_.
 titanic <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv")
 ```
 b. Create a __histogram__ of the age of passengers aboard the Titanic using __hist( )__. Does age follow a normal distribution? 
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 hist(titanic$age)
 ```
 Looking at our histogram, while we have some asymmetry, it has a clear, large mode near the center of the distribution. Non-normal data, on the other hand, would have obvious strong skews, or be strongly bimodal. Therefore, the age variable is approximately normal, and does not violate assumptions. We would be able to use a parametric test with this dataset.
@@ -102,7 +102,7 @@ a. Read the file into _R_.
 biomass <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/marinereserve.csv")
 ```
 b. Let's look at the data with a __histogram__ using __hist( )__. Does biomass ratio follow a normal distribution? 
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 hist(biomass$biomassRatio)
 ```
 Compared to the Titanic data, this histogram is very clearly right-skewed. From our plot, we can see that this dataset does NOT follow a normal distribution, and is non-normal. We would not be able to use a parametric test, and would need to turn to another option (_i.e._ transformation or a nonparametric test).  
@@ -112,7 +112,7 @@ __a2\)__ __QQ Plots__
 Now, let's visualize normality with __QQ plots__ using the same data.
 
 a. Let's start with the Titanic data. Create a __QQ plot__ of the age of passengers aboard the Titanic using __qqnorm( )__. Does age follow a normal distribution?  
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 qqnorm(titanic$age)   ##creates QQ plot
 qqline(titanic$age)   ##adds line to QQ plot
 ```
@@ -120,7 +120,7 @@ Looking at our QQ plot, notice we have some wiggle around the straight line, but
 <br>  
 
 b. What about the biomass data? Create a __QQ plot__ of the biomass ratios using __qqnorm( )__. Does biomass ratio follow a normal distribution?
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 qqnorm(biomass$biomassRatio)
 qqline(biomass$biomassRatio)
 ```
@@ -149,13 +149,13 @@ logbiomass <- log(biomass$biomassRatio)
 ```
 
 b. Make a histogram of the log-transformed data. Is it normal now?
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 hist(logbiomass)
 ```
 Looking at our histogram, it's not perfect, like our Titanic data, but it does have a clear, large mode near the center of the distribution, and is not strongly skewed. Therefore, we can say that the log transformation of biomass approximates a normal distribution, and we can run parametric tests with this dataset.
 
 c. Let's check this with a __QQ plot__ using __qqnorm( )__ as well. Is the data normal now?
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 qqnorm(logbiomass)
 qqline(logbiomass)
 ```
@@ -189,7 +189,7 @@ crickets <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/crick
 ```
 
 b. Look at a histogram for each group (starved vs. fed)
-```{r echo = T, results = 'hide'}
+```{r echo = T, fig.keep = "none"}
 hist(crickets$starved)
 hist(crickets$fed)
 ```

@@ -213,7 +213,7 @@ So, from our output, the first thing we notice is that _R_ ran a "Wilcoxon rank 
 3. Our alternative hypothesis is that the location shift (i.e. the distribution shape for each group) is not equal to 0.
 
 The point of running a Mann-Whitney U test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
-"P > 0.05, therefore our results are statistically significant, and we __fail to reject__ the H0. Our data meet our null expectations, and are due to chance. We conclude that there is no difference in time to mating between starved and fed females; i.e. the shape of each distribution is the same."  
+"P > 0.05, therefore our results are __NOT__ statistically significant, and we __fail to reject__ the H0. Our data meet our null expectations, and are due to chance. We conclude that there is no difference in time to mating between starved and fed females; i.e. the shape of each distribution is the same."  
 
 <br>
 
@@ -261,15 +261,15 @@ qqline(norm)
 #a) Two-sample design
 
 #b) 
-#bumpus <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv")
-#hist(bumpus$weight_g[which(bumpus$survival == "survived")],)
-#hist(bumpus$weight_g[which(bumpus$survival == "died")],)
+bumpus <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv")
+hist(bumpus$weight_g[which(bumpus$survival == "survived")],)
+hist(bumpus$weight_g[which(bumpus$survival == "died")],)
 
 # Yes, normal. Spread fairly evenly about the center, with clear, large mode near center of each distribution.
 
 #c) Variances are unequal
 
-#var.test(bumpus$weight_g~bumpus$survival, ratio = 1)
+var.test(bumpus$weight_g~bumpus$survival, ratio = 1)
 # p = 0.03327; p < 0.05, not equal
 
 #d) Unpaired, normal, unequal variances. Welch's t-test.
@@ -277,7 +277,8 @@ qqline(norm)
 #e) 
 # H0: Survived and dead sparrows do not differ in mean body weight ($µ_1 = µ_2$).
 
-#t.test(bumpus$weight_g~bumpus$survival, mu = 0, paired = F, var.equal = F)
+t.test(bumpus$weight_g~bumpus$survival, mu = 0, paired = F, var.equal = F)
+t.test(bumpus$weight_g~bumpus$survival, data = bumpus, var.equal = F)
 #p = 0.01321
 #p < 0.05, reject H0, survived and dead sparrows differ in mean body weight, by an amount somewhere between 0.135 and 1.134 g. From this, Bumpus concluded that lighter birds survived better.
 

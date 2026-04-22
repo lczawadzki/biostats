@@ -308,10 +308,11 @@ hist(swimmers$Infections.after-swimmers$Infections.before)
 #c) 
 # H0: The mean difference in number of infections before medication and after medication is 0 ($µ_d$ = 0).
 
+swimdif <- swimmers$Infections.after-swimmers$Infections.before
 # 2 have differences greater than 0 (+), and 12 have differences less than 0 (-). That is, we have x = 2 successes, n = 14 trials. We expect half of our data to be above 0 and half to be below 0, so p = 0.5.    
 
-binom.test(x = 2, n = 14, p = 0.05)
-#p = 0.153
-#p > 0.05, fail to reject H0. We cannot conclude that the medication works to decrease ear infections in swimmers.
+binom.test(x = 2, n = 14, p = 0.5)
+#p = 0.01294
+#p < 0.05, reject H0. We can conclude that the medication works to decrease ear infections in swimmers.
 
     ```

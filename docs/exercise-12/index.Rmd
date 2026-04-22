@@ -1,0 +1,297 @@
+---
+title: "R Exercise 12: Comparing more than two means (Ch 15)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 15: Comparing more than two means
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 15 to _R_.
+<br>  
+
+__Objectives__
+
+- Conduct an ANOVA in R
+- Use nonparametric methods for non-normal data (Kruskal-Wallis test)
+- Run a post-hoc test (Tukey-Kramer test)
+
+__New Commands__:  
+
+| Arguments | Notes |
+| --- | --- |
+| df | df is name of dataframe |
+| x | x is your numerical variable |
+| y | y is your categorical variable |
+| anova_name | a name for your anova, can be anything | 
+
+| R Command | Notes |
+| --- | --- |
+| anova_name <- aov(x ~ y, data = df) | runs an analysis of variance (ANOVA) for your data |
+| summary(anova_name) | prints ANOVA table for your ANOVA |
+| kruskal.test(x ~ y, data = df) | nonparametric alternative to the ANOVA |
+| TukeyHSD(anova_name) | runs post-hoc pairwise comparisons for your data |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 12__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+__Pt I: ANOVAs__  
+Like t-tests, ANOVAs compare the means of groups. However, where t-tests compare one mean to a null (one-sample, paired), or the means of two groups to each other (two-sample), ANOVAs compare means of __more than two__ groups. 
+
+In _R_, we use the function ___aov( )__. Once you read in your data, you need the following information:  
+
+1. __x__ - your numerical variable
+2. __y__ - your categorical variable
+
+Let's practice through example.
+
+__Example: Passengers that traveled on the Titanic were able to purchase either first class, second class, or third class tickets. Ticket cost depended on the class, with first class tickets being the most expensive. Does ticket class impact age of individuals that purchased the tickets? __  
+
+__Step 1:__ Read in the data (available here: https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv)  
+```{r echo = T, results = 'hide'}
+titanic <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv")
+```
+
+__Step 2:__ Check your categorical variable __passenger_class__ to make sure you have more than two groups. How many groups do we have?
+```{r echo = T, results = 'hide'}
+str(titanic)   ## one way to look at dataframe
+unique(titanic$passenger_class)   ##provides unique groups for a variable
+```
+From the dataframe structure, we see that __passenger_class__ is a factor w/ 3 levels, meaning it is a categorical variable with 3 groups. Also, we verify this with the _unique_ function and see that there are 3 unique groups of passenger_class. We can use an ANOVA to answer our question.  
+
+__Step 3:__ Once you are sure you have 1 numerical variable, and 1 categorical variable with __more than two__ groups, you can use the function __aov( )__ to run your ANOVA. Be sure to assign __aov( )__ to an __anova_name__. Let's name our anova _titanic_age_.
+```{r echo = T, results = 'hide'}
+titanic_age <- aov(age~passenger_class, data = titanic)
+```
+__Step 4:__ Use __summary( )__ to print your ANOVA table. 
+```{r echo = T, results = 'hide'}
+summary(titanic_age)
+```
+__Step 5:__ Interpret your output and state your conclusion.  
+
+Let's read through the output. The output in this case is our ANOVA table. The table has 2 rows and 6 columns.  
+
+- _Row 1:_ This row will give you information on the __variance among groups__.  
+- _Row 2:_ This row will give you information on the __variance within groups__ or our __error__. R refers to this as our "__Residuals__".  
+
+- _Column 1:_ whether the data refers to groups or error (Residuals) 
+- _Column 2:_ Df = degrees of freedom  
+- _Column 3:_ Sum Sq = sum of squares. Recall, sum of squares is calculated as the squared value of your deviations. These deviations are either (1) between each observation's group mean and the grand mean (among groups), or (2) between the observation and the group mean (within groups).  
+- _Column 4:_ Mean Sq = Mean Squares Group ($MS_{\text group}$; row 1) or Mean Squares Error ($MS_{\text error}$; row 2). Recall, $MS_{\text group}$ is calculated as $SS_{\text group}/df_{\text group}$ and $MS_{\text error}$ is calculated as $SS_{\text error}/df_{\text error}$.  
+- _Column 5:_ F value = your test statistic, _F_.  
+- _Column 6:_ Pr(>F) = your p-value. Significance codes for p-values are noted under the table (*** = < 0.01, ** = < 0.01, * = < 0.05, . = < 0.1, nothing = < 1).  
+<br>  
+
+Now, let's look at our output by row:  
+
+__Row 1: passenger_class__  
+
+- Passenger class has __2 degrees of freedom (df)__; (k - 1 = 3 - 1 = 2).  
+- Sum of Squares of the group deviations ($SS_{\text group}$) = 26,690.  
+- Mean Squares Group ($MS_{\text group}$) = 13,345. This is the variation __among groups__.  
+- The test statistic __F = 75.9__.    
+- Our ___P___ __-value < 2e-16__.    
+
+__Row 2: Residuals__ 
+
+- The residuals have __630 degrees of freedom (df)__; (n - 1 = 631 - 1 = 630).  
+- Sum of Squares of the error deviations ($SS_{\text error}$) = 110,764.   
+- Mean Squares Error ($MS_{\text error}$) = 176. This is the variation __within groups__.    
+
+Now, the point of running an ANOVA is to test if there _is_ a difference between the means of the groups. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output?  
+
+" __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. We conclude that __not all groups__ have equal means. Our data deviate from our null expectations, and are not due to chance. At least one group mean differs from the others. Age differs among ticket class."  
+<br>  
+
+__Pt II: Pairwise Comparisons__ 
+What if you want to know __which__ groups are different? Here, we would conduct a post-hoc test known as the Tukey-Kramer test.  
+
+Let's continue with the Titanic example.  
+
+__Step 1:__ Use __TukeyHSD( )__ to run your post-hoc tests. 
+```{r echo = T, results = 'hide'}
+TukeyHSD(titanic_age)
+```
+__Step 2:__ Interpret your output and state your conclusion.  
+
+First, our output gives us information on the test and the data used.  
+1. Line 1 tells you the ANOVA you ran before the Tukey-Kramer test, referred to as the "Fit".  
+2. Line 2 tells you your categorical variable. 
+
+Then, the output presents information for each pairwise comparison of our dataset as a pairwise-comparison table. The table has 3 rows and 5 columns.  
+
+- _Rows_: Each row gives you information on a pairwise-comparison. If you have 3 groups, you will have 3 pairwise comparisons = 3 rows. If you have 4 groups, you will have 6 pairwise comparisons = 6 rows, and so on.
+
+- _Column 1:_ which groups are being compared    
+- _Column 2:_ diff = difference in means between compared groups  
+- _Column 3:_ lwr = lower bound of 95% confidence interval for the difference between group means  
+- _Column 4:_ upr = upper bound of 95% confidence interval for the difference between group means  
+- _Column 5:_ p adj = your p-value, adjusted for the number of tests, hence "p adj"  
+<br>  
+
+So, from our output, the first thing we notice is that _R_ ran a "Tukey multiple comparisons of means". This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our ANOVA we ran before running a Tukey test is __aov(age~passenger_class, data = titanic)__.  
+2. The categorical variable that we are running pairwise comparisons for is __passenger_class__.  
+
+Now, let's look at our output by row. Note, we have 3 rows --> 3 groups = 3 pairwise comparisons = 3 rows. Row 1 is the comparison between 2nd class and 1st class tickets, Row 2 is the comparison between 3rd class and 1st class tickets, and Row 3 is the comparison between 3rd class and 2nd class tickets.  
+
+__Row 1: 2nd-1st__  
+This row compares 2nd class and 1st class tickets.  
+
+- The difference in mean ages between 2nd class and 1st class ticket holders is __-11.37 years__.   
+- The lower bound of the 95% confidence interval for mean age difference of these two groups is __-14.35 years__.  
+- The upper bound of the 95% confidence interval for mean age difference of these two groups is __-8.39 years__.   
+- Our ___P___ __-value = 0.00__.   
+
+__Row 2: 3rd-1st__  
+This row compares 3rd class and 1st class tickets.  
+
+- The difference in mean ages between 3rd class and 1st class ticket holders is __-15.15 years__.   
+- The lower bound of the 95% confidence interval for mean age difference of these two groups is __-18.19 years__.  
+- The upper bound of the 95% confidence interval for mean age difference of these two groups is __-12.10 years__.   
+- Our ___P___ __-value = 0.00__.   
+
+__Row 3: 3rd-2nd__  
+This row compares 3rd class and 1st class tickets.  
+
+- The difference in mean ages between 3rd class and 1st class ticket holders is __-3.78 years__.   
+- The lower bound of the 95% confidence interval for mean age difference of these two groups is __-6.87 years__.  
+- The upper bound of the 95% confidence interval for mean age difference of these two groups is __-0.69 years__.   
+- Our ___P___ __-value = 0.012__.  
+
+Now, the point of running the Tukey-Kramer test is to find out which groups differ. What conclusions can you draw from your output?  
+
+- "Group 1 and Group 2: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2."  
+- "Group 1 and Group 3: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2."  
+- "Group 2 and Group 3: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2." 
+
+'Mean age differs between 1st class and 2nd class passengers, 1st class and 3rd class passengers, and 2nd class and 3rd class passengers."  
+
+__Pt III: Nonparametric methods__  
+For argument's sake, let's say you plot three histograms, one for each age category, and you find out the data are not normal. What now? You can use the Kruskal-Wallis test, an alternative to the ANOVA, using __kruskal.test( )__. Try it out below.
+```{r echo = T, results = 'hide'}
+kruskal.test(age~passenger_class, data = titanic)
+```
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you what data you used for the test.
+2. Line 2 states specifically your __test statistic (Kruskal-Wallis chi-squared)__, the __degrees of freedom (df)__, and your ___P___ __-value__. Remember, the _P_-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.  
+
+So, from our output, the first thing we notice is that _R_ ran a "Kruskal-Wallis rank sum test". This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our data is the __age (numerical variable)__ by__ passenger_class (categorical variable)__.
+2. Our __test statistic (Kruskal-Wallis chi-squared) is 116.08__, our __degrees of freedom (df) are 2__, and our ___P___ __-value < 2.2e-16__.  
+
+What conclusions can you draw from your output? 
+" __P < 0.05__, therefore our results are statistically significant, and we __reject__ the H0. Our data deviate from our null expectations, and are not due to chance. At least one group mean differs from the others. Age differs among ticket class."
+
+**Now it's time to practice on your own.** 
+EDITTTTT
+1. Common cuckoos (_Cuculus canorus_), a passerine native to Eurasia, uses a parasitic breeding strategy to avoid raising their own young. Instead of laying eggs in their own eggs, cuckoos lay their eggs in the nests of other species, for example, Eurasian Reed Warblers (_Acrocephalus scirpaceus_). Studies have shown that cuckoos have evolved to lay eggs that are similar in colour to the eggs of the host species, but what about egg size? Do cuckoos lay eggs similar in size to the eggs of their hosts? Data on length of cuckoo eggs laid in nests of varying host species can be found here: https://github.com/lczawadzki/biostats/raw/main/data/cuckooeggs.csv.
+
+    a\. How many groups of host species are there in this dataset? 
+    b\. Report your null hypothesis.
+    c\. Use ANOVA to test for a difference between host species in the mean size of the cuckoo eggs in their nests. What is your conclusion (statistical decision, and final conclusion in language relevant to the problem)?
+    d\. Assuming that your ANOVA rejected the null hypothesis, use a Tukey-Kramer test to decide which pairs of host species are significantly different from each other in cuckoo egg mean length. What is your conclusion?
+
+    ```{r include = F}
+#Answer:
+
+cuckoo <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/cuckooeggs.csv")
+    
+#a)
+unique(cuckoo$host_species)
+    # 6 groups
+
+#b) H0: Mean cuckoo egg length is the same for all host species.
+
+#c) 
+cuckoo_aov <- aov(egg_length~host_species,
+                  data = cuckoo)
+summary(cuckoo_aov)
+
+    # p < 0.05, reject H0
+    # We conclude that not all host species have equal mean cuckoo egg length. At least one group mean differs from the others. Mean cuckoo egg length differs among host species.
+
+#d)
+TukeyHSD(cuckoo_aov)
+    # Meadow differ from Hedge
+    # Wren differ from Hedge
+    # Tree differ from Meadow
+    # Wren differ from Meadow
+    # Wren differ from Pied Wagtail
+    # Wren differ from Robin
+    # Wren differ from Tree Pipit
+    # All other pairwise comparisons do not have sufficient evidence to suggest that mean cuckoo egg length differs between these host species.
+
+
+    ```
+
+2. Animals infected with pathogens often experience a disturbance in their circadian rhythm (i.e. their endogenous daily cycle). Shirasu-Hiza et al. (2007) tested whether the mechanism of circadian timing itself could have an effect on disease. They tested this idea by sampling three groups of fruit flies -- one "normal", one with a mutation in the timing gene tim01, and one group that was heterozygous for the tim01 mutation. Flies were exposed to a dangerous bacteria, _Streptococcus pnuemoniae_, and the number of days that they lived after exposure were recorded. Data on this study are here: https://github.com/lczawadzki/biostats/raw/main/data/circadian_fly.csv.
+
+
+Plot a histogram of each of the three groups. Do these data match the assumptions of an ANOVA?
+
+Use a Kruskal-Wallis test to ask whether lifespan differs between the three groups of flies.
+
+    a\. Plot a separate histogram for each fly group. Do these data match assumptions of an ANOVA?  
+    b\. Use a Kruskal-Wallis test to ask whether lifespan differs between the three groups of flies. What is your conclusion (statistical decision, and final conclusion in language relevant to the problem)?  
+
+```{r include = F}
+#Answer:
+
+fly <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/circadian_fly.csv")
+
+#a)
+hist(fly$days_to_death[which(fly$genotype == "wild type")],)
+hist(fly$days_to_death[which(fly$genotype == "tim01")],)
+hist(fly$days_to_death[which(fly$genotype == "tim01 (rescued)")],)
+
+    # No, the data are not normal.
+
+#b)
+kruskal.test(days_to_death~genotype, data = fly)
+    # p < 0.05, reject H0
+    # We conclude that not all genotypes have equal mean days to death. At least one group mean differs from the others. Mean days to death differs among genotype.
+
+```

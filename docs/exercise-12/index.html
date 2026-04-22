@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-01-01" />
 
-<title>R Exercise 11: Handling Violations of Assumptions (Ch 13)</title>
+<title>R Exercise 12: Comparing more than two means (Ch 15)</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -1618,22 +1618,21 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">R Exercise 11: Handling Violations of Assumptions (Ch 13)</h1>
+<h1 class="title toc-ignore">R Exercise 12: Comparing more than two means (Ch 15)</h1>
 <h4 class="author">Dr. Z</h4>
 <h4 class="date">2026</h4>
 
 </div>
 
 
-<p>Let’s apply what we’ve learned in Chapter 12 to <em>R</em>. <br></p>
+<p>Let’s apply what we’ve learned in Chapter 15 to <em>R</em>. <br></p>
 <p><strong>Objectives</strong></p>
 <ul>
-<li>Graphically assess normality with histograms and QQ plots</li>
-<li>Statistically test for normality with a Shapiro-Wilk test</li>
-<li>Conduct log data transformations on non-normal data</li>
-<li>Use nonparametric methods for non-normal data (Sign test and Mann-Whitney <em>U</em> test)</li>
+<li>Conduct an ANOVA in R</li>
+<li>Use nonparametric methods for non-normal data (Kruskal-Wallis test)</li>
+<li>Run a post-hoc test (Tukey-Kramer test)</li>
 </ul>
-<p><strong>New (and old) Commands</strong>:</p>
+<p><strong>New Commands</strong>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -1643,8 +1642,20 @@ pre code {
 </thead>
 <tbody>
 <tr class="odd">
-<td>df$var</td>
-<td>df is name of dataframe, var is the column of interest</td>
+<td>df</td>
+<td>df is name of dataframe</td>
+</tr>
+<tr class="even">
+<td>x</td>
+<td>x is your numerical variable</td>
+</tr>
+<tr class="odd">
+<td>y</td>
+<td>y is your categorical variable</td>
+</tr>
+<tr class="even">
+<td>anova_name</td>
+<td>a name for your anova, can be anything</td>
 </tr>
 </tbody>
 </table>
@@ -1661,36 +1672,20 @@ pre code {
 </thead>
 <tbody>
 <tr class="odd">
-<td>hist(df$var)</td>
-<td>Makes a histogram of a variable</td>
+<td>anova_name &lt;- aov(x ~ y, data = df)</td>
+<td>runs an analysis of variance (ANOVA) for your data</td>
 </tr>
 <tr class="even">
-<td>qqnorm(df$var)</td>
-<td>Makes QQ plot of a variable</td>
+<td>summary(anova_name)</td>
+<td>prints ANOVA table for your ANOVA</td>
 </tr>
 <tr class="odd">
-<td>qqline(df$var)</td>
-<td>Adds a line to your QQ plot for your specific variable</td>
+<td>kruskal.test(x ~ y, data = df)</td>
+<td>nonparametric alternative to the ANOVA</td>
 </tr>
 <tr class="even">
-<td>shapiro.test(df$var)</td>
-<td>Shapiro-Wilk test for normality; if P &gt; 0.05, this means data follow a normal distribution</td>
-</tr>
-<tr class="odd">
-<td>log(df$var)</td>
-<td>Natural log transformation (ln) of a variable</td>
-</tr>
-<tr class="even">
-<td>asin(sqrt(df$var))</td>
-<td>arcsine transformation of a variable</td>
-</tr>
-<tr class="odd">
-<td>binom.test(x, n, p = 0.05)</td>
-<td>Sign test for non-normal data (paired/one-sample alternative), where x is the number of successes, n is the number of trials, and p = 0.05 since we expect half the data to be above and below a null constant</td>
-</tr>
-<tr class="even">
-<td>wilcox.test(x, y)</td>
-<td>Mann-Whitney <em>U</em> test for non-normal data (two-sample alternative), where x is the variable from the first group/treatment, and y is the variable from the second group/treatment</td>
+<td>TukeyHSD(anova_name)</td>
+<td>runs post-hoc pairwise comparisons for your data</td>
 </tr>
 </tbody>
 </table>
@@ -1728,7 +1723,7 @@ pre code {
 </tbody>
 </table>
 <p><br></p>
-<p><strong>Exercise 11</strong><br />
+<p><strong>Exercise 12</strong><br />
 1. Open <em>RStudio</em> and prepare a new script.</p>
 <p>Open a new script. All of your code for today’s exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script.</p>
 <pre class="r"><code># Filename: (what you will save the script as)
@@ -1738,146 +1733,164 @@ pre code {
 
 # Description: (describe what this script is for)</code></pre>
 <p><br></p>
-<p><strong>Pt I: Assessing Normality</strong><br />
-t-tests rely on the assumption that data are normally distributed. These tests are fairly robust to minor deviations from the normal (especially with large sample sizes), so our data only need to be approximately normally distributed. However, if data deviate strongly from the normal distribution, we cannot use a t-test, and need to use an alternative option. Therefore, we need to check whether our data are normally distributed before we proceed with hypothesis testing. If they are normal, we can continue with our t-test. If they are not normal, we’ll use another method.</p>
-<p><strong>a)</strong> <strong>Graphical Methods</strong><br />
-Visually, we can assess normality with histograms and QQ plots. Let’s try both.</p>
-<p><strong>a1)</strong> <strong>Histograms</strong><br />
-Let’s start with data from the Titanic. This data contains information on the ticket class, age, sex, and survival of all passengers onboard the Titanic. Data are available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv</a>.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Read the file into <em>R</em>.</li>
+<p><strong>Pt I: ANOVAs</strong><br />
+Like t-tests, ANOVAs compare the means of groups. However, where t-tests compare one mean to a null (one-sample, paired), or the means of two groups to each other (two-sample), ANOVAs compare means of <strong>more than two</strong> groups.</p>
+<p>In <em>R</em>, we use the function _<strong>aov( )</strong>. Once you read in your data, you need the following information:</p>
+<ol style="list-style-type: decimal">
+<li><strong>x</strong> - your numerical variable</li>
+<li><strong>y</strong> - your categorical variable</li>
 </ol>
+<p>Let’s practice through example.</p>
+<p><strong>Example: Passengers that traveled on the Titanic were able to purchase either first class, second class, or third class tickets. Ticket cost depended on the class, with first class tickets being the most expensive. Does ticket class impact age of individuals that purchased the tickets? </strong></p>
+<p><strong>Step 1:</strong> Read in the data (available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv</a>)</p>
 <pre class="r"><code>titanic &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/titanic_var.csv&quot;)</code></pre>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Create a <strong>histogram</strong> of the age of passengers aboard the Titanic using <strong>hist( )</strong>. Does age follow a normal distribution?</li>
-</ol>
-<pre class="r"><code>hist(titanic$age)</code></pre>
-<p>Looking at our histogram, while we have some asymmetry, it has a clear, large mode near the center of the distribution. Non-normal data, on the other hand, would have obvious strong skews, or be strongly bimodal. Therefore, the age variable is approximately normal, and does not violate assumptions. We would be able to use a parametric test with this dataset. <br></p>
-<p>Let’s practice with another dataset, this time on biomass ratio in 32 marine reserves from Halpern (2003). Data are available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/marinereserve.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/marinereserve.csv</a>.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Read the file into <em>R</em>.</li>
-</ol>
-<pre class="r"><code>biomass &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/marinereserve.csv&quot;)</code></pre>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Let’s look at the data with a <strong>histogram</strong> using <strong>hist( )</strong>. Does biomass ratio follow a normal distribution?</li>
-</ol>
-<pre class="r"><code>hist(biomass$biomassRatio)</code></pre>
-<p>Compared to the Titanic data, this histogram is very clearly right-skewed. From our plot, we can see that this dataset does NOT follow a normal distribution, and is non-normal. We would not be able to use a parametric test, and would need to turn to another option (<em>i.e.</em> transformation or a nonparametric test).<br />
+<p><strong>Step 2:</strong> Check your categorical variable <strong>passenger_class</strong> to make sure you have more than two groups. How many groups do we have?</p>
+<pre class="r"><code>str(titanic)   ## one way to look at dataframe
+unique(titanic$passenger_class)   ##provides unique groups for a variable</code></pre>
+<p>From the dataframe structure, we see that <strong>passenger_class</strong> is a factor w/ 3 levels, meaning it is a categorical variable with 3 groups. Also, we verify this with the <em>unique</em> function and see that there are 3 unique groups of passenger_class. We can use an ANOVA to answer our question.</p>
+<p><strong>Step 3:</strong> Once you are sure you have 1 numerical variable, and 1 categorical variable with <strong>more than two</strong> groups, you can use the function <strong>aov( )</strong> to run your ANOVA. Be sure to assign <strong>aov( )</strong> to an <strong>anova_name</strong>. Let’s name our anova <em>titanic_age</em>.</p>
+<pre class="r"><code>titanic_age &lt;- aov(age~passenger_class, data = titanic)</code></pre>
+<p><strong>Step 4:</strong> Use <strong>summary( )</strong> to print your ANOVA table.</p>
+<pre class="r"><code>summary(titanic_age)</code></pre>
+<p><strong>Step 5:</strong> Interpret your output and state your conclusion.</p>
+<p>Let’s read through the output. The output in this case is our ANOVA table. The table has 2 rows and 6 columns.</p>
+<ul>
+<li><em>Row 1:</em> This row will give you information on the <strong>variance among groups</strong>.<br />
+</li>
+<li><p><em>Row 2:</em> This row will give you information on the <strong>variance within groups</strong> or our <strong>error</strong>. R refers to this as our “<strong>Residuals</strong>”.</p></li>
+<li><em>Column 1:</em> whether the data refers to groups or error (Residuals)</li>
+<li><em>Column 2:</em> Df = degrees of freedom<br />
+</li>
+<li><em>Column 3:</em> Sum Sq = sum of squares. Recall, sum of squares is calculated as the squared value of your deviations. These deviations are either (1) between each observation’s group mean and the grand mean (among groups), or (2) between the observation and the group mean (within groups).<br />
+</li>
+<li><em>Column 4:</em> Mean Sq = Mean Squares Group (<span class="math inline">\(MS_{\text group}\)</span>; row 1) or Mean Squares Error (<span class="math inline">\(MS_{\text error}\)</span>; row 2). Recall, <span class="math inline">\(MS_{\text group}\)</span> is calculated as <span class="math inline">\(SS_{\text group}/df_{\text group}\)</span> and <span class="math inline">\(MS_{\text error}\)</span> is calculated as <span class="math inline">\(SS_{\text error}/df_{\text error}\)</span>.<br />
+</li>
+<li><em>Column 5:</em> F value = your test statistic, <em>F</em>.<br />
+</li>
+<li><p><em>Column 6:</em> Pr(&gt;F) = your p-value. Significance codes for p-values are noted under the table (*** = &lt; 0.01, ** = &lt; 0.01, * = &lt; 0.05, . = &lt; 0.1, nothing = &lt; 1).<br />
+<br></p></li>
+</ul>
+<p>Now, let’s look at our output by row:</p>
+<p><strong>Row 1: passenger_class</strong></p>
+<ul>
+<li>Passenger class has <strong>2 degrees of freedom (df)</strong>; (k - 1 = 3 - 1 = 2).<br />
+</li>
+<li>Sum of Squares of the group deviations (<span class="math inline">\(SS_{\text group}\)</span>) = 26,690.<br />
+</li>
+<li>Mean Squares Group (<span class="math inline">\(MS_{\text group}\)</span>) = 13,345. This is the variation <strong>among groups</strong>.<br />
+</li>
+<li>The test statistic <strong>F = 75.9</strong>.<br />
+</li>
+<li>Our <strong><em>P</em></strong> <strong>-value &lt; 2e-16</strong>.</li>
+</ul>
+<p><strong>Row 2: Residuals</strong></p>
+<ul>
+<li>The residuals have <strong>630 degrees of freedom (df)</strong>; (n - 1 = 631 - 1 = 630).<br />
+</li>
+<li>Sum of Squares of the error deviations (<span class="math inline">\(SS_{\text error}\)</span>) = 110,764.<br />
+</li>
+<li>Mean Squares Error (<span class="math inline">\(MS_{\text error}\)</span>) = 176. This is the variation <strong>within groups</strong>.</li>
+</ul>
+<p>Now, the point of running an ANOVA is to test if there <em>is</em> a difference between the means of the groups. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output?</p>
+<p>&quot; <strong>P &lt; 0.05</strong>, therefore our results are <strong>statistically significant</strong>, and we <strong>reject</strong> the H0. We conclude that <strong>not all groups</strong> have equal means. Our data deviate from our null expectations, and are not due to chance. At least one group mean differs from the others. Age differs among ticket class.&quot;<br />
 <br></p>
-<p><strong>a2)</strong> <strong>QQ Plots</strong><br />
-Now, let’s visualize normality with <strong>QQ plots</strong> using the same data.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Let’s start with the Titanic data. Create a <strong>QQ plot</strong> of the age of passengers aboard the Titanic using <strong>qqnorm( )</strong>. Does age follow a normal distribution?</li>
+<p><strong>Pt II: Pairwise Comparisons</strong> What if you want to know <strong>which</strong> groups are different? Here, we would conduct a post-hoc test known as the Tukey-Kramer test.</p>
+<p>Let’s continue with the Titanic example.</p>
+<p><strong>Step 1:</strong> Use <strong>TukeyHSD( )</strong> to run your post-hoc tests.</p>
+<pre class="r"><code>TukeyHSD(titanic_age)</code></pre>
+<p><strong>Step 2:</strong> Interpret your output and state your conclusion.</p>
+<p>First, our output gives us information on the test and the data used.<br />
+1. Line 1 tells you the ANOVA you ran before the Tukey-Kramer test, referred to as the “Fit”.<br />
+2. Line 2 tells you your categorical variable.</p>
+<p>Then, the output presents information for each pairwise comparison of our dataset as a pairwise-comparison table. The table has 3 rows and 5 columns.</p>
+<ul>
+<li><p><em>Rows</em>: Each row gives you information on a pairwise-comparison. If you have 3 groups, you will have 3 pairwise comparisons = 3 rows. If you have 4 groups, you will have 6 pairwise comparisons = 6 rows, and so on.</p></li>
+<li><em>Column 1:</em> which groups are being compared<br />
+</li>
+<li><em>Column 2:</em> diff = difference in means between compared groups<br />
+</li>
+<li><em>Column 3:</em> lwr = lower bound of 95% confidence interval for the difference between group means<br />
+</li>
+<li><em>Column 4:</em> upr = upper bound of 95% confidence interval for the difference between group means<br />
+</li>
+<li><p><em>Column 5:</em> p adj = your p-value, adjusted for the number of tests, hence “p adj”<br />
+<br></p></li>
+</ul>
+<p>So, from our output, the first thing we notice is that <em>R</em> ran a “Tukey multiple comparisons of means”. This is exactly what we wanted to run, so we’re good so far. Now, let’s look at each line:</p>
+<ol style="list-style-type: decimal">
+<li>Our ANOVA we ran before running a Tukey test is <strong>aov(age~passenger_class, data = titanic)</strong>.<br />
+</li>
+<li>The categorical variable that we are running pairwise comparisons for is <strong>passenger_class</strong>.</li>
 </ol>
-<pre class="r"><code>qqnorm(titanic$age)   ##creates QQ plot
-qqline(titanic$age)   ##adds line to QQ plot</code></pre>
-<p>Looking at our QQ plot, notice we have some wiggle around the straight line, but nothing substantial. Non-normal data would have substantial curvature over a large range of values or big jumps in the distribution. Therefore, the age of passengers aboard the Titanic follows a normal distribution. We would be able to use a parametric test with this dataset.<br />
-<br></p>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>What about the biomass data? Create a <strong>QQ plot</strong> of the biomass ratios using <strong>qqnorm( )</strong>. Does biomass ratio follow a normal distribution?</li>
-</ol>
-<pre class="r"><code>qqnorm(biomass$biomassRatio)
-qqline(biomass$biomassRatio)</code></pre>
-<p>Compared to the Titanic data, notice this QQ plot has substantial curvature over a large range of values, particularly on the right-hand side. This is expected since our histogram showed that the data were clearly right-skewed. Biomass ratio does NOT follow a normal distribution. We would not be able to use a parametric test, and would need to turn to another option (i.e. transformation or a nonparametric test).<br />
-<br></p>
-<p><strong>b)</strong> <strong>Statistical Methods (Shapiro-Wilk test)</strong><br />
-We can also assess normaliy statistically. Let’s try this with data on biomass ratio of 32 marine reserves.</p>
-<pre class="r"><code>shapiro.test(biomass$biomassRatio)</code></pre>
-<p>The <em>P-value</em> is &lt; 0.05, therefore, we reject the H0 of normality. Our data are not normal.<br />
-<br></p>
-<p><strong>Pt II: Data Transformations</strong><br />
-If data are not normal, we can first try to transform the data to achieve normality. The most common method for biological data is a log transformation (natural log; ln). Other methods include the arcsine transformation.</p>
-<p><strong>a) Log transformation</strong><br />
-We use log transformations when data are ratios or products of variables, frequency distribution of data is skewed to the right, variance increases as mean gets larger (in comparisons across groups), or data span several orders of magnitude.</p>
-<p>Let’s practice with the biomass dataset. Let’s transform our data, and then check for normality with a histogram and QQ plot.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Perform the log transformation using <strong>log( )</strong>. Assign it to a variable so we can use it more easily for making graphs.</li>
-</ol>
-<pre class="r"><code>logbiomass &lt;- log(biomass$biomassRatio)</code></pre>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Make a histogram of the log-transformed data. Is it normal now?</li>
-</ol>
-<pre class="r"><code>hist(logbiomass)</code></pre>
-<p>Looking at our histogram, it’s not perfect, like our Titanic data, but it does have a clear, large mode near the center of the distribution, and is not strongly skewed. Therefore, we can say that the log transformation of biomass approximates a normal distribution, and we can run parametric tests with this dataset.</p>
-<ol start="3" style="list-style-type: lower-alpha">
-<li>Let’s check this with a <strong>QQ plot</strong> using <strong>qqnorm( )</strong> as well. Is the data normal now?</li>
-</ol>
-<pre class="r"><code>qqnorm(logbiomass)
-qqline(logbiomass)</code></pre>
-<p>It’s definitely better. Not perfect, but better. Normal QQ plots will always have some wiggle. We would be able to proceed with this.<br />
-<br></p>
+<p>Now, let’s look at our output by row. Note, we have 3 rows –&gt; 3 groups = 3 pairwise comparisons = 3 rows. Row 1 is the comparison between 2nd class and 1st class tickets, Row 2 is the comparison between 3rd class and 1st class tickets, and Row 3 is the comparison between 3rd class and 2nd class tickets.</p>
+<p><strong>Row 1: 2nd-1st</strong><br />
+This row compares 2nd class and 1st class tickets.</p>
+<ul>
+<li>The difference in mean ages between 2nd class and 1st class ticket holders is <strong>-11.37 years</strong>.<br />
+</li>
+<li>The lower bound of the 95% confidence interval for mean age difference of these two groups is <strong>-14.35 years</strong>.<br />
+</li>
+<li>The upper bound of the 95% confidence interval for mean age difference of these two groups is <strong>-8.39 years</strong>.<br />
+</li>
+<li>Our <strong><em>P</em></strong> <strong>-value = 0.00</strong>.</li>
+</ul>
+<p><strong>Row 2: 3rd-1st</strong><br />
+This row compares 3rd class and 1st class tickets.</p>
+<ul>
+<li>The difference in mean ages between 3rd class and 1st class ticket holders is <strong>-15.15 years</strong>.<br />
+</li>
+<li>The lower bound of the 95% confidence interval for mean age difference of these two groups is <strong>-18.19 years</strong>.<br />
+</li>
+<li>The upper bound of the 95% confidence interval for mean age difference of these two groups is <strong>-12.10 years</strong>.<br />
+</li>
+<li>Our <strong><em>P</em></strong> <strong>-value = 0.00</strong>.</li>
+</ul>
+<p><strong>Row 3: 3rd-2nd</strong><br />
+This row compares 3rd class and 1st class tickets.</p>
+<ul>
+<li>The difference in mean ages between 3rd class and 1st class ticket holders is <strong>-3.78 years</strong>.<br />
+</li>
+<li>The lower bound of the 95% confidence interval for mean age difference of these two groups is <strong>-6.87 years</strong>.<br />
+</li>
+<li>The upper bound of the 95% confidence interval for mean age difference of these two groups is <strong>-0.69 years</strong>.<br />
+</li>
+<li>Our <strong><em>P</em></strong> <strong>-value = 0.012</strong>.</li>
+</ul>
+<p>Now, the point of running the Tukey-Kramer test is to find out which groups differ. What conclusions can you draw from your output?</p>
+<ul>
+<li>“Group 1 and Group 2: <strong>P &lt; 0.05</strong>, therefore our results are <strong>statistically significant</strong>, and we <strong>reject</strong> the H0. The mean of Group 1 differs from the mean of Group 2.”<br />
+</li>
+<li>“Group 1 and Group 3: <strong>P &lt; 0.05</strong>, therefore our results are <strong>statistically significant</strong>, and we <strong>reject</strong> the H0. The mean of Group 1 differs from the mean of Group 2.”<br />
+</li>
+<li>“Group 2 and Group 3: <strong>P &lt; 0.05</strong>, therefore our results are <strong>statistically significant</strong>, and we <strong>reject</strong> the H0. The mean of Group 1 differs from the mean of Group 2.”</li>
+</ul>
+<p>’Mean age differs between 1st class and 2nd class passengers, 1st class and 3rd class passengers, and 2nd class and 3rd class passengers.&quot;</p>
 <p><strong>Pt III: Nonparametric methods</strong><br />
-If data transformations do not make our data follow a normal distribution, there are alternative nonparametric methods we can use to run hypotheses tests with our data. We can use the Sign test in place of a paired/one-sample t-test, and the Mann-Whitney <em>U</em> test in place of the two-sample t-test.</p>
-<p><strong>a) Sign test (paired and one-sample alternative)</strong><br />
-The sign test ranks all of the data as being above or below a certain null constant. Data are either greater than the constant (+) or less than the constant (-). The + values are counted, as are the - values, and we can then run a binomial test where the + values are our “successes” and the total + and - values are the number of trials.</p>
-<p>Let’s practice with our biomass dataset. Scientists hypothesized that the biomass ratio in marine reserves should be equal to 1, therefore our null constant for this example is 1. 31 were ranked to be above 1 (+), and 1 was ranked below 1 (-). That is, we have x = 31 successes, n = 32 trials. We expect half of our data to be above 1 and half to be below one, so p = 0.5.</p>
-<pre class="r"><code>binom.test(x = 31, n = 32, p = 0.05)</code></pre>
-<p>We see that the <strong><em>P</em></strong> <strong>-value</strong> &lt; 2.2e-16, so we reject the H0 that the biomass ratio of marine reserves equals 1.</p>
-<p>The point of running a Sign test is to test if there <em>is</em> an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? “P &lt; 0.05, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data deviate from our null expectations, and are not due to chance. We conclude that the biomass ratio of marine reserves is greater than unprotected areas.”<br />
-<br></p>
-<p><strong>b) Mann-Whitney <em>U</em> test (two-sample alternative)</strong><br />
-The Mann-Whitney <em>U</em> test ranks all of the data from smallest to largest, and sums ranks for all individuals within each group.</p>
-<p>Let’s practice with data on sage crickets. Johnson et al. (1999) wanted to test whether females that had been starved for at least two days were faster to mate than those that were fed during the same period.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Read the file into <em>R</em>. Data are available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/crickets.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/crickets.csv</a>.</li>
-</ol>
-<pre class="r"><code>crickets &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/crickets.csv&quot;)</code></pre>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Look at a histogram for each group (starved vs. fed)</li>
-</ol>
-<pre class="r"><code>hist(crickets$starved)
-hist(crickets$fed)</code></pre>
-<p>We can clearly see that each group has a strong right skew. We <em>cannot</em> use parametric methods. Data also do not become normal when log-transformed, so we need to use a <strong>nonparametric test</strong>.</p>
-<ol start="3" style="list-style-type: lower-alpha">
-<li>Since each individual is only sampled once, and there are two groups, this is an <strong>unpaired design</strong>. Since we cannot use the two-sample t-test, we use its alternative, the Mann-Whitney <em>U</em> test.</li>
-</ol>
-<pre class="r"><code>wilcox.test(crickets$starved, crickets$fed)</code></pre>
+For argument’s sake, let’s say you plot three histograms, one for each age category, and you find out the data are not normal. What now? You can use the Kruskal-Wallis test, an alternative to the ANOVA, using <strong>kruskal.test( )</strong>. Try it out below.</p>
+<pre class="r"><code>kruskal.test(age~passenger_class, data = titanic)</code></pre>
 <p>Let’s read through the output. The output tells you a number of things about your data:</p>
 <ol style="list-style-type: decimal">
 <li>Line 1 tells you what data you used for the test.</li>
-<li>Line 2 states specifically your <strong>test statistic (W)</strong>, and your <strong><em>P</em></strong> <strong>-value</strong>. Remember, the <em>P</em>-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.</li>
-<li>Line 3 tells you the alternative hypothesis.</li>
+<li>Line 2 states specifically your <strong>test statistic (Kruskal-Wallis chi-squared)</strong>, the <strong>degrees of freedom (df)</strong>, and your <strong><em>P</em></strong> <strong>-value</strong>. Remember, the <em>P</em>-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.</li>
 </ol>
-<p>So, from our output, the first thing we notice is that <em>R</em> ran a “Wilcoxon rank sum test”, which is the Mann-Whitney U test in <em>R</em>. This is exactly what we wanted to run, so we’re good so far. Now, let’s look at each line:</p>
+<p>So, from our output, the first thing we notice is that <em>R</em> ran a “Kruskal-Wallis rank sum test”. This is exactly what we wanted to run, so we’re good so far. Now, let’s look at each line:</p>
 <ol style="list-style-type: decimal">
-<li>Our data comes from the dataframe <strong>crickets</strong> and our variables are <strong>starved</strong> and <strong>fed</strong>.</li>
-<li>Our <strong>test statistic (W) is 55</strong>, and our <strong><em>P</em></strong> <strong>-value = 0.3607</strong>.<br />
-</li>
-<li>Our alternative hypothesis is that the location shift (i.e. the distribution shape for each group) is not equal to 0.</li>
+<li>Our data is the <strong>age (numerical variable)</strong> by__ passenger_class (categorical variable)__.</li>
+<li>Our <strong>test statistic (Kruskal-Wallis chi-squared) is 116.08</strong>, our <strong>degrees of freedom (df) are 2</strong>, and our <strong><em>P</em></strong> <strong>-value &lt; 2.2e-16</strong>.</li>
 </ol>
-<p>The point of running a Mann-Whitney U test is to test if there <em>is</em> an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? “P &gt; 0.05, therefore our results are <strong>NOT</strong> statistically significant, and we <strong>fail to reject</strong> the H0. Our data meet our null expectations, and are due to chance. We conclude that there is no difference in time to mating between starved and fed females; i.e. the shape of each distribution is the same.”</p>
-<p><br></p>
-<p><strong>Steps Recap:</strong><br />
-1. Is this a paired or unpaired design?<br />
-2. Is our data normal? Yes - step 3. No - step 4.<br />
-3. Run a parametric test based on design type. Paired - paired t-test. Unpaired - two-sample t-test (check for equal variances first!).<br />
-4. Does transforming the data make it normal? Yes - parametric test with transformed data. No - step 5.<br />
-5. Run a non-parametric test based on design type. Paired - Sign test. Unpaired - Mann-Whitney <em>U</em> test.<br />
-<br></p>
-<p><strong>Now it’s time to practice on your own.</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>It can be difficult to know when a QQ plot is normal without visual experience. The best way to build up your visual practice is to plot lots of QQ plots of normal distributions, to get an understanding of the variety of QQ plots that are considered “normal”.</p>
-<p>a. Generate a list of 10 random numbers from a normal distribution with mean 15 and standard deviation 3, using the following command: norm &lt;- rnorm(n = 10, mean = 15, sd = 3)</p>
-<p>b. Use hist() to plot a histogram of these numbers from part a.</p>
-<p>c. Use qqnorm() to plot a QQ plot from the numbers in part a.</p>
-<p>d. Repeat (a) through (c) at least a dozen times. For each, look at the histograms and QQ plots. Think about the ways in which these look different from your expectations of a normal distribution graph. Remember, all of these samples come from a truly normal population, so these are simulated examples of what real normal data looks like!</p></li>
-</ol>
-<p><br></p>
+<p>What conclusions can you draw from your output? &quot; <strong>P &lt; 0.05</strong>, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data deviate from our null expectations, and are not due to chance. At least one group mean differs from the others. Age differs among ticket class.&quot;</p>
+<p><strong>Now it’s time to practice on your own.</strong> EDITTTTT 1. Common cuckoos (<em>Cuculus canorus</em>), a passerine native to Eurasia, uses a parasitic breeding strategy to avoid raising their own young. Instead of laying eggs in their own eggs, cuckoos lay their eggs in the nests of other species, for example, Eurasian Reed Warblers (<em>Acrocephalus scirpaceus</em>). Studies have shown that cuckoos have evolved to lay eggs that are similar in colour to the eggs of the host species, but what about egg size? Do cuckoos lay eggs similar in size to the eggs of their hosts? Data on length of cuckoo eggs laid in nests of varying host species can be found here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/cuckooeggs.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/cuckooeggs.csv</a>.</p>
+<pre><code>a\. How many groups of host species are there in this dataset? 
+b\. Report your null hypothesis.
+c\. Use ANOVA to test for a difference between host species in the mean size of the cuckoo eggs in their nests. What is your conclusion (statistical decision, and final conclusion in language relevant to the problem)?
+d\. Assuming that your ANOVA rejected the null hypothesis, use a Tukey-Kramer test to decide which pairs of host species are significantly different from each other in cuckoo egg mean length. What is your conclusion?</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>In 1898, after a severe winter storm in Providence, Rhode Island, hundreds of house sparrows (<em>Passer domesticus</em>) were found immobilized on the ground. 136 were brought to the Anatomical Laboratory of Brown University, where Hermon Bumpus (1898) studied them. 76 recovered, while 64 died. Bumpus identified the sex and age of each individual, noted whether they survived or died, and took a series of morphological measurements, including weight, skull width, and femur length. He used this data to ask questions about natural selection, and whether natural selection acted on any of the measured traits in these birds. Data can be found here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/bumpus.csv</a>. Did natural selection act on body weight of house sparrows (<em>i.e.</em> do birds that survived differ in mean body weight from those that died)?</p>
-<p>a. Is this a paired or two-sample design?</p>
-<p>b. Do the distributions for each group (survived vs. dead) look approximately normal? Note: Our data are grouped into a numerical variable column (weight_g) and a categorical variable column (survival). To plot separate histograms for survived and died, use the following notation: hist(df$numvar[which(df$catvar == “category”)],)</p>
-<p>c. Are the variances between groups equal? Run an F-test.</p>
-<p>d. Based on (a) (b) and (c), which test should you run?</p>
-<p>e. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).</p></li>
+<li>Animals infected with pathogens often experience a disturbance in their circadian rhythm (i.e. their endogenous daily cycle). Shirasu-Hiza et al. (2007) tested whether the mechanism of circadian timing itself could have an effect on disease. They tested this idea by sampling three groups of fruit flies – one “normal”, one with a mutation in the timing gene tim01, and one group that was heterozygous for the tim01 mutation. Flies were exposed to a dangerous bacteria, <em>Streptococcus pnuemoniae</em>, and the number of days that they lived after exposure were recorded. Data on this study are here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/circadian_fly.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/circadian_fly.csv</a>.</li>
 </ol>
-<p><br></p>
-<ol start="3" style="list-style-type: decimal">
-<li><p>Swimmers often get ear infections from water remaining trapped in the ear canal. 14 swimmers were given a medication that claimed to reduce ear infections. The number of ear infections they developed before starting the medication, and the number of ear infections they developed after starting the medication, were recorded. Data can be found here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/swimmers.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/swimmers.csv</a>. Does this medication reduce ear infections in swimmers?</p>
-<p>a. Is the data normally distributed? Note: this is a paired study design, so the DIFFERENCES between groups should be normally distributed, NOT the groups themselves.</p>
-<p>b. Based on your histogram, which test should you run?</p>
-<p>c. Report your null hypothesis, run your test in R, and state your conclusion (statistical decision and in language relevant to the problem).</p></li>
-</ol>
+<p>Plot a histogram of each of the three groups. Do these data match the assumptions of an ANOVA?</p>
+<p>Use a Kruskal-Wallis test to ask whether lifespan differs between the three groups of flies.</p>
+<pre><code>a\. Plot a separate histogram for each fly group. Do these data match assumptions of an ANOVA?  
+b\. Use a Kruskal-Wallis test to ask whether lifespan differs between the three groups of flies. What is your conclusion (statistical decision, and final conclusion in language relevant to the problem)?  </code></pre>
 
 
 

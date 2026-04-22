@@ -200,9 +200,9 @@ This row compares 3rd class and 1st class tickets.
 
 Now, the point of running the Tukey-Kramer test is to find out which groups differ. What conclusions can you draw from your output?  
 
-- "Group 1 and Group 2: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2."  
-- "Group 1 and Group 3: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2."  
-- "Group 2 and Group 3: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2." 
+- " __Group 1 and Group 2__: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2."  
+- " __Group 1 and Group 3__: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2."  
+- " __Group 2 and Group 3__: __P < 0.05__, therefore our results are __statistically significant__, and we __reject__ the H0. The mean of Group 1 differs from the mean of Group 2." 
 
 'Mean age differs between 1st class and 2nd class passengers, 1st class and 3rd class passengers, and 2nd class and 3rd class passengers."  
 
@@ -222,11 +222,10 @@ So, from our output, the first thing we notice is that _R_ ran a "Kruskal-Wallis
 1. Our data is the __age (numerical variable)__ by__ passenger_class (categorical variable)__.
 2. Our __test statistic (Kruskal-Wallis chi-squared) is 116.08__, our __degrees of freedom (df) are 2__, and our ___P___ __-value < 2.2e-16__.  
 
-What conclusions can you draw from your output? 
+What conclusions can you draw from your output?  
 " __P < 0.05__, therefore our results are statistically significant, and we __reject__ the H0. Our data deviate from our null expectations, and are not due to chance. At least one group mean differs from the others. Age differs among ticket class."
 
 **Now it's time to practice on your own.** 
-EDITTTTT
 1. Common cuckoos (_Cuculus canorus_), a passerine native to Eurasia, uses a parasitic breeding strategy to avoid raising their own young. Instead of laying eggs in their own eggs, cuckoos lay their eggs in the nests of other species, for example, Eurasian Reed Warblers (_Acrocephalus scirpaceus_). Studies have shown that cuckoos have evolved to lay eggs that are similar in colour to the eggs of the host species, but what about egg size? Do cuckoos lay eggs similar in size to the eggs of their hosts? Data on length of cuckoo eggs laid in nests of varying host species can be found here: https://github.com/lczawadzki/biostats/raw/main/data/cuckooeggs.csv.
 
     a\. How many groups of host species are there in this dataset? 

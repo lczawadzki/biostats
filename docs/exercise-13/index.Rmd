@@ -1,0 +1,237 @@
+---
+title: "R Exercise 13: Correlations (Ch 16)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 16: Correlations
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 16 to _R_.
+<br>  
+
+__Objectives__
+
+- Calculate a correlation coefficient (_r_) 
+- Test hypotheses about correlation
+- Use the non-parametric Spearman’s correlation
+
+__New Commands__:  
+
+| Arguments | Notes |
+| --- | --- |
+| df | df is name of dataframe |
+| x | x is one numerical variable |
+| y | y is the other numerical variable |
+| anova_name | a name for your anova, can be anything | 
+
+| R Command | Notes |
+| --- | --- |
+| cor.test(df\$x, df\$y) | tests a correlation for your data |
+| cor.test(df\$x, df\$y, method = "spearman") | nonparametric alternative to correlation test (Spearman's rank correlation) |
+| plot(df\$x, df\$y) | plots a scatterplot for your two numerical variables |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 12__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+__Pt I: Calculating the correlation coefficient and testing for significance__  
+Correlations quantify the "scatter" between two numerical variables. We quantify this with the correlation coefficient, _r_. Variables are strongly correlated if _r_ is close to 1 (Low "scatter"), and weakly correlated if _r_ is close to 0 (high "scatter"). 
+
+In _R_, we use the function __cor.test( )__. Once you read in your data, you need the following information:  
+
+1. __x__ - your first numerical variable
+2. __y__ - your second numerical variable
+
+Let's practice through example.
+
+__Example:__ Let's use the dataset from Chapter 2 on ornamentation in guppies. Brooks et al. (2000) tested the inheritance of "attractive" traits from fathers to sons. For 36 father-son pairs, they quantified the ornamentation of the fathers (colour and brightness), and the attractiveness of their sons (rate of female visits). Is a father's ornamentation associated with their son's attractiveness?
+
+__Step 1:__ Read in the data (available here: https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv)  
+```{r echo = T, results = 'hide'}
+guppy <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv")
+```
+
+__Step 2:__ Run a categorical test with the function __cor.test( )__. How strong is the correlation between ornamentation in fathers and attractiveness in sons? Is the relationship statistically significant?
+```{r echo = T, results = 'hide'}
+cor.test(guppy$fatherOrnamentation, guppy$sonAttractiveness)
+```
+__Step 3:__ Interpret your output and state your conclusion.  
+
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you what data you used for the test.
+2. Line 2 states specifically your __test statistic (t)__, your __degrees of freedom (df)__ and your ___P___ __-value__. Remember, the _P_-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.
+3. Line 3 tells you the alternative hypothesis.  
+4. Line 4 tells you the 95% confidence interval of the proportion, which are values between which you are 95% confident that the true population proportion lies between.    
+5. Line 5 tells you information about your sample estimates, specifically, the correlation coefficient, _r_, of _your_ sample data. 
+
+So, from our output, the first thing we notice is that _R_ ran a "Pearson's product-moment correlation", which is the correlation test in _R_. This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our data comes from the dataframe __guppy__ and our variables are __fatherOrnamentation__ and __sonAttractiveness__.
+2. Our __test statistic (t) is 4.5371__, our __degrees of freedom (df) are 34__, and our ___P___ __-value = 6.784e-05__.  
+3. Our alternative hypothesis is that the true correlation is not equal to 0.  
+4. We are 95% confident that the __true correlation coefficient__ lies between __0.358__ and __0.784__.  
+5. Our sample correlation coefficient, _r_, (the estimate) equals __0.614__.
+
+The point of running a correlation test is two-fold: (1) to quantify the relationship with a correlation coefficient, and (2) to test if there _is_ a linear association between the two variables. What conclusions can you draw from your output?  
+(1) "The correlation coefficient, _r_ = 0.614. There is a strong positive correlation between father ornamentation and son attractiveness in guppies."  
+(2) "P < 0.05, therefore our results are statistically significant, and we __reject__ the H0. Our data __do NOT__ meet our null expectations. We conclude that there is a significant association between father ornamentation and son attractiveness."
+<br>  
+
+__Pt II: Nonparametric methods - Spearman's rank__  
+If our data are not normally distributed, and data transformations do not make our data follow a normal distribution, we can use the Spearman's rank correlation, which is the alternative nonparametric method to the correlation test.
+
+Let's practice through example.
+
+__Example:__ In human populations, urbanization of settlements causes disease transmission to increase. As disease transmission increases, so does the evolution of resistance to diseases. A mutation in the _SLC11A1_ gene in humans causes resistance to tuberculosis. Barnes et al. (2011) studied the frequency of this resistant allele in towns and villages in Europe and Asia compared to the duration of these settlements to ask whether there was an association between frequency of alleles and settlement duration.  
+
+__Step 1:__ Read in the data (available here: https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv)  
+```{r echo = T, results = 'hide'}
+tb <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv")
+```
+__Step 2:__ Check that both numerical variables are normal using a histogram and QQ plot.   
+```{r echo = T, results = 'hide', fig.keep = "none"}
+hist(tb$alleleFrequency)
+qqnorm(tb$alleleFrequency)
+qqline(tb$alleleFrequency)
+
+hist(tb$duration)
+qqnorm(tb$duration)
+qqline(tb$duration)
+```
+Both histograms show obvious skew, and the QQ plots have significant curvature off of the line. The data are not normally distributed.  
+
+__Step 3:__ Since the data are NOT normal, we need to run a Spearman's rank correlation test instead of the parametric test. Run this test to ask: how strong is the correlation between frequency of the resistant allele and duration of settlement? Is the relationship statistically significant? You can ignore the warning.  
+```{r echo = T, results = 'hide'}
+cor.test(tb$alleleFrequency, tb$duration, method = "spearman")
+```
+__Step 4:__ Interpret your output and state your conclusion.  
+
+Let's read through the output.  
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you what data you used for the test.  
+2. Line 2 states specifically your __test statistic (S)__, and your ___P___ __-value__. Remember, the _P_-value is the probability of obtaining a mean difference as extreme, or more extreme, than your sample mean difference. That is, it is the probability of obtaining your mean difference under the null hypothesis.  
+3. Line 3 tells you the alternative hypothesis.  
+4. Line 4 tells you information about your sample estimates, specifically, the correlation coefficient, $r_s$, of _your_ sample data.  
+
+So, from our output, the first thing we notice is that _R_ ran a "Spearman's rank correlation rho", which is the correlation test in _R_. This is exactly what we wanted to run, so we're good so far. Now, let's look at each line:  
+
+1. Our data comes from the dataframe __tb__ and our variables are __alleleFrequency__ and __duration__.  
+2. Our __test statistic (S) is 232.64__, and our ___P___ __-value = 0.001258__.    
+3. Our alternative hypothesis is that the true rhho is not equal to 0.  
+4. Our sample correlation coefficient, $r_s$, (the estimate) equals __0.715__.  
+
+Again, the point of running a correlation test is two-fold: (1) to quantify the relationship with a correlation coefficient, and (2) to test if there _is_ a linear association between the two variables. What conclusions can you draw from your output?  
+(1) "The correlation coefficient, $r_s$ = 0.715. There is a strong positive correlation between frequency of the resistant allele and duration of settlement."    
+(2) "P < 0.05, therefore our results are statistically significant, and we __reject__ the H0. Our data __do NOT__ meet our null expectations. We conclude that there is a significant association between between frequency of the resistant allele and duration of settlement."  
+<br>  
+
+__Pt III: Plotting scatterplots__  
+We can visualize these relationships with a scatterplot! Remember, the best graph for two numerical variables is a scatterplot.    
+
+To do this, we use the function __plot( )__, and we need two pieces of information:  
+
+1. __x__ - your first numerical variable
+2. __y__ - your second numerical variable  
+
+Let's make one for both examples:  
+_1. Guppy dataset_
+```{r echo = T, results = 'hide', fig.keep = "none"}
+plot(guppy$sonAttractiveness, guppy$fatherOrnamentation)
+```
+_2. TB dataset_
+```{r echo = T, results = 'hide', fig.keep = "none"}
+plot(tb$duration, tb$alleleFrequency)
+```
+We can change the shape of each datapoint with the argument "pch", and the color of each datapoint with the argument, "col". Let's try this.  
+```{r echo = T, results = 'hide', fig.keep = "none"}
+plot(guppy$sonAttractiveness, guppy$fatherOrnamentation,
+     pch = 20, col = "red")
+plot(tb$duration, tb$alleleFrequency,
+     pch = 20, col = "red")
+```
+<br>  
+
+**Now it's time to practice on your own.**  
+
+1. Larger animals tend to have larger brains. But is the increase in brain size proportional to the increase in body size? A set of data on body and brain size of 62 mammal species was collated by Allison and Cicchetti (1976), and these data are in the data set “mammals.csv”. The file contains columns giving the species name, the average body mass (in kg) and average brain size (in g) for each species. Data on this study are here: https://github.com/lczawadzki/biostats/raw/main/data/mammals.csv.    
+
+    a\. Plot brain size against body size. Is the relationship linear?  
+    b\. Based on part (a), which test should we run? Run this test. Is there statistical evidence that brain size is correlated with body size?
+```{r include = F}
+#REWORD QUESTION; EXACT WORDING AS WEBSITE!!!
+
+#Answer:
+
+mammals <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/mammals.csv")
+
+#a)
+plot(mammals$body_mass_kg, mammals$brain_mass_g,
+     xlab = "Body Mass (kg)", ylab = "Brain Mass (g)",
+     pch = 20, col = "red")
+# No, skewed
+
+#b)
+cor.test(mammals$body_mass_kg, mammals$brain_mass_g,
+         method = "spearman")  
+    # p < 0.05, reject H0
+    # We conclude that there is a significant correlation between the body mass and the brain mass of mammals. 
+```
+
+2. We can make the data in Question 1 bivariate normal with a log transformation. To use log-transformed data in a hypothesis test, we can write the variables in as __log(df\$x)__ rather than just __df\$x__. Using the log-transformed data, complete the following:  
+
+    a\. Run the appropriate test in R to ask if there is statistical evidence that brain size is correlated with body size.   
+    b\. What is the correlation coefficient? What does this tell us about the strength of the correlation?  
+
+```{r include = F}
+#Answer:
+
+#a) 
+cor.test(log(mammals$body_mass_kg),
+         log(mammals$brain_mass_g))
+    # p < 0.05, reject H0
+    # We conclude that there is a significant correlation between the body mass and the brain mass of mammals. 
+
+#b) The correlation coefficient is 0.96, suggesting very strongly positive correlation.
+
+```

@@ -1647,11 +1647,11 @@ pre code {
 </tr>
 <tr class="even">
 <td>x</td>
-<td>x is one numerical variable</td>
+<td>x is one numerical variable (either a vector or column name)</td>
 </tr>
 <tr class="odd">
 <td>y</td>
-<td>y is the other numerical variable</td>
+<td>y is the other numerical variable (either a vector or column name)</td>
 </tr>
 <tr class="even">
 <td>anova_name</td>
@@ -1661,27 +1661,47 @@ pre code {
 </table>
 <table>
 <colgroup>
-<col width="50%"></col>
-<col width="50%"></col>
+<col width="33%"></col>
+<col width="33%"></col>
+<col width="33%"></col>
 </colgroup>
 <thead>
 <tr class="header">
+<th>Notation</th>
 <th>R Command</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>cor.test(df$x, df$y)</td>
+<td>Vector</td>
+<td>plot(x, y)</td>
+<td>plots a scatterplot for your two numerical variables</td>
+</tr>
+<tr class="even">
+<td>Column name</td>
+<td>plot(df$x, df$y)</td>
+<td>plots a scatterplot for your two numerical variables</td>
+</tr>
+<tr class="odd">
+<td>Vector</td>
+<td>cor.test(x, y)</td>
 <td>tests a correlation for your data</td>
 </tr>
 <tr class="even">
-<td>cor.test(df$x, df$y, method = “spearman”)</td>
-<td>nonparametric alternative to correlation test (Spearman’s rank correlation)</td>
+<td>Column name</td>
+<td>cor.test(df$x, df$y)</td>
+<td>tests a correlation for your data</td>
 </tr>
 <tr class="odd">
-<td>plot(df$x, df$y)</td>
-<td>plots a scatterplot for your two numerical variables</td>
+<td>Vector</td>
+<td>cor.test(x, y, method = “spearman”)</td>
+<td>nonparametric alternative to correlation test (Spearman’s rank correlation)</td>
+</tr>
+<tr class="even">
+<td>Column name</td>
+<td>cor.test(df$x, df$y, method = “spearman”)</td>
+<td>nonparametric alternative to correlation test (Spearman’s rank correlation)</td>
 </tr>
 </tbody>
 </table>
@@ -1729,7 +1749,34 @@ pre code {
 
 # Description: (describe what this script is for)</code></pre>
 <p><br></p>
-<p><strong>Pt I: Calculating the correlation coefficient and testing for significance</strong><br />
+<p><strong>Pt I: Plotting scatterplots</strong><br />
+First, we want to be able to visualize the relationship between our variables with a graph. Remember, the best graph for two numerical variables is a scatterplot.</p>
+<p>To do this, we use the function <strong>plot( )</strong>, and we need two pieces of information:</p>
+<ol style="list-style-type: decimal">
+<li><strong>x</strong> - your first numerical variable</li>
+<li><strong>y</strong> - your second numerical variable</li>
+</ol>
+<p>Let’s try two examples:</p>
+<p><strong>Example 1. Guppy dataset</strong><br />
+Let’s use the dataset from Chapter 2 on ornamentation in guppies. Brooks et al. (2000) tested the inheritance of “attractive” traits from fathers to sons. For 36 father-son pairs, they quantified the ornamentation of the fathers (colour and brightness), and the attractiveness of their sons (rate of female visits). Is a father’s ornamentation associated with their son’s attractiveness?</p>
+<p><strong>Step 1:</strong> Read in the data (available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv</a>)</p>
+<pre class="r"><code>guppy &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv&quot;)</code></pre>
+<p><strong>Step 2:</strong> Plot scatterplot of your two variables, sonAttractivness, and fatherOrnamentation.</p>
+<pre class="r"><code>plot(guppy$sonAttractiveness, guppy$fatherOrnamentation)</code></pre>
+<p><strong>Example 2. Tuberculosis dataset</strong><br />
+In human populations, urbanization of settlements causes disease transmission to increase. As disease transmission increases, so does the evolution of resistance to diseases. A mutation in the <em>SLC11A1</em> gene in humans causes resistance to tuberculosis. Barnes et al. (2011) studied the frequency of this resistant allele in towns and villages in Europe and Asia compared to the duration of these settlements to ask whether there was an association between frequency of alleles and settlement duration.</p>
+<p><strong>Step 1:</strong> Read in the data (available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv</a>)</p>
+<pre class="r"><code>tb &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv&quot;)</code></pre>
+<p><strong>Step 2:</strong> Plot scatterplot of your two variables, sonAttractivness, and fatherOrnamentation.</p>
+<pre class="r"><code>plot(tb$duration, tb$alleleFrequency)</code></pre>
+<p><strong>Modifying Plots</strong>:<br />
+We can change the shape of each datapoint with the argument “pch”, and the color of each datapoint with the argument, “col”. Let’s try this for each example.</p>
+<pre class="r"><code>plot(guppy$sonAttractiveness, guppy$fatherOrnamentation,
+     pch = 20, col = &quot;red&quot;)
+plot(tb$duration, tb$alleleFrequency,
+     pch = 20, col = &quot;red&quot;)</code></pre>
+<p><br></p>
+<p><strong>Pt II: Calculating the correlation coefficient and testing for significance</strong><br />
 Correlations quantify the “scatter” between two numerical variables. We quantify this with the correlation coefficient, <em>r</em>. Variables are strongly correlated if <em>r</em> is close to 1 (Low “scatter”), and weakly correlated if <em>r</em> is close to 0 (high “scatter”).</p>
 <p>In <em>R</em>, we use the function <strong>cor.test( )</strong>. Once you read in your data, you need the following information:</p>
 <ol style="list-style-type: decimal">
@@ -1737,12 +1784,10 @@ Correlations quantify the “scatter” between two numerical variables. We quan
 <li><strong>y</strong> - your second numerical variable</li>
 </ol>
 <p>Let’s practice through example.</p>
-<p><strong>Example:</strong> Let’s use the dataset from Chapter 2 on ornamentation in guppies. Brooks et al. (2000) tested the inheritance of “attractive” traits from fathers to sons. For 36 father-son pairs, they quantified the ornamentation of the fathers (colour and brightness), and the attractiveness of their sons (rate of female visits). Is a father’s ornamentation associated with their son’s attractiveness?</p>
-<p><strong>Step 1:</strong> Read in the data (available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv</a>)</p>
-<pre class="r"><code>guppy &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv&quot;)</code></pre>
-<p><strong>Step 2:</strong> Run a categorical test with the function <strong>cor.test( )</strong>. How strong is the correlation between ornamentation in fathers and attractiveness in sons? Is the relationship statistically significant?</p>
+<p><strong>Example 1. Guppy dataset</strong></p>
+<p><strong>Step 1:</strong> Run a correlation test with the function <strong>cor.test( )</strong>. How strong is the correlation between ornamentation in fathers and attractiveness in sons? Is the relationship statistically significant?</p>
 <pre class="r"><code>cor.test(guppy$fatherOrnamentation, guppy$sonAttractiveness)</code></pre>
-<p><strong>Step 3:</strong> Interpret your output and state your conclusion.</p>
+<p><strong>Step 2:</strong> Interpret your output and state your conclusion.</p>
 <p>Let’s read through the output. The output tells you a number of things about your data:</p>
 <ol style="list-style-type: decimal">
 <li>Line 1 tells you what data you used for the test.</li>
@@ -1766,14 +1811,12 @@ Correlations quantify the “scatter” between two numerical variables. We quan
 </ol>
 <p>The point of running a correlation test is two-fold: (1) to quantify the relationship with a correlation coefficient, and (2) to test if there <em>is</em> a linear association between the two variables. What conclusions can you draw from your output?<br />
 (1) “The correlation coefficient, <em>r</em> = 0.614. There is a strong positive correlation between father ornamentation and son attractiveness in guppies.”<br />
-(2) “P &lt; 0.05, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data <strong>do NOT</strong> meet our null expectations. We conclude that there is a significant association between father ornamentation and son attractiveness.” <br></p>
-<p><strong>Pt II: Nonparametric methods - Spearman’s rank</strong><br />
+(2) “P &lt; 0.05, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data <strong>do NOT</strong> meet our null expectations. We conclude that there is a significant linear association between father ornamentation and son attractiveness.” <br></p>
+<p><strong>Pt III: Nonparametric methods - Spearman’s rank</strong><br />
 If our data are not normally distributed, and data transformations do not make our data follow a normal distribution, we can use the Spearman’s rank correlation, which is the alternative nonparametric method to the correlation test.</p>
 <p>Let’s practice through example.</p>
-<p><strong>Example:</strong> In human populations, urbanization of settlements causes disease transmission to increase. As disease transmission increases, so does the evolution of resistance to diseases. A mutation in the <em>SLC11A1</em> gene in humans causes resistance to tuberculosis. Barnes et al. (2011) studied the frequency of this resistant allele in towns and villages in Europe and Asia compared to the duration of these settlements to ask whether there was an association between frequency of alleles and settlement duration.</p>
-<p><strong>Step 1:</strong> Read in the data (available here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv</a>)</p>
-<pre class="r"><code>tb &lt;- read.csv(&quot;https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv&quot;)</code></pre>
-<p><strong>Step 2:</strong> Check that both numerical variables are normal using a histogram and QQ plot.</p>
+<p><strong>Example 2. Tuberculosis dataset</strong></p>
+<p><strong>Step 1:</strong> Check that both numerical variables are normal using a histogram and QQ plot (you can also confirm with your scatterplot - if it is NOT linear, and NOT elliptical/circular, it is NOT normal).</p>
 <pre class="r"><code>hist(tb$alleleFrequency)
 qqnorm(tb$alleleFrequency)
 qqline(tb$alleleFrequency)
@@ -1782,11 +1825,11 @@ hist(tb$duration)
 qqnorm(tb$duration)
 qqline(tb$duration)</code></pre>
 <p>Both histograms show obvious skew, and the QQ plots have significant curvature off of the line. The data are not normally distributed.</p>
-<p><strong>Step 3:</strong> Since the data are NOT normal, we need to run a Spearman’s rank correlation test instead of the parametric test. Run this test to ask: how strong is the correlation between frequency of the resistant allele and duration of settlement? Is the relationship statistically significant? You can ignore the warning.</p>
+<p><strong>Step 2:</strong> Since the data are NOT normal, we need to run a Spearman’s rank correlation test instead of the parametric test. Run this test to ask: how strong is the correlation between frequency of the resistant allele and duration of settlement? Is the relationship statistically significant? <strong>You can ignore the warning.</strong></p>
 <pre class="r"><code>cor.test(tb$alleleFrequency, tb$duration, method = &quot;spearman&quot;)</code></pre>
 <pre><code>## Warning in cor.test.default(tb$alleleFrequency, tb$duration, method =
 ## &quot;spearman&quot;): Cannot compute exact p-value with ties</code></pre>
-<p><strong>Step 4:</strong> Interpret your output and state your conclusion.</p>
+<p><strong>Step 3:</strong> Interpret your output and state your conclusion.</p>
 <p>Let’s read through the output.<br />
 The output tells you a number of things about your data:</p>
 <ol style="list-style-type: decimal">
@@ -1810,26 +1853,8 @@ The output tells you a number of things about your data:</p>
 </ol>
 <p>Again, the point of running a correlation test is two-fold: (1) to quantify the relationship with a correlation coefficient, and (2) to test if there <em>is</em> a linear association between the two variables. What conclusions can you draw from your output?<br />
 (1) “The correlation coefficient, <span class="math inline">\(r_s\)</span> = 0.715. There is a strong positive correlation between frequency of the resistant allele and duration of settlement.”<br />
-(2) “P &lt; 0.05, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data <strong>do NOT</strong> meet our null expectations. We conclude that there is a significant association between between frequency of the resistant allele and duration of settlement.”<br />
+(2) “P &lt; 0.05, therefore our results are statistically significant, and we <strong>reject</strong> the H0. Our data <strong>do NOT</strong> meet our null expectations. We conclude that there is a significant linear association between between frequency of the resistant allele and duration of settlement.”<br />
 <br></p>
-<p><strong>Pt III: Plotting scatterplots</strong><br />
-We can visualize these relationships with a scatterplot! Remember, the best graph for two numerical variables is a scatterplot.</p>
-<p>To do this, we use the function <strong>plot( )</strong>, and we need two pieces of information:</p>
-<ol style="list-style-type: decimal">
-<li><strong>x</strong> - your first numerical variable</li>
-<li><strong>y</strong> - your second numerical variable</li>
-</ol>
-<p>Let’s make one for both examples:<br />
-<em>1. Guppy dataset</em></p>
-<pre class="r"><code>plot(guppy$sonAttractiveness, guppy$fatherOrnamentation)</code></pre>
-<p><em>2. TB dataset</em></p>
-<pre class="r"><code>plot(tb$duration, tb$alleleFrequency)</code></pre>
-<p>We can change the shape of each datapoint with the argument “pch”, and the color of each datapoint with the argument, “col”. Let’s try this.</p>
-<pre class="r"><code>plot(guppy$sonAttractiveness, guppy$fatherOrnamentation,
-     pch = 20, col = &quot;red&quot;)
-plot(tb$duration, tb$alleleFrequency,
-     pch = 20, col = &quot;red&quot;)</code></pre>
-<p><br></p>
 <p><strong>Now it’s time to practice on your own.</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Larger animals tend to have larger brains. But is the increase in brain size proportional to the increase in body size? A set of data on body and brain size of 62 mammal species was collated by Allison and Cicchetti (1976), and these data are in the data set “mammals.csv”. The file contains columns giving the species name, the average body mass (in kg) and average brain size (in g) for each species. Data on this study are here: <a href="https://github.com/lczawadzki/biostats/raw/main/data/mammals.csv" class="uri">https://github.com/lczawadzki/biostats/raw/main/data/mammals.csv</a>.</p>

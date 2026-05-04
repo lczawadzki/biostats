@@ -34,7 +34,6 @@ __New Commands__:
 | df | df is name of dataframe |
 | x | x is one numerical variable (either a vector or column name) |
 | y | y is the other numerical variable (either a vector or column name) |
-| anova_name | a name for your anova, can be anything |   
 
 | Notation | R Command | Notes |
 | --- | --- | --- |
@@ -95,7 +94,7 @@ guppy <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/guppyFat
 __Step 2:__ Plot scatterplot of your two variables, sonAttractivness, and fatherOrnamentation.
 ```{r echo = T, results = 'hide', fig.keep = "none"}
 
-plot(guppy$sonAttractiveness, guppy$fatherOrnamentation)
+plot(guppy$fatherOrnamentation, guppy$sonAttractiveness)
 ```
 
 __Example 2. Tuberculosis dataset__    
@@ -106,7 +105,7 @@ __Step 1:__ Read in the data (available here: https://github.com/lczawadzki/bios
 tb <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/TBResistance.csv")
 ```
 
-__Step 2:__ Plot scatterplot of your two variables, sonAttractivness, and fatherOrnamentation.
+__Step 2:__ Plot scatterplot of your two variables, duration, and alleleFrequency
 ```{r echo = T, results = 'hide', fig.keep = "none"}
 plot(tb$duration, tb$alleleFrequency)
 ```
@@ -114,7 +113,7 @@ plot(tb$duration, tb$alleleFrequency)
 __Modifying Plots__:  
 We can change the shape of each datapoint with the argument "pch", and the color of each datapoint with the argument, "col". Let's try this for each example.  
 ```{r echo = T, results = 'hide', fig.keep = "none"}
-plot(guppy$sonAttractiveness, guppy$fatherOrnamentation,
+plot(guppy$fatherOrnamentation, guppy$sonAttractiveness,
      pch = 20, col = "red")
 plot(tb$duration, tb$alleleFrequency,
      pch = 20, col = "red")
@@ -123,13 +122,6 @@ plot(tb$duration, tb$alleleFrequency,
 
 __Pt II: Calculating the correlation coefficient and testing for significance__  
 Correlations quantify the "scatter" between two numerical variables. We quantify this with the correlation coefficient, _r_. Variables are strongly correlated if _r_ is close to 1 (Low "scatter"), and weakly correlated if _r_ is close to 0 (high "scatter"). 
-
-In _R_, we use the function __cor.test( )__. Once you read in your data, you need the following information:  
-
-1. __x__ - your first numerical variable
-2. __y__ - your second numerical variable
-
-Let's practice through example.
 
 __Example 1. Guppy dataset__  
 
@@ -162,9 +154,7 @@ The point of running a correlation test is two-fold: (1) to quantify the relatio
 <br>  
 
 __Pt III: Nonparametric methods - Spearman's rank__  
-If our data are not normally distributed, and data transformations do not make our data follow a normal distribution, we can use the Spearman's rank correlation, which is the alternative nonparametric method to the correlation test.
-
-Let's practice through example.
+If our data are not normally distributed, and data transformations do not make our data follow a normal distribution, we can use the Spearman's rank correlation, which is the alternative nonparametric method to the correlation test.  
 
 __Example 2. Tuberculosis dataset__
 
@@ -182,7 +172,7 @@ Both histograms show obvious skew, and the QQ plots have significant curvature o
 
 __Step 2:__ Since the data are NOT normal, we need to run a Spearman's rank correlation test instead of the parametric test. Run this test to ask: how strong is the correlation between frequency of the resistant allele and duration of settlement? Is the relationship statistically significant? __You can ignore the warning.__    
 ```{r echo = T, results = 'hide'}
-cor.test(tb$alleleFrequency, tb$duration, method = "spearman")
+cor.test(tb$duration, tb$alleleFrequency, method = "spearman")
 ```
 __Step 3:__ Interpret your output and state your conclusion.  
 

@@ -42,7 +42,7 @@ __New Commands__:
 | --- | --- |
 | t.test(df\$x, df\$y, mu =, paired = T) | Paired t-test to test whether the mean difference of paired measurements equals a null value |
 | t.test(df\$x, df\$y, mu =, paired = F, var.equal = T) | Two-sample t-test to compare the difference between means of two groups |
-| t.test(df\$x~df\$y, data = df, var.equal = T) | Different syntax for two-sample t-test; use when both groups are in ONE column, and second column is the group names |
+| t.test(df\$x~df\$y, mu =, paired = F, var.equal = T) | Different syntax for two-sample t-test; use when both groups are in ONE column, and second column is the group names |
 | t.test(df\$x, df\$y, mu =, paired = F, var.equal = F) | Welch's t-test to compare the difference between means of two groups, where everything is the same for a two-sample t-test EXCEPT var.equal = F, specifying the variance of both groups are NOT equal |
 | var.test(df\$x, df\$y, ratio = 1) | F test to compare variance of two groups; only use if data are normally distributed |
 | var.test(df\$x~df\$y, ratio = 1) | Different syntax for F-test; use when both groups are in ONE column, and second column is the group names |
@@ -224,7 +224,7 @@ t.test(seals$feeding, seals$non.feeding, mu = 0, paired = T)
 #heart <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/heart_attack.csv", stringsAsFactors = T)
 #var.test(heart$AGE~heart$GENDER, ratio = 1)
 
-#t.test(heart$AGE~heart$GENDER, mu = 0, paired = F, var.equal = F)
+#t.test(heart$AGE~heart$GENDER, data = heart, paired = F, var.equal = F)
 #p < 2.2e-16
 #p < 0.05, reject H0, males and females differ in the mean age of a heart attack, by an amount somewhere between 7.797 and 8.722 years. We conclude that females experience heart attacks later than males. 
 ```

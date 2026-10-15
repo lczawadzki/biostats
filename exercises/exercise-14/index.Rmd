@@ -1,0 +1,228 @@
+---
+title: "R Exercise 14: Regressions (Ch 17)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 17: Regressions
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 17 to _R_.
+<br>  
+
+__Objectives__
+
+- Estimate slopes of regressions (_b_)  
+- Test regression models  
+- Plot regression lines  
+- Examine residual plots for deviations from the assumptions of linear regression  
+
+__New Commands__:  
+
+| Arguments | Notes |
+| --- | --- |
+| df | df is name of dataframe |
+| x | x is your explanatory variable |
+| y | y is your response variable |
+| model_name | a name for your linear model, can be anything | 
+
+| R Command | Notes |
+| --- | --- |
+| model_name <- lm(y ~ x, data = df) | fits a linear regression model for your data |
+| summary(model_name) | provides hypothesis test output for your linear model |
+| confint(model_name) | prints 95% confidence intervals for your linear model estimates |
+| plot(residuals(model_name) ~ x, data = df) | plots residual plot of your data |
+| abline(h = 0) | adds a line at y = 0 to your residual plot |
+| plot(df\$x, df\$y) | plots a scatterplot for your two numerical variables |
+| abline(model_name) | adds regression line to your scatterplot |
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 12__  
+1\. Open _RStudio_ and prepare a new script.
+
+Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+Let's revisit the guppy dataset from Brooks et al. (2000). Recall that Brooks et al. (2000) wanted to test the inheritance of "attractive" traits from fathers to sons. Previously, we looked at whether these variables were correlated. NOW, we want to ask if father Ornamentation __predicts__ son Attractiveness.  
+
+1. __x__ - your explanatory variable; __fatherOrnamentation__
+2. __y__ - your response variable; __sonAttractiveness__
+
+Read in the data (available here: https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv)  
+```{r echo = T, results = 'hide'}
+guppy <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/guppyFatherSon.csv")
+```
+<br>  
+  
+__Pt I: Diagnostic Plots__  
+First, we want to check that our data meet assumptions of a regression. To do this, we will fit our model, and plot a residual plot. Recall, this graph plots your residuals ($Y - \hat{Y}$) against the fitted values for $X$.  
+  
+__Step 1:__ Fit your linear model using the function __lm ( )__.
+```{r echo = T, results = 'hide', fig.keep = "none"}
+guppy_model <- lm(sonAttractiveness ~ fatherOrnamentation, data = guppy)
+```
+
+__Step 2:__ Plot your residual plot using the function __plot( )__. Add a line at y = 0 to your plot using the function __abline( )__.
+```{r echo = T, results = 'hide', fig.keep = "none"}
+plot(residuals(guppy_model) ~ fatherOrnamentation, data = guppy)
+abline(h = 0)
+```
+Based on our residual plot, we can see that the points randomly bounce about zero. This tells us that the residuals are independent. Our data do not deviate from the assumptions of a linear regression. We can proceed parametrically!  
+
+*Note: You can also use a QQ plot, or Shapiro-Wilk test, but residual plots are the "gold standard" for diagnostic testing with regressions*  
+<br>  
+
+__Pt II: Calculating the least squares regression line and testing for significance__  
+Regressions quantify the rate of change between two numerical variables. Steeper slopes represent a higher rate of change, and gradual slopes represent a lower rate of change. That is, the steeper your slope, the more $Y$ will change for every incremental increase in $X$.   
+  
+__Step 1:__ Recall you need to fit your linear model using the function __lm ( )__.  
+```{r echo = T, results = 'hide', fig.keep = "none"}
+guppy_model <- lm(sonAttractiveness ~ fatherOrnamentation, data = guppy)
+```
+
+__Step 2:__ Produce the output summary using the function __summary( )__.  
+```{r echo = T, results = 'hide', fig.keep = "none"}
+summary(guppy_model)
+```
+Let's read through the output. The output tells you a number of things about your data:  
+
+1. Line 1-2 tells you what linear model you used for the test.
+2. Line 3-5 provides information on your residuals ($Y - \hat{Y}$). Here you will see: __Min__ the smallest residual value, __1Q__ the first quartile of your residuals, __Median__ the median of your residuals, __3Q__ the third quartile of your residuals, and __Max__ the largest residual value.  
+3. Line 6-11 provides a "Coefficients" output table with information on the components of your model, your test-statistics (t) and your p-values.   
+- _Row 1:_ This row will give you information on the __y-intercept (a)__.  
+- _Row 2:_ This row will give you information on the __explanatory variable (x)__.  
+
+- _Column 1:_ Estimate = the sample estimate for each row
+- _Column 2:_ Std. Error = the Standard Error, or uncertainty about the true population parameter, for each row.
+- _Column 3:_ t value = your test statistic, _t_   
+- _Column 4:_ Pr(>|t|) your p-value. Significance codes for p-values are noted under the table (*** = < 0.01, ** = < 0.01, * = < 0.05, . = < 0.1, nothing = < 1).  
+
+3. Line 12 tells you the standard error of your residuals.   
+4. Line 13 tells you the $R^2$ value, or amount of variation in $Y$ explained by the explanatory variable, $X$. Multiple R-squared refers to the $R^2$ value for all predictors, and the Adjusted R-squared adjusts the $R^2$ value based on the number of predictors in your model. This is because as you increase the number of predictors, your $R^2$ will increase, but this could be due to chance. Always opt for the Adjusted R-squared.  
+5. Line 14 tells you your F-statistic for the ANOVA investigation of the model, and your p-value for this ANOVA.  
+
+Looking at our output:  
+
+1. The linear model we are analyzing is __lm(sonAttractiveness ~ fatherOrnamentation, data = guppy)__.  
+2. Our __Residuals__ have a minimum value of -0.67, a first quartile of -0.15, a median of -0.02, a third quartile of 0.28, and a maximum value of 0.51.  
+3. For the Coefficients table, we can go through this by row:  
+- _Row 1: (Intercept)_  
+
+- The y-intercept ($a$) is equal to __0.005084__ (our estimate).   
+- Standard error of the y-intercept is __0.119__.  
+- The test statistic, __t = 0.043__.   
+- Our ___P___ __-value = 0.966__.    
+
+- _Row 2: fatherOrnamentation_     
+
+- The slope ($b$) is equal to __0.982__ (our estimate).   
+- Standard error of the slope is __0.216__.  
+- The test statistic, __t = 4.537__.   
+- Our ___P___ __-value = 6.78e-05__. **This is the P-value we will use**  
+
+4. The standard error of our residuals is __0.32__.  
+5. The amount of variation in $Y$ explained by $X$ equals __0.3588__ (use the Adjusted R-squared)/  
+6. From our ANOVA of the linear model, the test statistic, _F = 20.59_, and the ___P___ __-value = 6.784e-05__.  
+
+The point of running a regression test is two-fold: (1) to quantify the relationship with a least squares regression line, and (2) to test if there _is_ a significant slope ( _i.e._ greater than 0). What conclusions can you draw from your output?  
+(1) "The formula for the least squares regression line is $Y = 0.005084 + 0.982X$, where $Y$ = sonAttractiveness, and $X$ = fatherOrnamentation."    
+(2) "Looking at the p-value for our slope (6.78e-05) P < 0.05, therefore our results are statistically significant, and we __reject__ the H0. We conclude that the slope of the regression line is not zero for the relationship between father ornamentation and son attractiveness in guppies."  
+
+We can also base our interpretation on the p-value for the ANOVA (6.784e-05), which would provide us with the same conclusion.  
+<br>   
+
+__Pt III: Plotting scatterplots with the line of best fit__  
+We can now visualize the data with a scatterplot, and add our least squares regression line to this.  
+
+__Step 1:__ Plot your scatterplot using the function __plot( )__. Add the line of best fit using the function __abline( )__.
+```{r echo = T, results = 'hide', fig.keep = "none"}
+plot(sonAttractiveness ~ fatherOrnamentation, data = guppy)
+abline(guppy_model)
+```
+
+We can change the shape of each datapoint with the argument "pch", and the color of the line with the argument "col".
+```{r echo = T, results = 'hide', fig.keep = "none"}
+plot(sonAttractiveness ~ fatherOrnamentation, data = guppy, pch = 20)
+abline(guppy_model, col = "red")
+```
+<br>  
+
+**Now it's time to practice on your own.**  
+
+1. Let's revisit the dataset on brain size and body size in animals. Recall, larger animals tend to have larger brains. A set of data on body and brain size of 62 mammal species was collated by Allison and Cicchetti (1976). In Exercise 13, we asked if there was a correlation between these two variables. Now, we want to ask if body size __predicts__ brain size in mammals.   
+Data on this study are here: https://github.com/lczawadzki/biostats/raw/main/data/mammalslog.csv.    
+
+    a\. This is a new dataset with log-transformed values of brain size and body size. Using the log-transformed values, fit your linear model using lm( ).  
+    b\. Plot a diagnostic plot of the residuals. Do the data meet assumptions of a regression?   
+    c\. Obtain the output summary of your linear model. What is the formula for the least squares regression line?  
+    d\. Using the output summary, test the hypothesis that the null slope is equal to 0.  
+    e\. Plot a scatterplot of your data with the regression line.  
+```{r include = F}
+#REWORD QUESTION; EXACT WORDING AS WEBSITE!!!
+
+#Answer:
+
+mammals <- read.csv("https://github.com/lczawadzki/biostats/raw/main/data/mammalslog.csv")
+
+#a)
+#x <- log(mammals$body_mass_kg)
+#y <- log(mammals$brain_mass_g)
+
+x <- mammals$log_body_mass
+y <- mammals$log_brain_mass
+
+mammal_model <- lm(y ~ x)
+
+#b)
+plot(residuals(mammal_model) ~ x)
+abline(h = 0)
+
+#Yes, scattered above and below line equally.
+
+#c)
+summary(mammal_model)
+#Y = 2.13 + 0.75X 
+#log(brain size) = 2.13 + 0.75(log(body size))
+
+#d)
+#p-value of slope <2e-16; p<0.05, reject H0
+#p-value of ANOVA <2e-16; p<0.05, reject H0
+
+#e)
+plot(x, y, pch = 20)
+abline(mammal_model, col = "red")
+```

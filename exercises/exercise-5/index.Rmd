@@ -1,0 +1,169 @@
+---
+title: "R Exercise 5: Analyzing Proportions (Ch 7)"
+author: "Dr. Z"
+date: "2026"
+output:
+  html_document:
+    highlight: textmate
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r include = F}
+## Textbook followed: The Analysis of Biological Data (3rd Edition) by Whitlock & Schluter
+## Chapter 7: Analyzing Proportions
+## Chapter 8: Fitting probability models to frequency data
+
+## Activities adapted from the following sources:
+## 1) Labs using R made for The Analysis of Biological Data (3rd Edition) by Whitlock and Schluter: https://whitlockschluter3e.zoology.ubc.ca/RLabs/index.html
+```
+
+Let's apply what we've learned in Chapter 7 to _R_.
+<br>  
+__Objectives__  
+
+- Be able to estimate the proportion of data.
+- Be able to calculate the standard error of a proportion.
+- Be able to conduct a binomial test (hypothesis test about proportions).
+- Be able to calculate the 95% confidence interval of a proportion.
+
+<br>
+  
+__Reminder__: Save your script for practice at home! :)
+<br>  
+
+__Shortcuts__:  
+
+| Symbol or Command | Keyboard Shortcut |
+| --- | --- |
+| <- | Alt + - |
+| # | Shift + 3 | 
+| Run one line in script | Ctrl + Enter | 
+| Run entire script | Ctrl + Shift + Enter | 
+| Open new script | Ctrl + Shift + N  | 
+<br>  
+
+
+__Exercise 5__  
+1\. Open _RStudio_ and prepare a new script.
+
+a) Open a new script. All of your code for today's exercises, and your notes and comments will go in this script. Write your filename, title, author, date, and description of the script. 
+```{r}
+# Filename: (what you will save the script as)
+# Title: (give script a title)
+# Author: (write your full name here)
+# Date: Month Day Year (write the actual date here)
+
+# Description: (describe what this script is for)
+```
+<br>  
+
+2\. Let's revisit the tumbling toast and Murphy's Law example, using data from: _Matthews, RAJ. (1995). Tumbling toast, Murphy’s Law and fundamental constants. Eur. J. Phys. 16:172-176._ Matthews (1995) found that 6101 out of 9821 slices of toast thrown in the air landed butter side down. The null hypothesis would be that toast thrown in the air would land butter side up and down in equal proportion.  
+<br>  
+__Pt I: Calculating Proportions and Standard Error__  
+If you are asked, "What is the best estimate of the proportion?", you can calculate this directly in _R_ by dividing the number of successes, _X_, by the number of trials, _n_. What is the best estimate of the proportion of toast that lands butter side down when dropped?
+```{r echo = T, results = 'hide'}
+     6101/9821
+```
+
+If you are asked, "Calculate the standard error of the sample proportion," we would use the formula from Chapter 7: SE = sqrt((sample proportion*(1-sample proportion))/n). What is the standard error of the sample proportion of toast that lands butter side down?  
+```{r echo = T, results = 'hide'}
+     sqrt((0.62*(1-0.62))/9821)
+```
+<br>  
+
+__Pt II: Conducting a binomial test__  
+What if we want to test the hypothesis that toast lands butter side down more often than it lands butter side up? You would need to undergo a hypothesis test. For proportional data, where there are only two outcomes, we use the binomial test.  
+
+In _R_, we use the function __binom.test( )__. You do NOT have to read in any data. You only need to enter in three pieces of information:  
+
+1. __x__ - the number of successes (_X_ in our formula)  
+2. __n__ - the number of trials (_n_ in our formula)   
+3. __p__ - the _expected_ probability from our null hypothesis (H0)  
+
+___Note___: This test will be a two-tailed test by default!  
+<br>
+
+Using the toast example, our three values for the binomial test are:  
+
+1. __x__ = 6101 successes  
+2. __n__ = 9821 trials  
+3. __p__ = 0.5; toast will land up/down equally (half and half!)   
+
+Try conducting a binomial test with the above information.
+```{r echo = T, results = 'hide'}
+     binom.test(x = 6101, n = 9821, p = 0.5)
+```
+<br>  
+__Pt III: Understanding your output__  
+Let's read through the output. 
+The output tells you a number of things about your data:  
+
+1. Line 1 tells you about your data. You have ___X___ successes and ___n___ trials.  
+2. Line 2 states specifically your __number of successes (_X_)__, the __number of trials (_n_)__, and your ___P___ __-value__. Remember, the _P_-value is the probability that a sample from the null model would be as extreme, or more extreme, than your sample. That is, it is the probability of obtaining your data under the null hypothesis or expectation. 
+3. Line 3 tells you your alternative hypothesis (HA).  
+4. Line 4 tells you the 95% confidence interval of the proportion, which are values between which you are 95% confident that the true population proportion lies between. This function uses the Clopper and Pearson (1934) method of calculating confidence intervals by default.  
+5. Line 5 tells you information about your sample estimates, specifically, the probability of success in _your_ sample data.  
+
+So, from our output, we know that:  
+
+1. Our data consists of __6101 successes__ and __9821 trials__.  
+2. Our ___P___ __-value < 2.2e-16__.  
+3. HA: p is not equal to 0.5.  
+4. We are 95% confident that the __true population proportion__ lies between __0.61__ and __0.63__.  
+5. Our sample proportion (the estimate) equals __0.62__.  
+<br>  
+
+__Pt IV: Interpreting your results__  
+The point of running a binomial test is to test if there _is_ an effect. This is a hypothesis test! Running the test alone is insufficient, we now need to draw our conclusions. What conclusions can you draw from your output? 
+
+"p < 0.05, therefore our results are statistically significant, and we reject the H0. Our data do not match our null expectations, and are not likely to occur due to chance. We conclude that toast lands butter side down more than we would expect due to chance at a p = 0.62. Additionally, we are 95% confident that the true population proportion lies between 0.61 and 0.63."  
+<br>  
+
+**Now it's time to practice on your own.**  
+
+1. Many hospitals still have signs posted everywhere banning cell phone use. These bans originated from studies on earlier versions of cell phones. In one such experiment, out of 510 tests with cell phones operating at near-maximum power, 6 disrupted a piece of medical equipment enough to hinder interpretation of data or cause equipment to malfunction. (question adopted from: Whitlock & Schluter 2020)    
+
+    a\. Based on this experiment, what is the best estimate of the proportion of equipment disruption by cell phones in hospitals?    
+    
+    b\. How precise is this estimate? Calculate the standard error of the sample proportion. Recall, standard error for proportions is: sqrt((sample proportion*(1-sample proportion))/n). 
+      
+<br>  
+    ```{r include = F}
+#Answer:
+6/510 #p = 0.012
+sqrt((0.012*(1-0.012))/510) #SE = 0.005
+    ```
+
+2. Marzoli and Tomassi (2009) had a researcher approach and speak to strangers in a noisy nightclub. An observer scored whether the person  turned either the left or right ear towards the questioner. Of 25 participants, 19 turned the right ear towards the questioner and 6 turned thier left ear towards the questioner. (question adopted from: Whitlock & Schluter 2020)    
+
+    a\. What is your best estimate of the proportion of individuals that turn their right ear to a questioner?      
+    
+    b\. What is the observed value of the test statistic?  
+    
+    c\. Researchers hypothesised that individuals would prefer one ear over the year. Test this hypothesis using the data. Report your null hypothesis, your p-value, and your biological conclusion.  
+    
+    d\. What is the 95% confidence interval? Report as a statement. If your confidence interval is broad, what can researchers do to increase precision in their next experiment?  
+    
+    e\. Using the above data, what is the probability that exactly 19 out of 25 participants favored their right ear? __NOTE__\: You will need to calculate this directly in _R_. Recall the binomial formula: Pr[X] = (n choose x) * p^X * (1-p)^n-X, where (n choose x) equals n! / (X!(n-X)!). To calculate factorials in _R_, use the function __factorial()__.  This is because we are asking for the Pr[19] alone. What is the probability of exactly 19 participants using their right ear? A binomial test, on the other hand, compares the sample to the sampling distribution. It calculates the probability of a sample from the null distribution being _as extreme_ or _more extreme_ than our data. If we were to calculate the binomial test, you would essentially be calculating the probability of obtaining 19 or 20 or 21 or 22 or 23 or 24 or 25 participants using their right ear: Pr[19] + Pr[20] + Pr[21] + Pr[22] + Pr[23] + Pr[24] + Pr[25], like we did in part (c)! Since we JUST want Pr[19], we can use the binomial formula.  
+    
+<br>  
+    ```{r include = F}
+#Answer:
+19/25 #p = 0.76
+    
+#19 right ears
+
+binom.test(x = 19, n = 25, p = 0.5)    
+  #H0: Preference for right and left ear is equal (p = 0.5).
+  #p = 0.01463; p < 0.05
+  #Since p < 0.05, we reject the null hypothesis, and conclude that more people use their right ear than their left ear when listening to a stranger in a noisy nightclub (than is predicted by chance).
+
+#We are 95% confident that the true proportion lies between 0.55 and 0.91. That is, between 55-91% of individuals will have a preference for their right ear over their left. The broad range indicates we need a larger sample size to increase the precision of our estimate.
+
+# X = 19, n = 25, p = 0.50
+(factorial(25)/(factorial(19)*factorial(25-19)))*((0.50)^19)*((1-0.50)^(25-19))
+    #p = 0.00528
+    ```
+  

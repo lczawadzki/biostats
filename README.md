@@ -42,3 +42,6 @@ Exercise 14 (Ch 17):
 https://lczawadzki.github.io/biostats/exercise-14/index.html
 # Data
 All data for in-class exercises, quizzes, and exams is in the <a href = "https://github.com/lczawadzki/biostats/tree/main/data"> data folder</a>.
+
+#Credit:
+Some exercises and data are adapted from https://whitlockschluter3e.zoology.ubc.ca/index.html 
